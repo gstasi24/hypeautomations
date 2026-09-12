@@ -61,7 +61,6 @@ function Index() {
         </main>
         <Footer />
         <StickyCta />
-        <BookingDialog />
       </div>
     </BookingProvider>
   );
