@@ -127,7 +127,8 @@ export function BookingFlow({ onClose }: { onClose: () => void }) {
 
   const submit = useMutation({
     mutationFn: useServerFn(createBooking),
-    onSuccess: (result) => {
+    onSuccess: (raw) => {
+      const result = raw as { ok: true; booking: BookingConfirmation } | { ok: false; error: string };
       if (result.ok) {
         setConfirmation(result.booking);
         setError(null);
