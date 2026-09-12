@@ -14,16 +14,192 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      availability_rules: {
+        Row: {
+          created_at: string
+          enabled: boolean
+          end_time: string
+          id: string
+          start_time: string
+          weekday: number
+        }
+        Insert: {
+          created_at?: string
+          enabled?: boolean
+          end_time: string
+          id?: string
+          start_time: string
+          weekday: number
+        }
+        Update: {
+          created_at?: string
+          enabled?: boolean
+          end_time?: string
+          id?: string
+          start_time?: string
+          weekday?: number
+        }
+        Relationships: []
+      }
+      blocked_dates: {
+        Row: {
+          blocked_on: string
+          created_at: string
+          id: string
+          reason: string | null
+        }
+        Insert: {
+          blocked_on: string
+          created_at?: string
+          id?: string
+          reason?: string | null
+        }
+        Update: {
+          blocked_on?: string
+          created_at?: string
+          id?: string
+          reason?: string | null
+        }
+        Relationships: []
+      }
+      booking_settings: {
+        Row: {
+          booking_horizon_days: number
+          buffer_minutes: number
+          id: boolean
+          max_bookings_per_day: number
+          meeting_type: string
+          min_notice_hours: number
+          slot_duration_minutes: number
+          timezone: string
+          updated_at: string
+        }
+        Insert: {
+          booking_horizon_days?: number
+          buffer_minutes?: number
+          id?: boolean
+          max_bookings_per_day?: number
+          meeting_type?: string
+          min_notice_hours?: number
+          slot_duration_minutes?: number
+          timezone?: string
+          updated_at?: string
+        }
+        Update: {
+          booking_horizon_days?: number
+          buffer_minutes?: number
+          id?: boolean
+          max_bookings_per_day?: number
+          meeting_type?: string
+          min_notice_hours?: number
+          slot_duration_minutes?: number
+          timezone?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      bookings: {
+        Row: {
+          automation_goals: string[]
+          business_type: string | null
+          company: string | null
+          consent: boolean
+          created_at: string
+          email: string
+          enquiry_sources: string[]
+          full_name: string
+          id: string
+          manage_token: string
+          notes: string | null
+          phone: string | null
+          slot_end: string
+          slot_start: string
+          status: string
+          timezone: string | null
+          tools: string[]
+          tools_other: string | null
+          website: string | null
+        }
+        Insert: {
+          automation_goals?: string[]
+          business_type?: string | null
+          company?: string | null
+          consent?: boolean
+          created_at?: string
+          email: string
+          enquiry_sources?: string[]
+          full_name: string
+          id?: string
+          manage_token?: string
+          notes?: string | null
+          phone?: string | null
+          slot_end: string
+          slot_start: string
+          status?: string
+          timezone?: string | null
+          tools?: string[]
+          tools_other?: string | null
+          website?: string | null
+        }
+        Update: {
+          automation_goals?: string[]
+          business_type?: string | null
+          company?: string | null
+          consent?: boolean
+          created_at?: string
+          email?: string
+          enquiry_sources?: string[]
+          full_name?: string
+          id?: string
+          manage_token?: string
+          notes?: string | null
+          phone?: string | null
+          slot_end?: string
+          slot_start?: string
+          status?: string
+          timezone?: string | null
+          tools?: string[]
+          tools_other?: string | null
+          website?: string | null
+        }
+        Relationships: []
+      }
+      user_roles: {
+        Row: {
+          created_at: string
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin" | "user"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +326,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin", "user"],
+    },
   },
 } as const
