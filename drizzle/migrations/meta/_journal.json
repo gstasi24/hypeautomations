@@ -8,6 +8,13 @@
       "when": 1789226909590,
       "tag": "0000_create_booking_system",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1789229142520,
+      "tag": "0001_move_has_role_to_private_schema",
+      "breakpoints": true
     }
   ]
 }
