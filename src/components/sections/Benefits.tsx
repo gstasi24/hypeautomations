@@ -36,7 +36,7 @@ const BENEFITS = [
 
 export function Benefits() {
   return (
-    <section className="relative py-20 lg:py-28">
+    <section className="relative py-14 sm:py-16 lg:py-20">
       <div className="brand-glow right-0 top-1/3 h-72 w-72 opacity-30" />
       <div className="relative mx-auto w-full max-w-7xl px-5 lg:px-8">
         <Reveal>
@@ -46,7 +46,7 @@ export function Benefits() {
           </h2>
         </Reveal>
 
-        <div className="mt-12 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-8 grid gap-3 sm:mt-10 sm:grid-cols-2 lg:grid-cols-3">
           {BENEFITS.map((benefit, index) => {
             const Icon = benefit.icon;
             return (

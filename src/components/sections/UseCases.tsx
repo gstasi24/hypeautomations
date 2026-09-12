@@ -35,7 +35,7 @@ export function UseCases() {
   const current = CASES[active]!;
 
   return (
-    <section className="relative py-20 lg:py-28">
+    <section className="relative py-14 sm:py-16 lg:py-20">
       <div className="mx-auto w-full max-w-7xl px-5 lg:px-8">
         <Reveal>
           <h2 className="max-w-2xl text-3xl font-bold leading-tight sm:text-4xl lg:text-5xl">
@@ -47,7 +47,7 @@ export function UseCases() {
           <div
             role="tablist"
             aria-label="Business types"
-            className="mt-10 flex gap-2 overflow-x-auto pb-2"
+            className="mt-8 flex gap-2 overflow-x-auto pb-2 sm:mt-10"
           >
             {CASES.map((item, index) => (
               <button

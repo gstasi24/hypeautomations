@@ -104,7 +104,7 @@ export function WhatWeAutomate() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   return (
-    <section id="automations" className="relative py-20 lg:py-28">
+    <section id="automations" className="relative py-14 sm:py-16 lg:py-20">
       <div className="brand-glow left-0 top-1/4 h-72 w-72 opacity-30" />
       <div className="relative mx-auto w-full max-w-7xl px-5 lg:px-8">
         <Reveal>
@@ -116,7 +116,7 @@ export function WhatWeAutomate() {
           </p>
         </Reveal>
 
-        <ul className="mt-12 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+        <ul className="mt-8 grid gap-3 sm:mt-10 sm:grid-cols-2 lg:grid-cols-4">
           {CATEGORIES.map((category, index) => {
             const Icon = category.icon;
             const expanded = openIndex === index;

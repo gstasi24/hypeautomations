@@ -7,7 +7,7 @@ export function Hero() {
   const { openBooking } = useBooking();
 
   return (
-    <section id="top" className="relative overflow-hidden pb-16 pt-28 lg:pb-28 lg:pt-36">
+    <section id="top" className="relative overflow-hidden pb-12 pt-24 sm:pb-16 lg:pb-20 lg:pt-32">
       <div className="brand-glow -top-40 left-1/2 h-[520px] w-[720px] -translate-x-1/2 opacity-55" />
       <div className="brand-glow bottom-0 left-1/4 h-72 w-[520px] opacity-40" />
 

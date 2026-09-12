@@ -13,7 +13,7 @@ export function FinalCta() {
   const { openBooking } = useBooking();
 
   return (
-    <section id="consultation" className="relative overflow-hidden py-20 lg:py-32">
+    <section id="consultation" className="relative overflow-hidden py-16 sm:py-20 lg:py-24">
       <div className="brand-glow left-1/2 top-1/4 h-[420px] w-[680px] -translate-x-1/2 opacity-50" />
       <div className="relative mx-auto w-full max-w-4xl px-5 text-center lg:px-8">
         <Reveal>

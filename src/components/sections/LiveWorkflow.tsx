@@ -33,12 +33,12 @@ export function LiveWorkflow() {
       current += 1;
       setVisible(current);
       if (current >= STEPS.length) clearInterval(interval);
-    }, 700);
+    }, 450);
     return () => clearInterval(interval);
   }, [inView]);
 
   return (
-    <section id="how-it-works" className="relative py-20 lg:py-28">
+    <section id="how-it-works" className="relative py-14 sm:py-16 lg:py-20">
       <div className="mx-auto w-full max-w-5xl px-5 lg:px-8">
         <Reveal>
           <h2 className="text-3xl font-bold leading-tight sm:text-4xl lg:text-5xl">
@@ -49,7 +49,7 @@ export function LiveWorkflow() {
           </p>
         </Reveal>
 
-        <div ref={ref} className="mt-12 space-y-2.5">
+        <div ref={ref} className="mt-8 space-y-2.5 sm:mt-10">
           {STEPS.map((step, index) => {
             const shown = index < visible;
             return (
@@ -73,7 +73,7 @@ export function LiveWorkflow() {
         </div>
 
         <Reveal delay={100}>
-          <div className="mt-10 rounded-3xl border border-primary/40 bg-surface/70 p-7 sm:p-9">
+          <div className="mt-8 rounded-3xl border border-primary/40 bg-surface/70 p-7 sm:p-9">
             <p className="text-xl font-semibold sm:text-2xl">
               Six steps. Zero manual work. Every single time.
             </p>

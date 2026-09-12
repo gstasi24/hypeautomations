@@ -17,7 +17,7 @@ const CARDS = [
 
 export function Problem() {
   return (
-    <section id="solutions" className="relative py-20 lg:py-28">
+    <section id="solutions" className="relative py-14 sm:py-16 lg:py-20">
       <div className="mx-auto w-full max-w-7xl px-5 lg:px-8">
         <Reveal>
           <h2 className="max-w-2xl text-3xl font-bold leading-tight sm:text-4xl lg:text-5xl">
@@ -26,7 +26,7 @@ export function Problem() {
           </h2>
         </Reveal>
 
-        <ul className="mt-12 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+        <ul className="mt-8 grid gap-3 sm:mt-10 sm:grid-cols-2 lg:grid-cols-3">
           {CARDS.map((card, index) => (
             <Reveal as="li" key={card.n} delay={index * 70}>
               <div className="group h-full rounded-2xl border border-border bg-surface/60 p-6 transition-all duration-400 hover:-translate-y-1 hover:border-primary/50 hover:bg-surface hover:shadow-[0_18px_50px_-24px_var(--color-primary)]">
@@ -41,7 +41,7 @@ export function Problem() {
         </ul>
 
         <Reveal delay={120}>
-          <div className="mt-12 rounded-3xl border border-border bg-surface/50 p-7 sm:p-10">
+          <div className="mt-8 rounded-3xl border border-border bg-surface/50 p-7 sm:mt-10 sm:p-10">
             <p className="text-xl font-semibold sm:text-2xl">These aren't six separate tasks.</p>
             <p className="mt-2 text-xl text-muted-foreground sm:text-2xl">
               They're <span className="text-gradient">one system</span> waiting to be automated.

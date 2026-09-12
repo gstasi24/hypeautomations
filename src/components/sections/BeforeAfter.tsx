@@ -16,7 +16,7 @@ const AFTER = ["Lead", "AI", "CRM", "WhatsApp", "Follow-up", "Booking"];
 
 export function BeforeAfter() {
   return (
-    <section className="relative py-20 lg:py-28">
+    <section className="relative py-14 sm:py-16 lg:py-20">
       <div className="mx-auto w-full max-w-7xl px-5 lg:px-8">
         <Reveal>
           <h2 className="max-w-xl text-3xl font-bold leading-tight sm:text-4xl lg:text-5xl">
@@ -24,7 +24,7 @@ export function BeforeAfter() {
           </h2>
         </Reveal>
 
-        <div className="mt-12 grid gap-5 lg:grid-cols-2">
+        <div className="mt-8 grid gap-5 sm:mt-10 lg:grid-cols-2">
           <Reveal>
             <div className="h-full rounded-3xl border border-border bg-surface/40 p-6 sm:p-8">
               <p className="text-xs font-bold uppercase tracking-[0.25em] text-muted-foreground">
@@ -85,7 +85,7 @@ export function BeforeAfter() {
         </div>
 
         <Reveal delay={120}>
-          <p className="mx-auto mt-12 max-w-2xl text-center text-lg text-muted-foreground sm:text-xl">
+          <p className="mx-auto mt-8 max-w-2xl text-center text-lg text-muted-foreground sm:mt-10 sm:text-xl">
             Automation doesn't replace your business. It removes the{" "}
             <span className="text-foreground">friction slowing it down.</span>
           </p>

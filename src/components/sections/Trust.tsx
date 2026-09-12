@@ -26,7 +26,7 @@ const POINTS = [
 
 export function Trust() {
   return (
-    <section className="relative py-20 lg:py-28">
+    <section className="relative py-14 sm:py-16 lg:py-20">
       <div className="mx-auto w-full max-w-7xl px-5 lg:px-8">
         <Reveal>
           <h2 className="max-w-2xl text-3xl font-bold leading-tight sm:text-4xl lg:text-5xl">
@@ -35,7 +35,7 @@ export function Trust() {
           </h2>
         </Reveal>
 
-        <div className="mt-12 grid gap-3 sm:grid-cols-2">
+        <div className="mt-8 grid gap-3 sm:mt-10 sm:grid-cols-2">
           {POINTS.map((point, index) => {
             const Icon = point.icon;
             return (

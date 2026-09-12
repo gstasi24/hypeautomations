@@ -21,7 +21,7 @@ export function Calculator() {
   }, [tasks, minutes]);
 
   return (
-    <section className="relative py-20 lg:py-28">
+    <section className="relative py-14 sm:py-16 lg:py-20">
       <div className="mx-auto w-full max-w-5xl px-5 lg:px-8">
         <Reveal>
           <h2 className="text-3xl font-bold leading-tight sm:text-4xl lg:text-5xl">
@@ -31,7 +31,7 @@ export function Calculator() {
         </Reveal>
 
         <Reveal delay={120}>
-          <div className="mt-10 grid gap-6 rounded-3xl border border-border bg-surface/60 p-6 sm:p-9 lg:grid-cols-2 lg:gap-10">
+          <div className="mt-8 grid gap-6 rounded-3xl border border-border bg-surface/60 p-6 sm:mt-10 sm:p-9 lg:grid-cols-2 lg:gap-10">
             <div className="space-y-9">
               <div>
                 <div className="flex items-baseline justify-between">
