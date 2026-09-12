@@ -11,7 +11,6 @@ export function BookingDialog({
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent
-        showCloseButton
         className="max-h-[92vh] w-[min(100vw-1.5rem,52rem)] overflow-y-auto border-border bg-surface p-0 sm:max-w-3xl"
       >
         <DialogTitle className="sr-only">Book a free consultation</DialogTitle>
