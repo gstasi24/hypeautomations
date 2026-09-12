@@ -21,7 +21,7 @@ const GROUPS = [
 
 export function Integrations() {
   return (
-    <section id="integrations" className="relative py-20 lg:py-28">
+    <section id="integrations" className="relative py-14 sm:py-16 lg:py-20">
       <div className="mx-auto w-full max-w-7xl px-5 lg:px-8">
         <Reveal>
           <h2 className="max-w-2xl text-3xl font-bold leading-tight sm:text-4xl lg:text-5xl">
@@ -32,7 +32,7 @@ export function Integrations() {
           </p>
         </Reveal>
 
-        <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-8 grid gap-4 sm:mt-10 sm:grid-cols-2 lg:grid-cols-4">
           {GROUPS.map((group, index) => (
             <Reveal key={group.title} delay={index * 80}>
               <div className="h-full rounded-2xl border border-border bg-surface/60 p-6">

@@ -30,7 +30,7 @@ const STEPS = [
 
 export function Process() {
   return (
-    <section className="relative py-20 lg:py-28">
+    <section className="relative py-14 sm:py-16 lg:py-20">
       <div className="mx-auto w-full max-w-5xl px-5 lg:px-8">
         <Reveal>
           <h2 className="text-3xl font-bold leading-tight sm:text-4xl lg:text-5xl">
@@ -38,7 +38,7 @@ export function Process() {
           </h2>
         </Reveal>
 
-        <ol className="mt-12 space-y-3">
+        <ol className="mt-8 space-y-3 sm:mt-10">
           {STEPS.map((step, index) => (
             <Reveal as="li" key={step.n} delay={index * 80}>
               <div className="flex gap-5 rounded-2xl border border-border bg-surface/60 p-6">
