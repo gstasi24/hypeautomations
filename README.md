@@ -27,3 +27,20 @@ npm run dev
 - TypeScript
 - React
 - Tailwind CSS
+
+## CI/CD
+
+Every push and pull request on `main` runs `.github/workflows/ci.yml`, which installs
+dependencies with Bun, runs ESLint and a full production build. A change is only
+considered ready for production once this workflow is green.
+
+Add these repository secrets (Settings → Secrets and variables → Actions) so the
+build step can resolve the backend configuration:
+
+- `VITE_SUPABASE_URL`
+- `VITE_SUPABASE_PUBLISHABLE_KEY`
+- `VITE_SUPABASE_PROJECT_ID`
+
+Production hosting stays on Lovable: commits made here sync to Lovable automatically,
+and the site goes live from the Publish action in the Lovable editor. Backend changes
+(database, server functions) apply immediately.
