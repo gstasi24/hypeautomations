@@ -1,18 +1,14 @@
-# Hype Automations Funnel
-
-Implement exactly the screenshot and nothing else
+# Welcome to your Lovable project
 
 This project was built with [Lovable](https://lovable.dev).
 
-**Live app**: https://hypeautomations.lovable.app
-
 ## Build with Lovable
 
-Continue developing this project in the [Lovable editor](https://lovable.dev/projects/4726f626-ba84-4306-bcd4-3041f744c0be).
+Open your project in the [Lovable editor](https://lovable.dev) and keep building.
 
 - **Ship faster**: describe what you want to build and Lovable handles the code.
-- **Stay in sync**: every change made in Lovable is committed straight to this repository.
-- **Full ownership**: this code is yours. Push to `main` on GitHub and your changes sync back into Lovable, ready for your next prompt.
+- **Stay in sync**: connect the project to GitHub and every change made in Lovable is committed straight to your repository.
+- **Full ownership**: this code is yours. Push to your repository and your changes sync back into Lovable, ready for your next prompt.
 
 ## Development
 
@@ -24,3 +20,27 @@ cd <repository-name>
 npm i
 npm run dev
 ```
+
+## Built with
+
+- TanStack Start
+- TypeScript
+- React
+- Tailwind CSS
+
+## CI/CD
+
+Every push and pull request on `main` runs `.github/workflows/ci.yml`, which installs
+dependencies with Bun, runs ESLint and a full production build. A change is only
+considered ready for production once this workflow is green.
+
+Add these repository secrets (Settings → Secrets and variables → Actions) so the
+build step can resolve the backend configuration:
+
+- `VITE_SUPABASE_URL`
+- `VITE_SUPABASE_PUBLISHABLE_KEY`
+- `VITE_SUPABASE_PROJECT_ID`
+
+Production hosting stays on Lovable: commits made here sync to Lovable automatically,
+and the site goes live from the Publish action in the Lovable editor. Backend changes
+(database, server functions) apply immediately.

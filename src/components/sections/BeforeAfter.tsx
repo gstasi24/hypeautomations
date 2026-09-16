@@ -55,7 +55,9 @@ export function BeforeAfter() {
             <div className="relative h-full overflow-hidden rounded-3xl border border-primary/40 bg-surface/70 p-6 sm:p-8">
               <div className="brand-glow -right-10 top-1/3 h-56 w-56 opacity-60" />
               <div className="relative">
-                <p className="text-xs font-bold uppercase tracking-[0.25em] text-secondary">After</p>
+                <p className="text-xs font-bold uppercase tracking-[0.25em] text-secondary">
+                  After
+                </p>
                 <ul className="mt-6 space-y-2">
                   {AFTER.map((item, index) => (
                     <li key={item}>
@@ -63,7 +65,9 @@ export function BeforeAfter() {
                         <span className="flex size-7 items-center justify-center rounded-lg bg-brand-gradient text-[0.65rem] font-bold text-primary-foreground">
                           {index + 1}
                         </span>
-                        <span className="text-sm font-semibold uppercase tracking-wide">{item}</span>
+                        <span className="text-sm font-semibold uppercase tracking-wide">
+                          {item}
+                        </span>
                         {index === AFTER.length - 1 ? (
                           <Check className="ml-auto size-4 text-success" />
                         ) : null}

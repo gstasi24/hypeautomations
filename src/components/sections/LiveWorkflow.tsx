@@ -7,10 +7,26 @@ import { ArrowRight } from "lucide-react";
 
 const STEPS = [
   { time: "0s", title: "A new lead arrives", detail: "Website form submitted" },
-  { time: "1s", title: "AI reads and qualifies the enquiry", detail: "Intent, budget and urgency detected" },
-  { time: "2s", title: "The CRM is updated automatically", detail: "Contact created, stage set to Qualified" },
-  { time: "3s", title: "The customer receives an instant WhatsApp reply", detail: "Personalised, in your tone of voice" },
-  { time: "4s", title: "A follow-up is scheduled", detail: "No reply? Reminder queued for tomorrow" },
+  {
+    time: "1s",
+    title: "AI reads and qualifies the enquiry",
+    detail: "Intent, budget and urgency detected",
+  },
+  {
+    time: "2s",
+    title: "The CRM is updated automatically",
+    detail: "Contact created, stage set to Qualified",
+  },
+  {
+    time: "3s",
+    title: "The customer receives an instant WhatsApp reply",
+    detail: "Personalised, in your tone of voice",
+  },
+  {
+    time: "4s",
+    title: "A follow-up is scheduled",
+    detail: "No reply? Reminder queued for tomorrow",
+  },
   { time: "5s", title: "The meeting is booked", detail: "Calendar invite sent to both sides" },
 ];
 

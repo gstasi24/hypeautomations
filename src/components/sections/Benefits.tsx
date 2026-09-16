@@ -41,8 +41,7 @@ export function Benefits() {
       <div className="relative mx-auto w-full max-w-7xl px-5 lg:px-8">
         <Reveal>
           <h2 className="max-w-2xl text-3xl font-bold leading-tight sm:text-4xl lg:text-5xl">
-            What changes once your business{" "}
-            <span className="text-gradient">runs on systems.</span>
+            What changes once your business <span className="text-gradient">runs on systems.</span>
           </h2>
         </Reveal>
 

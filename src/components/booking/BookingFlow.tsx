@@ -128,7 +128,8 @@ export function BookingFlow({ onClose }: { onClose: () => void }) {
   const submit = useMutation({
     mutationFn: useServerFn(createBooking),
     onSuccess: (raw) => {
-      const result = raw as { ok: true; booking: BookingConfirmation } | { ok: false; error: string };
+      const result = raw as
+        { ok: true; booking: BookingConfirmation } | { ok: false; error: string };
       if (result.ok) {
         setConfirmation(result.booking);
         setError(null);
@@ -174,8 +175,8 @@ export function BookingFlow({ onClose }: { onClose: () => void }) {
           <h2 className="mt-5 text-3xl font-bold sm:text-4xl">You're booked.</h2>
           <p className="mt-3 max-w-xl text-sm text-muted-foreground">
             Your consultation with Hype Automations has been scheduled. We'll use the call to
-            understand your current workflow and identify the processes with the strongest automation
-            potential.
+            understand your current workflow and identify the processes with the strongest
+            automation potential.
           </p>
 
           <div className="mt-6 grid gap-3 sm:grid-cols-3">
@@ -184,7 +185,10 @@ export function BookingFlow({ onClose }: { onClose: () => void }) {
               { label: "Time", value: confirmation.timeLabel },
               { label: "Timezone", value: confirmation.timezone },
             ].map((item) => (
-              <div key={item.label} className="rounded-2xl border border-border bg-surface-2/60 p-4">
+              <div
+                key={item.label}
+                className="rounded-2xl border border-border bg-surface-2/60 p-4"
+              >
                 <p className="text-xs uppercase tracking-[0.18em] text-muted-foreground">
                   {item.label}
                 </p>
@@ -473,9 +477,7 @@ export function BookingFlow({ onClose }: { onClose: () => void }) {
                   details I provided for that purpose.
                 </span>
               </label>
-              {error ? (
-                <p className="text-sm text-destructive sm:col-span-2">{error}</p>
-              ) : null}
+              {error ? <p className="text-sm text-destructive sm:col-span-2">{error}</p> : null}
             </div>
           ) : null}
         </div>
@@ -508,8 +510,7 @@ export function BookingFlow({ onClose }: { onClose: () => void }) {
                   data: {
                     ...form,
                     consent: true as const,
-                    visitorTimezone:
-                      Intl.DateTimeFormat().resolvedOptions().timeZone ?? "",
+                    visitorTimezone: Intl.DateTimeFormat().resolvedOptions().timeZone ?? "",
                   },
                 })
               }
@@ -524,9 +525,7 @@ export function BookingFlow({ onClose }: { onClose: () => void }) {
           )}
         </footer>
 
-        <p className="mt-4 text-xs text-muted-foreground">
-          No commitment. No generic sales pitch.
-        </p>
+        <p className="mt-4 text-xs text-muted-foreground">No commitment. No generic sales pitch.</p>
       </div>
     </section>
   );

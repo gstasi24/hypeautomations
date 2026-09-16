@@ -12,7 +12,11 @@ const CARDS = [
     top: "A meeting needs to be scheduled.",
     bottom: "Five messages later, you finally find a time.",
   },
-  { n: "06", top: "The job is completed.", bottom: "Someone should ask for a review. Often, nobody does." },
+  {
+    n: "06",
+    top: "The job is completed.",
+    bottom: "Someone should ask for a review. Often, nobody does.",
+  },
 ];
 
 export function Problem() {
