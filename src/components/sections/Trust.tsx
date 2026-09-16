@@ -30,8 +30,7 @@ export function Trust() {
       <div className="mx-auto w-full max-w-7xl px-5 lg:px-8">
         <Reveal>
           <h2 className="max-w-2xl text-3xl font-bold leading-tight sm:text-4xl lg:text-5xl">
-            Why businesses choose to work{" "}
-            <span className="text-gradient">with us.</span>
+            Why businesses choose to work <span className="text-gradient">with us.</span>
           </h2>
         </Reveal>
 

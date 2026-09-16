@@ -15,7 +15,10 @@ export function BookingProvider({ children }: { children: ReactNode }) {
   const openBooking = useCallback(() => setOpen(true), []);
   const closeBooking = useCallback(() => setOpen(false), []);
 
-  const value = useMemo(() => ({ open, openBooking, closeBooking }), [open, openBooking, closeBooking]);
+  const value = useMemo(
+    () => ({ open, openBooking, closeBooking }),
+    [open, openBooking, closeBooking],
+  );
 
   return (
     <BookingContext.Provider value={value}>
@@ -28,7 +31,11 @@ export function BookingProvider({ children }: { children: ReactNode }) {
 export function useBooking() {
   const context = useContext(BookingContext);
   if (!context) {
-    return { open: false, openBooking: () => {}, closeBooking: () => {} } satisfies BookingContextValue;
+    return {
+      open: false,
+      openBooking: () => {},
+      closeBooking: () => {},
+    } satisfies BookingContextValue;
   }
   return context;
 }

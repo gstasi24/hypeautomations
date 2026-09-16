@@ -15,9 +15,14 @@ export const getAdminOverview = createServerFn({ method: "GET" })
       .maybeSingle();
     const isAdmin = Boolean(adminRow);
 
-
     if (!isAdmin) {
-      return { isAdmin: false as const, bookings: [], blockedDates: [], availability: [], settings: null };
+      return {
+        isAdmin: false as const,
+        bookings: [],
+        blockedDates: [],
+        availability: [],
+        settings: null,
+      };
     }
 
     const [bookings, blockedDates, availability, settings] = await Promise.all([
@@ -43,7 +48,9 @@ export const getAdminOverview = createServerFn({ method: "GET" })
 export const setBookingStatus = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator((data: unknown) =>
-    z.object({ id: z.string().uuid(), status: z.enum(["confirmed", "cancelled", "completed"]) }).parse(data),
+    z
+      .object({ id: z.string().uuid(), status: z.enum(["confirmed", "cancelled", "completed"]) })
+      .parse(data),
   )
   .handler(async ({ data, context }) => {
     const { error } = await context.supabase
@@ -71,7 +78,9 @@ export const toggleAvailabilityRule = createServerFn({ method: "POST" })
 export const addBlockedDate = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator((data: unknown) =>
-    z.object({ date: z.string().min(10).max(10), reason: z.string().max(200).optional() }).parse(data),
+    z
+      .object({ date: z.string().min(10).max(10), reason: z.string().max(200).optional() })
+      .parse(data),
   )
   .handler(async ({ data, context }) => {
     const { error } = await context.supabase

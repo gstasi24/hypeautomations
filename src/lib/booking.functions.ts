@@ -205,64 +205,73 @@ const bookingSchema = z.object({
 
 export const createBooking = createServerFn({ method: "POST" })
   .inputValidator((data: unknown) => bookingSchema.parse(data))
-  .handler(async ({ data }): Promise<{ ok: true; booking: BookingConfirmation } | { ok: false; error: string }> => {
-    const availability = await buildAvailability();
-    const slot = availability.days.flatMap((d) => d.slots).find((s) => s.start === data.slotStart);
+  .handler(
+    async ({
+      data,
+    }): Promise<{ ok: true; booking: BookingConfirmation } | { ok: false; error: string }> => {
+      const availability = await buildAvailability();
+      const slot = availability.days
+        .flatMap((d) => d.slots)
+        .find((s) => s.start === data.slotStart);
 
-    if (!slot) {
-      return { ok: false, error: "That time is no longer available. Please choose another slot." };
-    }
-
-    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
-    const { data: inserted, error } = await supabaseAdmin
-      .from("bookings")
-      .insert({
-        slot_start: slot.start,
-        slot_end: slot.end,
-        full_name: data.fullName,
-        company: data.company || null,
-        email: data.email,
-        phone: data.phone,
-        website: data.website || null,
-        notes: data.notes || null,
-        business_type: data.businessType || null,
-        automation_goals: data.automationGoals,
-        enquiry_sources: data.enquirySources,
-        tools: data.tools,
-        tools_other: data.toolsOther || null,
-        consent: data.consent,
-        timezone: data.visitorTimezone || availability.timezone,
-      })
-      .select("id, slot_start, slot_end, manage_token")
-      .single();
-
-    if (error || !inserted) {
-      console.error("createBooking failed", error);
-      if (error?.code === "23505" || error?.code === "23P01" || error?.code === "23505") {
-        return { ok: false, error: "That time was just taken. Please pick another slot." };
+      if (!slot) {
+        return {
+          ok: false,
+          error: "That time is no longer available. Please choose another slot.",
+        };
       }
-      return { ok: false, error: "We couldn't confirm the booking. Please try another time." };
-    }
 
-    return {
-      ok: true,
-      booking: {
-        id: inserted.id,
-        slotStart: inserted.slot_start,
-        slotEnd: inserted.slot_end,
-        timezone: availability.timezone,
-        dateLabel: fmt(inserted.slot_start, availability.timezone, {
-          weekday: "long",
-          day: "numeric",
-          month: "long",
-          year: "numeric",
-        }),
-        timeLabel: fmt(inserted.slot_start, availability.timezone, {
-          hour: "2-digit",
-          minute: "2-digit",
-          hour12: false,
-        }),
-        manageToken: inserted.manage_token,
-      },
-    };
-  });
+      const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+      const { data: inserted, error } = await supabaseAdmin
+        .from("bookings")
+        .insert({
+          slot_start: slot.start,
+          slot_end: slot.end,
+          full_name: data.fullName,
+          company: data.company || null,
+          email: data.email,
+          phone: data.phone,
+          website: data.website || null,
+          notes: data.notes || null,
+          business_type: data.businessType || null,
+          automation_goals: data.automationGoals,
+          enquiry_sources: data.enquirySources,
+          tools: data.tools,
+          tools_other: data.toolsOther || null,
+          consent: data.consent,
+          timezone: data.visitorTimezone || availability.timezone,
+        })
+        .select("id, slot_start, slot_end, manage_token")
+        .single();
+
+      if (error || !inserted) {
+        console.error("createBooking failed", error);
+        if (error?.code === "23505" || error?.code === "23P01" || error?.code === "23505") {
+          return { ok: false, error: "That time was just taken. Please pick another slot." };
+        }
+        return { ok: false, error: "We couldn't confirm the booking. Please try another time." };
+      }
+
+      return {
+        ok: true,
+        booking: {
+          id: inserted.id,
+          slotStart: inserted.slot_start,
+          slotEnd: inserted.slot_end,
+          timezone: availability.timezone,
+          dateLabel: fmt(inserted.slot_start, availability.timezone, {
+            weekday: "long",
+            day: "numeric",
+            month: "long",
+            year: "numeric",
+          }),
+          timeLabel: fmt(inserted.slot_start, availability.timezone, {
+            hour: "2-digit",
+            minute: "2-digit",
+            hour12: false,
+          }),
+          manageToken: inserted.manage_token,
+        },
+      };
+    },
+  );

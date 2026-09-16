@@ -63,7 +63,9 @@ export function ControlCenter({ compact = false }: { compact?: boolean }) {
         </div>
 
         {/* KPI tiles */}
-        <div className={cn("mt-4 grid gap-2", compact ? "grid-cols-2" : "grid-cols-2 sm:grid-cols-4")}>
+        <div
+          className={cn("mt-4 grid gap-2", compact ? "grid-cols-2" : "grid-cols-2 sm:grid-cols-4")}
+        >
           {KPIS.map((kpi) => (
             <div key={kpi.label} className="rounded-2xl border border-border bg-surface-2/70 p-3">
               <p className="text-[0.6rem] uppercase tracking-wider text-muted-foreground">
@@ -108,7 +110,9 @@ export function ControlCenter({ compact = false }: { compact?: boolean }) {
                     <p
                       className={cn(
                         "truncate text-[0.7rem] transition-opacity duration-500",
-                        isActive || isDone ? "text-accent opacity-100" : "text-muted-foreground opacity-60",
+                        isActive || isDone
+                          ? "text-accent opacity-100"
+                          : "text-muted-foreground opacity-60",
                       )}
                     >
                       {node.note}
@@ -151,7 +155,9 @@ export function ControlCenter({ compact = false }: { compact?: boolean }) {
           <p className="text-sm font-semibold">
             {complete ? "Meeting booked" : "Workflow in progress"}
           </p>
-          <BadgeCheck className={cn("size-5", complete ? "text-success" : "text-muted-foreground")} />
+          <BadgeCheck
+            className={cn("size-5", complete ? "text-success" : "text-muted-foreground")}
+          />
         </div>
 
         <p className="mt-3 text-[0.62rem] text-muted-foreground">

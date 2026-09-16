@@ -305,7 +305,9 @@ function AdminPage() {
               <Button
                 onClick={() => {
                   if (!blockDate) return;
-                  addBlocked.mutate({ data: { date: blockDate, reason: blockReason || undefined } });
+                  addBlocked.mutate({
+                    data: { date: blockDate, reason: blockReason || undefined },
+                  });
                   setBlockDate("");
                   setBlockReason("");
                 }}
