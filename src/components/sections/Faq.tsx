@@ -1,4 +1,3 @@
-import { Reveal } from "@/components/site/Reveal";
 import {
   Accordion,
   AccordionContent,
@@ -41,13 +40,13 @@ export function Faq() {
   return (
     <section id="faq" className="relative py-14 sm:py-16 lg:py-20">
       <div className="mx-auto w-full max-w-3xl px-5 lg:px-8">
-        <Reveal>
+        <div>
           <h2 className="text-3xl font-bold leading-tight sm:text-4xl lg:text-5xl">
-            Questions, <span className="text-gradient">answered.</span>
+            Questions, answered.
           </h2>
-        </Reveal>
+        </div>
 
-        <Reveal delay={100}>
+        <div>
           <Accordion type="single" collapsible className="mt-8 sm:mt-10">
             {ITEMS.map((item) => (
               <AccordionItem
@@ -64,7 +63,7 @@ export function Faq() {
               </AccordionItem>
             ))}
           </Accordion>
-        </Reveal>
+        </div>
       </div>
     </section>
   );

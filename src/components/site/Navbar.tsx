@@ -9,7 +9,7 @@ import { cn } from "@/lib/utils";
 const LINKS = [
   { label: "Solutions", href: "#solutions" },
   { label: "Automations", href: "#automations" },
-  { label: "How It Works", href: "#how-it-works" },
+  { label: "How it works", href: "#how-it-works" },
   { label: "Integrations", href: "#integrations" },
   { label: "FAQ", href: "#faq" },
 ];
@@ -54,7 +54,7 @@ export function Navbar() {
 
         <div className="flex items-center gap-2">
           <Button size="sm" className="hidden lg:inline-flex" onClick={openBooking}>
-            Book a Consultation
+            Book a free consultation
           </Button>
 
           <Sheet open={menuOpen} onOpenChange={setMenuOpen}>
@@ -82,7 +82,7 @@ export function Navbar() {
                     openBooking();
                   }}
                 >
-                  Book a Consultation
+                  Book a free consultation
                 </Button>
               </div>
             </SheetContent>

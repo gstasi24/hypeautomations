@@ -167,9 +167,8 @@ export function BookingFlow({ onClose }: { onClose: () => void }) {
   if (confirmation) {
     return (
       <section className="relative overflow-hidden p-6 sm:p-9">
-        <div className="brand-glow -top-24 left-1/2 h-72 w-72 -translate-x-1/2 opacity-70" />
         <div className="relative">
-          <span className="inline-flex items-center gap-2 rounded-full border border-success/40 bg-success/10 px-3 py-1 text-xs font-medium uppercase tracking-[0.18em] text-success">
+          <span className="inline-flex items-center gap-2 rounded-full border border-success/40 bg-success/10 px-3 py-1 text-xs font-medium text-success">
             <Check className="size-3.5" /> Confirmed
           </span>
           <h2 className="mt-5 text-3xl font-bold sm:text-4xl">You're booked.</h2>
@@ -189,9 +188,7 @@ export function BookingFlow({ onClose }: { onClose: () => void }) {
                 key={item.label}
                 className="rounded-2xl border border-border bg-surface-2/60 p-4"
               >
-                <p className="text-xs uppercase tracking-[0.18em] text-muted-foreground">
-                  {item.label}
-                </p>
+                <p className="text-xs text-muted-foreground">{item.label}</p>
                 <p className="mt-1 font-semibold">{item.value}</p>
               </div>
             ))}
@@ -213,9 +210,7 @@ export function BookingFlow({ onClose }: { onClose: () => void }) {
           </div>
 
           <div className="mt-8 rounded-2xl border border-border bg-surface-2/40 p-5">
-            <h3 className="text-sm font-semibold uppercase tracking-[0.18em] text-muted-foreground">
-              What happens next
-            </h3>
+            <h3 className="text-sm font-semibold text-muted-foreground">What happens next</h3>
             <ol className="mt-4 space-y-3 text-sm">
               {[
                 "We review the information you provided.",
@@ -243,12 +238,9 @@ export function BookingFlow({ onClose }: { onClose: () => void }) {
 
   return (
     <section className="relative overflow-hidden p-6 sm:p-9">
-      <div className="brand-glow -top-32 right-0 h-64 w-64 opacity-50" />
       <div className="relative">
         <header>
-          <p className="text-xs uppercase tracking-[0.25em] text-muted-foreground">
-            Free consultation
-          </p>
+          <p className="text-xs text-muted-foreground">Free consultation</p>
           <h2 className="mt-2 text-2xl font-bold sm:text-3xl">
             {step === 0 ? "Let's understand your business." : null}
             {step === 1 ? "What would you most like to automate?" : null}
@@ -493,7 +485,7 @@ export function BookingFlow({ onClose }: { onClose: () => void }) {
 
           {step < 5 ? (
             <Button onClick={() => setStep((s) => s + 1)} disabled={!canContinue}>
-              Continue <ArrowRight className="size-4" />
+              Continue
             </Button>
           ) : (
             <Button

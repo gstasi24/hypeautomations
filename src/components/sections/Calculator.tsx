@@ -1,9 +1,7 @@
 import { useMemo, useState } from "react";
-import { Reveal } from "@/components/site/Reveal";
 import { Slider } from "@/components/ui/slider";
 import { Button } from "@/components/ui/button";
 import { useBooking } from "@/components/booking/BookingProvider";
-import { ArrowRight } from "lucide-react";
 
 export function Calculator() {
   const [tasks, setTasks] = useState(30);
@@ -23,14 +21,13 @@ export function Calculator() {
   return (
     <section className="relative py-14 sm:py-16 lg:py-20">
       <div className="mx-auto w-full max-w-5xl px-5 lg:px-8">
-        <Reveal>
+        <div>
           <h2 className="text-3xl font-bold leading-tight sm:text-4xl lg:text-5xl">
-            How much time is manual work{" "}
-            <span className="text-gradient">costing you each week?</span>
+            How much time is manual work costing you each week?
           </h2>
-        </Reveal>
+        </div>
 
-        <Reveal delay={120}>
+        <div>
           <div className="mt-8 grid gap-6 rounded-3xl border border-border bg-surface/60 p-6 sm:mt-10 sm:p-9 lg:grid-cols-2 lg:gap-10">
             <div className="space-y-9">
               <div>
@@ -38,7 +35,7 @@ export function Calculator() {
                   <label htmlFor="tasks" className="text-sm font-medium">
                     Repetitive tasks per week
                   </label>
-                  <span className="text-2xl font-bold text-gradient">{tasks}</span>
+                  <span className="text-2xl font-bold">{tasks}</span>
                 </div>
                 <Slider
                   id="tasks"
@@ -56,7 +53,7 @@ export function Calculator() {
                   <label htmlFor="minutes" className="text-sm font-medium">
                     Minutes per task
                   </label>
-                  <span className="text-2xl font-bold text-gradient">{minutes}</span>
+                  <span className="text-2xl font-bold">{minutes}</span>
                 </div>
                 <Slider
                   id="minutes"
@@ -71,9 +68,7 @@ export function Calculator() {
             </div>
 
             <div className="rounded-2xl border border-primary/40 bg-surface-2/60 p-6">
-              <p className="text-xs font-bold uppercase tracking-[0.25em] text-secondary">
-                Estimated time spent
-              </p>
+              <p className="text-xs font-bold text-secondary">Estimated time spent</p>
               <div className="mt-5 space-y-4">
                 <div>
                   <p className="text-4xl font-extrabold">{result.weeklyHours}h</p>
@@ -92,14 +87,14 @@ export function Calculator() {
               </div>
 
               <Button className="mt-7 w-full" onClick={openBooking}>
-                See What Can Be Automated <ArrowRight className="size-4" />
+                Book a free consultation
               </Button>
               <p className="mt-3 text-xs text-muted-foreground">
                 Your own estimate based on the numbers you enter. Not a promise of results.
               </p>
             </div>
           </div>
-        </Reveal>
+        </div>
       </div>
     </section>
   );
