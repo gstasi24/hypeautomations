@@ -1,4 +1,3 @@
-import { Reveal } from "@/components/site/Reveal";
 import { ArrowDown, Check } from "lucide-react";
 
 const BEFORE = [
@@ -18,18 +17,16 @@ export function BeforeAfter() {
   return (
     <section className="relative py-14 sm:py-16 lg:py-20">
       <div className="mx-auto w-full max-w-7xl px-5 lg:px-8">
-        <Reveal>
+        <div>
           <h2 className="max-w-xl text-3xl font-bold leading-tight sm:text-4xl lg:text-5xl">
-            From manual process to <span className="text-gradient">automated system.</span>
+            From manual process to automated system.
           </h2>
-        </Reveal>
+        </div>
 
         <div className="mt-8 grid gap-5 sm:mt-10 lg:grid-cols-2">
-          <Reveal>
+          <div>
             <div className="h-full rounded-3xl border border-border bg-surface/40 p-6 sm:p-8">
-              <p className="text-xs font-bold uppercase tracking-[0.25em] text-muted-foreground">
-                Before
-              </p>
+              <p className="text-xs font-bold text-muted-foreground">Before</p>
               <ul className="mt-6 space-y-2">
                 {BEFORE.map((item, index) => (
                   <li
@@ -49,15 +46,12 @@ export function BeforeAfter() {
                 Eight manual handovers. Every one of them can break.
               </p>
             </div>
-          </Reveal>
+          </div>
 
-          <Reveal delay={140}>
+          <div>
             <div className="relative h-full overflow-hidden rounded-3xl border border-primary/40 bg-surface/70 p-6 sm:p-8">
-              <div className="brand-glow -right-10 top-1/3 h-56 w-56 opacity-60" />
               <div className="relative">
-                <p className="text-xs font-bold uppercase tracking-[0.25em] text-secondary">
-                  After
-                </p>
+                <p className="text-xs font-bold text-secondary">After</p>
                 <ul className="mt-6 space-y-2">
                   {AFTER.map((item, index) => (
                     <li key={item}>
@@ -65,9 +59,7 @@ export function BeforeAfter() {
                         <span className="flex size-7 items-center justify-center rounded-lg bg-brand-gradient text-xs font-bold text-primary-foreground">
                           {index + 1}
                         </span>
-                        <span className="text-sm font-semibold uppercase tracking-wide">
-                          {item}
-                        </span>
+                        <span className="text-sm font-semibold ">{item}</span>
                         {index === AFTER.length - 1 ? (
                           <Check className="ml-auto size-4 text-success" />
                         ) : null}
@@ -85,15 +77,15 @@ export function BeforeAfter() {
                 </p>
               </div>
             </div>
-          </Reveal>
+          </div>
         </div>
 
-        <Reveal delay={120}>
+        <div>
           <p className="mx-auto mt-8 max-w-2xl text-center text-lg text-muted-foreground sm:mt-10 sm:text-xl">
             Automation doesn't replace your business. It removes the{" "}
             <span className="text-foreground">friction slowing it down.</span>
           </p>
-        </Reveal>
+        </div>
       </div>
     </section>
   );

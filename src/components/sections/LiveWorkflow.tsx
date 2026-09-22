@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
-import { Reveal, useInView } from "@/components/site/Reveal";
+import { useInView } from "@/components/site/Reveal";
 import { Button } from "@/components/ui/button";
 import { useBooking } from "@/components/booking/BookingProvider";
 import { cn } from "@/lib/utils";
-import { ArrowRight } from "lucide-react";
 
 const STEPS = [
   { time: "0s", title: "A new lead arrives", detail: "Website form submitted" },
@@ -56,14 +55,14 @@ export function LiveWorkflow() {
   return (
     <section id="how-it-works" className="relative py-14 sm:py-16 lg:py-20">
       <div className="mx-auto w-full max-w-5xl px-5 lg:px-8">
-        <Reveal>
+        <div>
           <h2 className="text-3xl font-bold leading-tight sm:text-4xl lg:text-5xl">
-            This is what happens <span className="text-gradient">while you're busy.</span>
+            This is what happens while you're busy.
           </h2>
           <p className="mt-5 max-w-xl text-muted-foreground">
             One enquiry, handled end to end — without anyone touching a keyboard.
           </p>
-        </Reveal>
+        </div>
 
         <div ref={ref} className="mt-8 space-y-2.5 sm:mt-10">
           {STEPS.map((step, index) => {
@@ -88,16 +87,16 @@ export function LiveWorkflow() {
           })}
         </div>
 
-        <Reveal delay={100}>
+        <div>
           <div className="mt-8 rounded-3xl border border-primary/40 bg-surface/70 p-7 sm:p-9">
             <p className="text-xl font-semibold sm:text-2xl">
               Six steps. Zero manual work. Every single time.
             </p>
             <Button size="lg" className="mt-6" onClick={openBooking}>
-              Automate This For My Business <ArrowRight className="size-4" />
+              Book a free consultation
             </Button>
           </div>
-        </Reveal>
+        </div>
       </div>
     </section>
   );

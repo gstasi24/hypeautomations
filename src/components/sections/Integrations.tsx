@@ -1,5 +1,3 @@
-import { Reveal } from "@/components/site/Reveal";
-
 const GROUPS = [
   {
     title: "Communication",
@@ -23,22 +21,20 @@ export function Integrations() {
   return (
     <section id="integrations" className="relative py-14 sm:py-16 lg:py-20">
       <div className="mx-auto w-full max-w-7xl px-5 lg:px-8">
-        <Reveal>
+        <div>
           <h2 className="max-w-2xl text-3xl font-bold leading-tight sm:text-4xl lg:text-5xl">
-            Works with the tools <span className="text-gradient">you already use.</span>
+            Works with the tools you already use.
           </h2>
           <p className="mt-5 max-w-xl text-muted-foreground">
             You don't need to change your systems. We connect them.
           </p>
-        </Reveal>
+        </div>
 
         <div className="mt-8 grid gap-4 sm:mt-10 sm:grid-cols-2 lg:grid-cols-4">
           {GROUPS.map((group, index) => (
-            <Reveal key={group.title} delay={index * 80}>
+            <div key={group.title}>
               <div className="h-full rounded-2xl border border-border bg-surface/60 p-6">
-                <p className="text-xs font-bold uppercase tracking-[0.2em] text-secondary">
-                  {group.title}
-                </p>
+                <p className="text-xs font-bold text-secondary">{group.title}</p>
                 <ul className="mt-4 space-y-2">
                   {group.tools.map((tool) => (
                     <li
@@ -50,16 +46,16 @@ export function Integrations() {
                   ))}
                 </ul>
               </div>
-            </Reveal>
+            </div>
           ))}
         </div>
 
-        <Reveal delay={100}>
+        <div>
           <p className="mt-8 text-sm text-muted-foreground">
             Using something else? Most modern tools can be connected — we'll confirm yours on the
             call.
           </p>
-        </Reveal>
+        </div>
       </div>
     </section>
   );

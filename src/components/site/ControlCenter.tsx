@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useInView } from "./Reveal";
 import { cn } from "@/lib/utils";
+import { ExampleTag } from "./ExampleTag";
 import {
   BadgeCheck,
   Bot,
@@ -50,13 +51,9 @@ export function ControlCenter({ compact = false }: { compact?: boolean }) {
 
   return (
     <div ref={ref} className="relative">
-      <div className="brand-glow -bottom-16 left-1/2 h-64 w-[80%] -translate-x-1/2 opacity-70" />
-
       <div className="relative rounded-3xl border border-border bg-surface/80 p-4 backdrop-blur-xl glow-ring sm:p-6">
         <div className="flex items-center justify-between">
-          <p className="text-xs font-semibold uppercase tracking-[0.25em] text-muted-foreground">
-            Automation control center
-          </p>
+          <p className="text-xs font-semibold text-muted-foreground">Automation control center</p>
           <span className="flex items-center gap-1.5 rounded-full border border-success/40 bg-success/10 px-2.5 py-1 text-xs font-medium text-success">
             <span className="size-1.5 rounded-full bg-success animate-breathe" /> Running
           </span>
@@ -68,7 +65,7 @@ export function ControlCenter({ compact = false }: { compact?: boolean }) {
         >
           {KPIS.map((kpi) => (
             <div key={kpi.label} className="rounded-2xl border border-border bg-surface-2/70 p-3">
-              <p className="text-xs uppercase tracking-wider text-muted-foreground">{kpi.label}</p>
+              <p className="text-xs r text-muted-foreground">{kpi.label}</p>
               <p className="mt-1 text-xl font-bold">{kpi.value}</p>
               <p className="text-xs text-accent">{kpi.status}</p>
             </div>
@@ -118,7 +115,7 @@ export function ControlCenter({ compact = false }: { compact?: boolean }) {
                   </div>
                   <span
                     className={cn(
-                      "shrink-0 rounded-full px-2 py-0.5 text-xs font-medium uppercase tracking-wider transition-colors duration-500",
+                      "shrink-0 rounded-full px-2 py-0.5 text-xs font-medium r transition-colors duration-500",
                       isActive
                         ? "bg-primary/25 text-secondary"
                         : isDone
@@ -158,9 +155,7 @@ export function ControlCenter({ compact = false }: { compact?: boolean }) {
           />
         </div>
 
-        <p className="mt-3 text-xs text-muted-foreground">
-          Illustrative demo interface. Figures are examples, not client results.
-        </p>
+        <ExampleTag className="mt-3" />
       </div>
     </div>
   );

@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { Reveal } from "@/components/site/Reveal";
 import { cn } from "@/lib/utils";
 
 const CASES = [
@@ -37,13 +36,13 @@ export function UseCases() {
   return (
     <section className="relative py-14 sm:py-16 lg:py-20">
       <div className="mx-auto w-full max-w-7xl px-5 lg:px-8">
-        <Reveal>
+        <div>
           <h2 className="max-w-2xl text-3xl font-bold leading-tight sm:text-4xl lg:text-5xl">
-            What this looks like in <span className="text-gradient">your kind of business.</span>
+            What this looks like in your kind of business.
           </h2>
-        </Reveal>
+        </div>
 
-        <Reveal delay={100}>
+        <div>
           <div
             role="tablist"
             aria-label="Business types"
@@ -66,24 +65,20 @@ export function UseCases() {
               </button>
             ))}
           </div>
-        </Reveal>
+        </div>
 
-        <Reveal delay={140}>
+        <div>
           <div className="mt-6 grid gap-3 lg:grid-cols-2">
             <div className="rounded-2xl border border-border bg-surface/40 p-6 sm:p-8">
-              <p className="text-xs font-bold uppercase tracking-[0.25em] text-muted-foreground">
-                Today
-              </p>
+              <p className="text-xs font-bold text-muted-foreground">Today</p>
               <p className="mt-4 text-lg leading-snug text-muted-foreground">{current.before}</p>
             </div>
             <div className="rounded-2xl border border-primary/40 bg-surface/70 p-6 sm:p-8">
-              <p className="text-xs font-bold uppercase tracking-[0.25em] text-secondary">
-                With automation
-              </p>
+              <p className="text-xs font-bold text-secondary">With automation</p>
               <p className="mt-4 text-lg font-medium leading-snug">{current.after}</p>
             </div>
           </div>
-        </Reveal>
+        </div>
       </div>
     </section>
   );

@@ -1,5 +1,3 @@
-import { Reveal } from "@/components/site/Reveal";
-
 const STEPS = [
   {
     n: "01",
@@ -32,23 +30,23 @@ export function Process() {
   return (
     <section className="relative py-14 sm:py-16 lg:py-20">
       <div className="mx-auto w-full max-w-5xl px-5 lg:px-8">
-        <Reveal>
+        <div>
           <h2 className="text-3xl font-bold leading-tight sm:text-4xl lg:text-5xl">
-            How we <span className="text-gradient">work together.</span>
+            How we work together.
           </h2>
-        </Reveal>
+        </div>
 
         <ol className="mt-8 space-y-3 sm:mt-10">
           {STEPS.map((step, index) => (
-            <Reveal as="li" key={step.n} delay={index * 80}>
+            <li key={step.n}>
               <div className="flex gap-5 rounded-2xl border border-border bg-surface/60 p-6">
-                <span className="text-sm font-bold tracking-[0.2em] text-primary">{step.n}</span>
+                <span className="text-sm font-bold text-primary">{step.n}</span>
                 <div>
                   <h3 className="text-lg font-semibold">{step.title}</h3>
                   <p className="mt-2 text-sm text-muted-foreground">{step.text}</p>
                 </div>
               </div>
-            </Reveal>
+            </li>
           ))}
         </ol>
       </div>

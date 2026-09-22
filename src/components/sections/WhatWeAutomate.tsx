@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { Reveal } from "@/components/site/Reveal";
 import { cn } from "@/lib/utils";
 import {
   Bot,
@@ -105,30 +104,29 @@ export function WhatWeAutomate() {
 
   return (
     <section id="automations" className="relative py-14 sm:py-16 lg:py-20">
-      <div className="brand-glow left-0 top-1/4 h-72 w-72 opacity-30" />
       <div className="relative mx-auto w-full max-w-7xl px-5 lg:px-8">
-        <Reveal>
+        <div>
           <h2 className="max-w-2xl text-3xl font-bold leading-tight sm:text-4xl lg:text-5xl">
-            What could your business <span className="text-gradient">stop doing manually?</span>
+            What could your business stop doing manually?
           </h2>
           <p className="mt-5 max-w-xl text-muted-foreground">
             We build systems around the tools and processes you already use.
           </p>
-        </Reveal>
+        </div>
 
         <ul className="mt-8 grid gap-3 sm:mt-10 sm:grid-cols-2 lg:grid-cols-4">
           {CATEGORIES.map((category, index) => {
             const Icon = category.icon;
             const expanded = openIndex === index;
             return (
-              <Reveal as="li" key={category.n} delay={index * 60}>
+              <li key={category.n}>
                 <button
                   type="button"
                   onClick={() => setOpenIndex(expanded ? null : index)}
                   aria-expanded={expanded}
                   className={cn(
                     "group h-full w-full rounded-2xl border border-border bg-surface/60 p-5 text-left transition-all duration-400",
-                    "hover:border-primary/50 hover:bg-surface hover:shadow-[0_18px_50px_-24px_var(--color-primary)]",
+                    "hover:border-primary/50 hover:bg-surface",
                     expanded && "border-primary/60 bg-surface",
                   )}
                 >
@@ -136,14 +134,10 @@ export function WhatWeAutomate() {
                     <span className="flex size-10 items-center justify-center rounded-xl border border-border-strong bg-surface-2 text-accent">
                       <Icon className="size-5" />
                     </span>
-                    <span className="text-xs font-bold tracking-[0.2em] text-muted-foreground">
-                      {category.n}
-                    </span>
+                    <span className="text-xs font-bold text-muted-foreground">{category.n}</span>
                   </div>
 
-                  <h3 className="mt-4 text-base font-semibold uppercase tracking-wide">
-                    {category.title}
-                  </h3>
+                  <h3 className="mt-4 text-base font-semibold ">{category.title}</h3>
 
                   <ul className="mt-3 space-y-1.5 text-sm text-muted-foreground">
                     {category.items.map((item) => (
@@ -176,11 +170,11 @@ export function WhatWeAutomate() {
                     </div>
                   </div>
 
-                  <p className="mt-3 text-xs uppercase tracking-widest text-muted-foreground lg:hidden">
+                  <p className="mt-3 text-xs st text-muted-foreground lg:hidden">
                     {expanded ? "Tap to close" : "Tap to see the workflow"}
                   </p>
                 </button>
-              </Reveal>
+              </li>
             );
           })}
         </ul>

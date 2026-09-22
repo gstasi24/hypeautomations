@@ -1,7 +1,6 @@
-import { Reveal } from "@/components/site/Reveal";
 import { Button } from "@/components/ui/button";
 import { useBooking } from "@/components/booking/BookingProvider";
-import { ArrowRight, CalendarCheck, Clock, MessageSquare } from "lucide-react";
+import { CalendarCheck, Clock, MessageSquare } from "lucide-react";
 
 const EXPECT = [
   { icon: Clock, text: "30 minutes, online, no preparation needed" },
@@ -14,20 +13,18 @@ export function FinalCta() {
 
   return (
     <section id="consultation" className="relative overflow-hidden py-16 sm:py-20 lg:py-24">
-      <div className="brand-glow left-1/2 top-1/4 h-[420px] w-[680px] -translate-x-1/2 opacity-50" />
       <div className="relative mx-auto w-full max-w-4xl px-5 text-center lg:px-8">
-        <Reveal>
+        <div>
           <h2 className="text-3xl font-extrabold leading-[1.1] sm:text-5xl lg:text-6xl">
-            Let's find out what your business{" "}
-            <span className="text-gradient">no longer has to do manually.</span>
+            Let's find out what your business no longer has to do manually.
           </h2>
           <p className="mx-auto mt-6 max-w-xl text-muted-foreground sm:text-lg">
             Book a free consultation. We'll look at your process and show you what a system could
             handle for you.
           </p>
-        </Reveal>
+        </div>
 
-        <Reveal delay={120}>
+        <div>
           <div className="mx-auto mt-10 grid max-w-2xl gap-3 sm:grid-cols-3">
             {EXPECT.map((item) => {
               const Icon = item.icon;
@@ -42,16 +39,16 @@ export function FinalCta() {
               );
             })}
           </div>
-        </Reveal>
+        </div>
 
-        <Reveal delay={200}>
+        <div>
           <Button size="lg" className="mt-10 h-14 px-8 text-base" onClick={openBooking}>
-            Book My Free Consultation <ArrowRight className="size-4" />
+            Book a free consultation
           </Button>
           <p className="mt-4 text-sm text-muted-foreground">
             Free, no commitment, and you'll get value even if we never work together.
           </p>
-        </Reveal>
+        </div>
       </div>
     </section>
   );

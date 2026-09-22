@@ -1,5 +1,4 @@
-import { useEffect, useRef, useState, type ReactNode } from "react";
-import { cn } from "@/lib/utils";
+import { useEffect, useRef, useState } from "react";
 
 export function useInView<T extends HTMLElement>(options?: { threshold?: number; once?: boolean }) {
   const ref = useRef<T | null>(null);
@@ -30,30 +29,4 @@ export function useInView<T extends HTMLElement>(options?: { threshold?: number;
   }, [options?.threshold, options?.once]);
 
   return { ref, inView };
-}
-
-export function Reveal({
-  children,
-  className,
-  delay = 0,
-  as: Tag = "div",
-}: {
-  children: ReactNode;
-  className?: string;
-  delay?: number;
-  as?: "div" | "section" | "li" | "span" | "p";
-}) {
-  const { ref, inView } = useInView<HTMLDivElement>();
-
-  return (
-    <Tag
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      ref={ref as any}
-      data-visible={inView ? "true" : "false"}
-      className={cn("reveal", className)}
-      style={{ transitionDelay: `${delay}ms` }}
-    >
-      {children}
-    </Tag>
-  );
 }

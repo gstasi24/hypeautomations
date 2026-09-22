@@ -24,7 +24,7 @@ export function StickyCta() {
       <div className="flex items-center justify-between gap-3">
         <p className="text-sm font-medium">Ready to automate?</p>
         <Button size="sm" className="h-10 px-5" onClick={openBooking}>
-          Book a Call
+          Book a free consultation
         </Button>
       </div>
     </div>

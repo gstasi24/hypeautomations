@@ -31,7 +31,7 @@ export function Footer() {
               onClick={openBooking}
               className="text-left text-muted-foreground hover:text-foreground"
             >
-              Book a Consultation
+              Book a free consultation
             </button>
             <a href="#faq" className="text-muted-foreground hover:text-foreground">
               FAQ
