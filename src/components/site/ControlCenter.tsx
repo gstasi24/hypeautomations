@@ -54,10 +54,10 @@ export function ControlCenter({ compact = false }: { compact?: boolean }) {
 
       <div className="relative rounded-3xl border border-border bg-surface/80 p-4 backdrop-blur-xl glow-ring sm:p-6">
         <div className="flex items-center justify-between">
-          <p className="text-[0.65rem] font-semibold uppercase tracking-[0.25em] text-muted-foreground">
+          <p className="text-xs font-semibold uppercase tracking-[0.25em] text-muted-foreground">
             Automation control center
           </p>
-          <span className="flex items-center gap-1.5 rounded-full border border-success/40 bg-success/10 px-2.5 py-1 text-[0.65rem] font-medium text-success">
+          <span className="flex items-center gap-1.5 rounded-full border border-success/40 bg-success/10 px-2.5 py-1 text-xs font-medium text-success">
             <span className="size-1.5 rounded-full bg-success animate-breathe" /> Running
           </span>
         </div>
@@ -68,11 +68,9 @@ export function ControlCenter({ compact = false }: { compact?: boolean }) {
         >
           {KPIS.map((kpi) => (
             <div key={kpi.label} className="rounded-2xl border border-border bg-surface-2/70 p-3">
-              <p className="text-[0.6rem] uppercase tracking-wider text-muted-foreground">
-                {kpi.label}
-              </p>
+              <p className="text-xs uppercase tracking-wider text-muted-foreground">{kpi.label}</p>
               <p className="mt-1 text-xl font-bold">{kpi.value}</p>
-              <p className="text-[0.6rem] text-accent">{kpi.status}</p>
+              <p className="text-xs text-accent">{kpi.status}</p>
             </div>
           ))}
         </div>
@@ -109,7 +107,7 @@ export function ControlCenter({ compact = false }: { compact?: boolean }) {
                     <p className="text-sm font-semibold">{node.label}</p>
                     <p
                       className={cn(
-                        "truncate text-[0.7rem] transition-opacity duration-500",
+                        "truncate text-xs transition-opacity duration-500",
                         isActive || isDone
                           ? "text-accent opacity-100"
                           : "text-muted-foreground opacity-60",
@@ -120,7 +118,7 @@ export function ControlCenter({ compact = false }: { compact?: boolean }) {
                   </div>
                   <span
                     className={cn(
-                      "shrink-0 rounded-full px-2 py-0.5 text-[0.6rem] font-medium uppercase tracking-wider transition-colors duration-500",
+                      "shrink-0 rounded-full px-2 py-0.5 text-xs font-medium uppercase tracking-wider transition-colors duration-500",
                       isActive
                         ? "bg-primary/25 text-secondary"
                         : isDone
@@ -160,7 +158,7 @@ export function ControlCenter({ compact = false }: { compact?: boolean }) {
           />
         </div>
 
-        <p className="mt-3 text-[0.62rem] text-muted-foreground">
+        <p className="mt-3 text-xs text-muted-foreground">
           Illustrative demo interface. Figures are examples, not client results.
         </p>
       </div>

@@ -1,6 +1,7 @@
 @import "tailwindcss" source(none);
 @source "../src";
 @import "tw-animate-css";
+@import "@fontsource-variable/plus-jakarta-sans";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -11,8 +12,12 @@
  */
 
 @theme inline {
-  --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
-  --font-display: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Plus Jakarta Sans Variable", "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-sans);
+
+  /* Shape: chosen by what the object is (see DESIGN_PHILOSOPHY.md §7) */
+  --radius-control: 10px;
+  --radius-panel: 20px;
 
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
@@ -30,6 +35,9 @@
   --color-popover-foreground: var(--popover-foreground);
   --color-primary: var(--primary);
   --color-primary-foreground: var(--primary-foreground);
+  --color-primary-fill: var(--primary-fill);
+  --color-link: var(--link);
+  --color-manual: var(--manual);
   --color-secondary: var(--secondary);
   --color-secondary-foreground: var(--secondary-foreground);
   --color-muted: var(--muted);
@@ -78,6 +86,10 @@
 
   --primary: oklch(0.606 0.221 295);
   --primary-foreground: oklch(0.98 0.005 280);
+  /* Button fill: darker than --primary so white text reaches 5.3:1 */
+  --primary-fill: oklch(0.54 0.221 295);
+  /* Purple as small text: --primary only reaches 4.5:1 on panels */
+  --link: oklch(0.729 0.16 296);
   --secondary: oklch(0.729 0.16 296);
   --secondary-foreground: oklch(0.16 0.03 272);
 
@@ -86,6 +98,7 @@
 
   --muted: oklch(0.222 0.038 272);
   --muted-foreground: oklch(0.702 0.032 257);
+  --manual: oklch(0.702 0.032 257);
 
   --destructive: oklch(0.62 0.22 22);
   --destructive-foreground: oklch(0.98 0.005 280);
@@ -95,7 +108,8 @@
   --border: oklch(0.98 0.01 280 / 10%);
   --border-strong: oklch(0.98 0.01 280 / 20%);
   --input: oklch(0.98 0.01 280 / 14%);
-  --ring: oklch(0.606 0.221 295);
+  /* Focus ring is cyan: 11.5:1 on the page and visible on a violet button */
+  --ring: oklch(0.808 0.117 216);
 
   --chart-1: oklch(0.606 0.221 295);
   --chart-2: oklch(0.808 0.117 216);
@@ -123,6 +137,14 @@
   --glow-primary:
     0 0 0 1px oklch(0.606 0.221 295 / 30%), 0 18px 60px -12px oklch(0.606 0.221 295 / 55%);
   --glow-soft: 0 20px 70px -20px oklch(0.606 0.221 295 / 45%);
+  /* The gradient by meaning: automation is flowing here */
+  --flow: var(--gradient-brand);
+
+  /* Motion */
+  --motion-micro: 150ms;
+  --motion-state: 250ms;
+  --motion-run: 450ms;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .dark {

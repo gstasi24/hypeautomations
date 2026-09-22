@@ -136,7 +136,7 @@ export function WhatWeAutomate() {
                     <span className="flex size-10 items-center justify-center rounded-xl border border-border-strong bg-surface-2 text-accent">
                       <Icon className="size-5" />
                     </span>
-                    <span className="text-[0.65rem] font-bold tracking-[0.2em] text-muted-foreground">
+                    <span className="text-xs font-bold tracking-[0.2em] text-muted-foreground">
                       {category.n}
                     </span>
                   </div>
@@ -164,7 +164,7 @@ export function WhatWeAutomate() {
                       <div className="mt-4 flex flex-wrap items-center gap-1.5 border-t border-border pt-4">
                         {category.flow.map((step, stepIndex) => (
                           <span key={step} className="flex items-center gap-1.5">
-                            <span className="rounded-lg bg-surface-2 px-2 py-1 text-[0.65rem] font-medium text-foreground">
+                            <span className="rounded-lg bg-surface-2 px-2 py-1 text-xs font-medium text-foreground">
                               {step}
                             </span>
                             {stepIndex < category.flow.length - 1 ? (
@@ -176,7 +176,7 @@ export function WhatWeAutomate() {
                     </div>
                   </div>
 
-                  <p className="mt-3 text-[0.65rem] uppercase tracking-widest text-muted-foreground lg:hidden">
+                  <p className="mt-3 text-xs uppercase tracking-widest text-muted-foreground lg:hidden">
                     {expanded ? "Tap to close" : "Tap to see the workflow"}
                   </p>
                 </button>

@@ -13,6 +13,7 @@ export default tseslint.config(
       ".vinxi",
       // Auto-generated integration files are not editable in the project.
       "src/integrations/supabase/previewAuthStorage.ts",
+      "src/integrations/supabase/types.ts",
       "src/routeTree.gen.ts",
     ],
   },

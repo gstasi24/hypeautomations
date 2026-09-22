@@ -94,7 +94,7 @@ export function Calculator() {
               <Button className="mt-7 w-full" onClick={openBooking}>
                 See What Can Be Automated <ArrowRight className="size-4" />
               </Button>
-              <p className="mt-3 text-[0.68rem] text-muted-foreground">
+              <p className="mt-3 text-xs text-muted-foreground">
                 Your own estimate based on the numbers you enter. Not a promise of results.
               </p>
             </div>
