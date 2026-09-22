@@ -6,7 +6,7 @@ export function Logo({ className }: { className?: string }) {
         <span className="text-gradient">Y</span>
         <span>PE</span>
       </span>
-      <span className="mt-1 block text-[0.5rem] font-medium uppercase tracking-[0.42em] text-muted-foreground">
+      <span className="mt-1 block text-xs font-medium uppercase tracking-[0.42em] text-muted-foreground">
         Automations
       </span>
     </span>

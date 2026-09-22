@@ -62,7 +62,7 @@ export function BeforeAfter() {
                   {AFTER.map((item, index) => (
                     <li key={item}>
                       <div className="flex items-center gap-3 rounded-xl border border-border-strong bg-surface-2/70 px-4 py-3.5">
-                        <span className="flex size-7 items-center justify-center rounded-lg bg-brand-gradient text-[0.65rem] font-bold text-primary-foreground">
+                        <span className="flex size-7 items-center justify-center rounded-lg bg-brand-gradient text-xs font-bold text-primary-foreground">
                           {index + 1}
                         </span>
                         <span className="text-sm font-semibold uppercase tracking-wide">

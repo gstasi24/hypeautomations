@@ -13,7 +13,7 @@ export function Hero() {
 
       <div className="relative mx-auto grid w-full max-w-7xl items-center gap-12 px-5 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16 lg:px-8">
         <div>
-          <span className="inline-flex items-center gap-2 rounded-full border border-border-strong bg-surface/70 px-3.5 py-1.5 text-[0.65rem] font-semibold uppercase tracking-[0.22em] text-secondary">
+          <span className="inline-flex items-center gap-2 rounded-full border border-border-strong bg-surface/70 px-3.5 py-1.5 text-xs font-semibold uppercase tracking-[0.22em] text-secondary">
             AI Automation Systems
           </span>
 
