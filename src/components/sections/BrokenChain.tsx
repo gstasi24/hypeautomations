@@ -39,8 +39,11 @@ export function BrokenChain() {
         They're one system waiting to be automated.
       </p>
 
-      <div className="mt-8 overflow-x-auto">
-        <ol className="flex min-w-max items-center" aria-label="The same work as one system">
+      <div className="mt-8">
+        <ol
+          className="flex flex-wrap items-center gap-y-2"
+          aria-label="The same work as one system"
+        >
           {AUTOMATED.map((step, index) => {
             const last = index === AUTOMATED.length - 1;
             return (
