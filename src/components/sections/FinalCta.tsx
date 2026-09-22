@@ -8,47 +8,48 @@ const EXPECT = [
   { icon: CalendarCheck, text: "You leave with a concrete automation plan" },
 ];
 
+/** The end of the run: the one centred, green moment on the page. */
 export function FinalCta() {
   const { openBooking } = useBooking();
 
   return (
-    <section id="consultation" className="relative overflow-hidden py-16 sm:py-20 lg:py-24">
-      <div className="relative mx-auto w-full max-w-4xl px-5 text-center lg:px-8">
-        <div>
-          <h2 className="text-3xl font-extrabold leading-[1.1] sm:text-5xl lg:text-6xl">
-            Let's find out what your business no longer has to do manually.
-          </h2>
-          <p className="mx-auto mt-6 max-w-xl text-muted-foreground sm:text-lg">
-            Book a free consultation. We'll look at your process and show you what a system could
-            handle for you.
-          </p>
+    <section id="consultation" className="relative overflow-hidden py-20 lg:py-28">
+      <div
+        className="brand-glow left-1/2 top-1/4 h-[420px] w-[680px] -translate-x-1/2 opacity-50"
+        aria-hidden="true"
+      />
+      <div className="relative mx-auto w-full max-w-3xl px-5 text-center lg:px-8">
+        <div aria-hidden="true" className="flex flex-col items-center">
+          <span className="block h-16 w-px bg-success" />
+          <span className="size-2.5 rounded-full bg-success" />
         </div>
 
-        <div>
-          <div className="mx-auto mt-10 grid max-w-2xl gap-3 sm:grid-cols-3">
-            {EXPECT.map((item) => {
-              const Icon = item.icon;
-              return (
-                <div
-                  key={item.text}
-                  className="rounded-2xl border border-border bg-surface/60 p-5 text-left"
-                >
-                  <Icon className="size-5 text-accent" />
-                  <p className="mt-3 text-sm text-muted-foreground">{item.text}</p>
-                </div>
-              );
-            })}
-          </div>
-        </div>
+        <h2 className="type-statement mt-8">
+          Let's find out what your business no longer has to do manually.
+        </h2>
+        <p className="mx-auto mt-6 max-w-xl text-lg text-muted-foreground">
+          Book a free consultation. We look at your process and show you what a system could handle
+          for you.
+        </p>
 
-        <div>
-          <Button size="lg" className="mt-10 h-14 px-8 text-base" onClick={openBooking}>
-            Book a free consultation
-          </Button>
-          <p className="mt-4 text-sm text-muted-foreground">
-            Free, no commitment, and you'll get value even if we never work together.
-          </p>
-        </div>
+        <ul className="mx-auto mt-10 grid max-w-2xl gap-4 text-left sm:grid-cols-3">
+          {EXPECT.map((item) => {
+            const Icon = item.icon;
+            return (
+              <li key={item.text} className="flex gap-3">
+                <Icon className="mt-0.5 size-5 shrink-0 text-success" aria-hidden="true" />
+                <p className="text-sm text-muted-foreground">{item.text}</p>
+              </li>
+            );
+          })}
+        </ul>
+
+        <Button size="lg" className="mt-10" onClick={openBooking}>
+          Book a free consultation
+        </Button>
+        <p className="mt-4 text-sm text-muted-foreground">
+          Free, no commitment. You leave with a plan even if we never work together.
+        </p>
       </div>
     </section>
   );

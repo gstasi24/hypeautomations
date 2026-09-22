@@ -14,9 +14,7 @@ export function Hero() {
 
       <div className="relative mx-auto grid w-full max-w-6xl items-center gap-12 px-5 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16 lg:px-8">
         <div>
-          <h1 className="text-balance text-[clamp(2.5rem,1rem+6vw,4.5rem)] font-extrabold leading-[1.02] tracking-[-0.035em]">
-            We automate the work you shouldn't be doing manually.
-          </h1>
+          <h1 className="type-display">We automate the work you shouldn't be doing manually.</h1>
 
           <p className="mt-6 max-w-xl text-lg leading-relaxed text-muted-foreground sm:text-xl">
             We connect AI, WhatsApp, your CRM, email and the tools you already use, so leads,

@@ -1,3 +1,4 @@
+import { Statement } from "@/components/site/Section";
 import {
   Accordion,
   AccordionContent,
@@ -38,33 +39,23 @@ const ITEMS = [
 
 export function Faq() {
   return (
-    <section id="faq" className="relative py-14 sm:py-16 lg:py-20">
-      <div className="mx-auto w-full max-w-3xl px-5 lg:px-8">
-        <div>
-          <h2 className="text-3xl font-bold leading-tight sm:text-4xl lg:text-5xl">
-            Questions, answered.
-          </h2>
-        </div>
-
-        <div>
-          <Accordion type="single" collapsible className="mt-8 sm:mt-10">
-            {ITEMS.map((item) => (
-              <AccordionItem
-                key={item.q}
-                value={item.q}
-                className="border-border border-b last:border-b-0"
-              >
-                <AccordionTrigger className="text-left text-base font-semibold hover:no-underline">
-                  {item.q}
-                </AccordionTrigger>
-                <AccordionContent className="text-sm leading-relaxed text-muted-foreground">
-                  {item.a}
-                </AccordionContent>
-              </AccordionItem>
-            ))}
-          </Accordion>
-        </div>
-      </div>
-    </section>
+    <Statement id="faq" rail="flow" title="Questions, answered.">
+      <Accordion type="single" collapsible className="max-w-3xl">
+        {ITEMS.map((item) => (
+          <AccordionItem
+            key={item.q}
+            value={item.q}
+            className="border-border border-b last:border-b-0"
+          >
+            <AccordionTrigger className="py-5 text-left text-base font-semibold hover:no-underline">
+              {item.q}
+            </AccordionTrigger>
+            <AccordionContent className="text-base leading-relaxed text-muted-foreground">
+              {item.a}
+            </AccordionContent>
+          </AccordionItem>
+        ))}
+      </Accordion>
+    </Statement>
   );
 }

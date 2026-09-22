@@ -6,15 +6,12 @@ import { Footer } from "@/components/site/Footer";
 import { StickyCta } from "@/components/site/StickyCta";
 import { Hero } from "@/components/sections/Hero";
 import { PatternInterrupt } from "@/components/sections/PatternInterrupt";
-import { Problem } from "@/components/sections/Problem";
-import { BeforeAfter } from "@/components/sections/BeforeAfter";
+import { BrokenChain } from "@/components/sections/BrokenChain";
 import { WhatWeAutomate } from "@/components/sections/WhatWeAutomate";
 import { Integrations } from "@/components/sections/Integrations";
-import { Benefits } from "@/components/sections/Benefits";
 import { UseCases } from "@/components/sections/UseCases";
 import { Calculator } from "@/components/sections/Calculator";
-import { Process } from "@/components/sections/Process";
-import { Trust } from "@/components/sections/Trust";
+import { HowItWorks } from "@/components/sections/HowItWorks";
 import { Faq } from "@/components/sections/Faq";
 import { FinalCta } from "@/components/sections/FinalCta";
 
@@ -44,15 +41,12 @@ function Index() {
         <main className="pb-20 lg:pb-0">
           <Hero />
           <PatternInterrupt />
-          <Problem />
-          <BeforeAfter />
+          <BrokenChain />
           <WhatWeAutomate />
           <Integrations />
-          <Benefits />
           <UseCases />
           <Calculator />
-          <Process />
-          <Trust />
+          <HowItWorks />
           <Faq />
           <FinalCta />
         </main>
