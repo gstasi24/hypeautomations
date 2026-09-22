@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Instrument } from "@/components/site/Section";
 import { cn } from "@/lib/utils";
 import {
   Bot,
@@ -13,21 +14,18 @@ import {
 
 const CATEGORIES = [
   {
-    n: "01",
-    title: "Lead Management",
+    title: "Lead management",
     icon: Users,
     items: ["Lead capture", "Qualification", "Lead routing", "CRM updates", "Lead scoring"],
     flow: ["Form", "AI check", "CRM", "Owner alert"],
   },
   {
-    n: "02",
     title: "WhatsApp",
     icon: MessageCircle,
     items: ["Instant responses", "Qualification", "Follow-ups", "Reminders", "Notifications"],
     flow: ["Message", "AI reply", "Qualify", "Handover"],
   },
   {
-    n: "03",
     title: "Sales",
     icon: TrendingUp,
     items: [
@@ -40,15 +38,13 @@ const CATEGORIES = [
     flow: ["Lead", "Assign", "Nurture", "Pipeline"],
   },
   {
-    n: "04",
     title: "Appointments",
     icon: CalendarClock,
     items: ["Scheduling", "Confirmation", "Reminders", "Rescheduling", "No-show follow-up"],
     flow: ["Request", "Slot", "Confirm", "Remind"],
   },
   {
-    n: "05",
-    title: "Customer Support",
+    title: "Customer support",
     icon: Headphones,
     items: [
       "Request classification",
@@ -60,7 +56,6 @@ const CATEGORIES = [
     flow: ["Request", "Classify", "Route", "Resolve"],
   },
   {
-    n: "06",
     title: "Reputation",
     icon: Star,
     items: [
@@ -72,7 +67,6 @@ const CATEGORIES = [
     flow: ["Job done", "Ask", "Remind", "Collect"],
   },
   {
-    n: "07",
     title: "Operations",
     icon: Settings2,
     items: [
@@ -80,12 +74,11 @@ const CATEGORIES = [
       "Database updates",
       "Internal notifications",
       "Reporting",
-      "Data synchronization",
+      "Data synchronisation",
     ],
     flow: ["Trigger", "Update", "Notify", "Report"],
   },
   {
-    n: "08",
     title: "AI",
     icon: Bot,
     items: [
@@ -99,86 +92,114 @@ const CATEGORIES = [
   },
 ];
 
+const BENEFITS = [
+  { title: "Time back", text: "Repetitive tasks stop landing on your team's to-do list." },
+  { title: "Faster response", text: "Enquiries get answered in seconds, not hours." },
+  {
+    title: "Fewer missed opportunities",
+    text: "Nothing gets forgotten because a person was busy.",
+  },
+  { title: "More control", text: "You can see what happens at every step of the process." },
+  { title: "Scalability", text: "More volume no longer means more manual work." },
+  { title: "Consistency", text: "Every customer gets the same quality of follow-up." },
+];
+
 export function WhatWeAutomate() {
-  const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const [active, setActive] = useState(0);
+  const current = CATEGORIES[active]!;
+  const Icon = current.icon;
 
   return (
-    <section id="automations" className="relative py-14 sm:py-16 lg:py-20">
-      <div className="relative mx-auto w-full max-w-7xl px-5 lg:px-8">
-        <div>
-          <h2 className="max-w-2xl text-3xl font-bold leading-tight sm:text-4xl lg:text-5xl">
-            What could your business stop doing manually?
-          </h2>
-          <p className="mt-5 max-w-xl text-muted-foreground">
-            We build systems around the tools and processes you already use.
-          </p>
-        </div>
-
-        <ul className="mt-8 grid gap-3 sm:mt-10 sm:grid-cols-2 lg:grid-cols-4">
-          {CATEGORIES.map((category, index) => {
-            const Icon = category.icon;
-            const expanded = openIndex === index;
-            return (
-              <li key={category.n}>
-                <button
-                  type="button"
-                  onClick={() => setOpenIndex(expanded ? null : index)}
-                  aria-expanded={expanded}
-                  className={cn(
-                    "group h-full w-full rounded-2xl border border-border bg-surface/60 p-5 text-left transition-all duration-400",
-                    "hover:border-primary/50 hover:bg-surface",
-                    expanded && "border-primary/60 bg-surface",
-                  )}
-                >
-                  <div className="flex items-center justify-between">
-                    <span className="flex size-10 items-center justify-center rounded-xl border border-border-strong bg-surface-2 text-accent">
-                      <Icon className="size-5" />
-                    </span>
-                    <span className="text-xs font-bold text-muted-foreground">{category.n}</span>
-                  </div>
-
-                  <h3 className="mt-4 text-base font-semibold ">{category.title}</h3>
-
-                  <ul className="mt-3 space-y-1.5 text-sm text-muted-foreground">
-                    {category.items.map((item) => (
-                      <li key={item} className="flex items-start gap-2">
-                        <span className="mt-1.5 size-1 shrink-0 rounded-full bg-primary" />
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
-
-                  <div
-                    className={cn(
-                      "grid transition-all duration-500 lg:group-hover:grid-rows-[1fr] lg:group-hover:opacity-100",
-                      expanded ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0",
-                    )}
-                  >
-                    <div className="overflow-hidden">
-                      <div className="mt-4 flex flex-wrap items-center gap-1.5 border-t border-border pt-4">
-                        {category.flow.map((step, stepIndex) => (
-                          <span key={step} className="flex items-center gap-1.5">
-                            <span className="rounded-lg bg-surface-2 px-2 py-1 text-xs font-medium text-foreground">
-                              {step}
-                            </span>
-                            {stepIndex < category.flow.length - 1 ? (
-                              <span className="text-accent">→</span>
-                            ) : null}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-
-                  <p className="mt-3 text-xs st text-muted-foreground lg:hidden">
-                    {expanded ? "Tap to close" : "Tap to see the workflow"}
-                  </p>
-                </button>
+    <Instrument
+      id="automations"
+      rail="flow"
+      title="What could your business stop doing manually?"
+      lead="Pick an area. We build these around the tools and processes you already use."
+      after={
+        <div className="mt-14">
+          <h3 className="type-title">What changes once it runs</h3>
+          <ul className="mt-6 grid gap-x-10 gap-y-6 sm:grid-cols-2 lg:grid-cols-3">
+            {BENEFITS.map((benefit) => (
+              <li key={benefit.title}>
+                <p className="font-semibold">{benefit.title}</p>
+                <p className="mt-1 text-muted-foreground">{benefit.text}</p>
               </li>
+            ))}
+          </ul>
+        </div>
+      }
+    >
+      <div className="grid gap-6 lg:grid-cols-[15rem_1fr] lg:gap-10">
+        <div
+          role="tablist"
+          aria-label="Areas we automate"
+          className="flex gap-2 overflow-x-auto pb-1 lg:flex-col lg:overflow-visible lg:pb-0"
+        >
+          {CATEGORIES.map((category, index) => {
+            const TabIcon = category.icon;
+            const selected = active === index;
+            return (
+              <button
+                key={category.title}
+                type="button"
+                role="tab"
+                id={`area-tab-${index}`}
+                aria-selected={selected}
+                aria-controls="area-panel"
+                onClick={() => setActive(index)}
+                className={cn(
+                  "flex shrink-0 items-center gap-2.5 rounded-control border px-3.5 py-2.5 text-left text-sm font-medium transition-colors duration-(--motion-micro)",
+                  selected
+                    ? "border-primary bg-primary/10 text-foreground"
+                    : "border-border text-muted-foreground hover:border-border-strong hover:text-foreground",
+                )}
+              >
+                <TabIcon className="size-4 shrink-0" aria-hidden="true" />
+                {category.title}
+              </button>
             );
           })}
-        </ul>
+        </div>
+
+        <div
+          id="area-panel"
+          role="tabpanel"
+          aria-labelledby={`area-tab-${active}`}
+          className="min-w-0"
+        >
+          <h3 className="type-title flex items-center gap-3">
+            <Icon className="size-5 text-link" aria-hidden="true" />
+            {current.title}
+          </h3>
+
+          <ul className="mt-5 grid gap-2 sm:grid-cols-2">
+            {current.items.map((item) => (
+              <li key={item} className="flex items-start gap-2.5">
+                <span
+                  className="mt-2.5 size-1.5 shrink-0 rounded-full bg-link"
+                  aria-hidden="true"
+                />
+                {item}
+              </li>
+            ))}
+          </ul>
+
+          <p className="mt-8 text-sm text-muted-foreground">How it runs</p>
+          <ol className="mt-3 flex flex-wrap items-center gap-y-2">
+            {current.flow.map((step, index) => {
+              const last = index === current.flow.length - 1;
+              return (
+                <li key={step} className="flex items-center">
+                  <span className="rounded-full border border-border-strong bg-surface-2 px-3 py-1 text-sm font-medium">
+                    {step}
+                  </span>
+                  {last ? null : <span aria-hidden="true" className="h-px w-6 bg-brand-gradient" />}
+                </li>
+              );
+            })}
+          </ol>
+        </div>
       </div>
-    </section>
+    </Instrument>
   );
 }

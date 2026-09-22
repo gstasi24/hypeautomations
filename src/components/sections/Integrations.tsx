@@ -1,62 +1,47 @@
+import { Statement } from "@/components/site/Section";
+
 const GROUPS = [
   {
     title: "Communication",
     tools: ["WhatsApp Business", "Email", "SMS", "Slack", "Telegram"],
   },
   {
-    title: "CRM & Sales",
+    title: "CRM and sales",
     tools: ["HubSpot", "Pipedrive", "Salesforce", "Zoho", "Airtable"],
   },
   {
-    title: "Calendars & Forms",
+    title: "Calendars and forms",
     tools: ["Google Calendar", "Outlook", "Typeform", "Webflow", "Website forms"],
   },
   {
-    title: "Data & Operations",
+    title: "Data and operations",
     tools: ["Google Sheets", "Notion", "Databases", "Invoicing tools", "Internal systems"],
   },
 ];
 
 export function Integrations() {
   return (
-    <section id="integrations" className="relative py-14 sm:py-16 lg:py-20">
-      <div className="mx-auto w-full max-w-7xl px-5 lg:px-8">
-        <div>
-          <h2 className="max-w-2xl text-3xl font-bold leading-tight sm:text-4xl lg:text-5xl">
-            Works with the tools you already use.
-          </h2>
-          <p className="mt-5 max-w-xl text-muted-foreground">
-            You don't need to change your systems. We connect them.
-          </p>
-        </div>
-
-        <div className="mt-8 grid gap-4 sm:mt-10 sm:grid-cols-2 lg:grid-cols-4">
-          {GROUPS.map((group, index) => (
-            <div key={group.title}>
-              <div className="h-full rounded-2xl border border-border bg-surface/60 p-6">
-                <p className="text-xs font-bold text-secondary">{group.title}</p>
-                <ul className="mt-4 space-y-2">
-                  {group.tools.map((tool) => (
-                    <li
-                      key={tool}
-                      className="rounded-xl border border-border bg-surface-2/50 px-3.5 py-2.5 text-sm transition-colors hover:border-primary/50 hover:text-foreground"
-                    >
-                      {tool}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        <div>
-          <p className="mt-8 text-sm text-muted-foreground">
-            Using something else? Most modern tools can be connected — we'll confirm yours on the
-            call.
-          </p>
-        </div>
+    <Statement
+      id="integrations"
+      rail="flow"
+      title="Works with the tools you already use."
+      lead="You don't need to change your systems. We connect them."
+    >
+      <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+        {GROUPS.map((group) => (
+          <div key={group.title}>
+            <h3 className="text-sm font-semibold">{group.title}</h3>
+            <ul className="mt-3 space-y-1.5 text-muted-foreground">
+              {group.tools.map((tool) => (
+                <li key={tool}>{tool}</li>
+              ))}
+            </ul>
+          </div>
+        ))}
       </div>
-    </section>
+      <p className="mt-10 max-w-xl text-sm text-muted-foreground">
+        Using something else? Most modern tools can be connected. We'll confirm yours on the call.
+      </p>
+    </Statement>
   );
 }
