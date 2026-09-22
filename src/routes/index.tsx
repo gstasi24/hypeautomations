@@ -9,7 +9,6 @@ import { PatternInterrupt } from "@/components/sections/PatternInterrupt";
 import { Problem } from "@/components/sections/Problem";
 import { BeforeAfter } from "@/components/sections/BeforeAfter";
 import { WhatWeAutomate } from "@/components/sections/WhatWeAutomate";
-import { LiveWorkflow } from "@/components/sections/LiveWorkflow";
 import { Integrations } from "@/components/sections/Integrations";
 import { Benefits } from "@/components/sections/Benefits";
 import { UseCases } from "@/components/sections/UseCases";
@@ -48,7 +47,6 @@ function Index() {
           <Problem />
           <BeforeAfter />
           <WhatWeAutomate />
-          <LiveWorkflow />
           <Integrations />
           <Benefits />
           <UseCases />

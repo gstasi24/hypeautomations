@@ -28,7 +28,7 @@ const STEPS = [
 
 export function Process() {
   return (
-    <section className="relative py-14 sm:py-16 lg:py-20">
+    <section id="how-it-works" className="relative py-14 sm:py-16 lg:py-20">
       <div className="mx-auto w-full max-w-5xl px-5 lg:px-8">
         <div>
           <h2 className="text-3xl font-bold leading-tight sm:text-4xl lg:text-5xl">
