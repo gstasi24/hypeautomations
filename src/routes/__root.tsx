@@ -10,6 +10,9 @@ import {
 import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
+
+// Absolute origin for social previews; scrapers reject relative image URLs.
+const SITE_URL = (import.meta.env["VITE_SITE_URL"] as string | undefined)?.replace(/\/$/, "") ?? "";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 
 function NotFoundComponent() {
@@ -91,7 +94,11 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           "We automate the repetitive work in your business — leads, WhatsApp, CRM, follow-ups and bookings.",
       },
       { property: "og:type", content: "website" },
+      { property: "og:image", content: `${SITE_URL}/og.png` },
+      { property: "og:image:width", content: "1200" },
+      { property: "og:image:height", content: "630" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:image", content: `${SITE_URL}/og.png` },
       { name: "theme-color", content: "#070b14" },
     ],
     links: [

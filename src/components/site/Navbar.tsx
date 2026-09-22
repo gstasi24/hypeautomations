@@ -70,13 +70,14 @@ export function Navbar() {
                     key={link.href}
                     href={link.href}
                     onClick={() => setMenuOpen(false)}
-                    className="rounded-xl px-3 py-3.5 text-base text-muted-foreground transition-colors hover:bg-surface-2 hover:text-foreground"
+                    className="rounded-control px-3 py-3.5 text-base text-muted-foreground transition-colors hover:bg-surface-2 hover:text-foreground"
                   >
                     {link.label}
                   </a>
                 ))}
                 <Button
-                  className="mt-6 h-12 text-base"
+                  size="lg"
+                  className="mt-6 w-full"
                   onClick={() => {
                     setMenuOpen(false);
                     openBooking();

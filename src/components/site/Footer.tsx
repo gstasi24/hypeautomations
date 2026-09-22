@@ -24,7 +24,7 @@ export function Footer() {
               Automations
             </a>
             <a href="#how-it-works" className="text-muted-foreground hover:text-foreground">
-              How It Works
+              How it works
             </a>
             <button
               type="button"
@@ -44,9 +44,7 @@ export function Footer() {
 
         <div className="mt-12 flex flex-col gap-3 border-t border-border pt-6 text-xs text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
           <p>© {new Date().getFullYear()} Hype Automations — Hype Digital Consulting.</p>
-          <p>
-            Dashboards and figures shown on this page are illustrative examples, not client results.
-          </p>
+          <p>Demos and figures on this page are examples, not client results.</p>
         </div>
       </div>
     </footer>
