@@ -203,6 +203,30 @@ const bookingSchema = z.object({
   visitorTimezone: z.string().max(80).optional().default(""),
 });
 
+/**
+ * Hand a confirmed booking to the notification webhook (n8n), which emails the team
+ * and the customer. Never blocks or fails the booking: a missing URL skips it, and
+ * any error is logged. See docs/BOOKING_EMAILS.md.
+ */
+async function notifyBooking(payload: Record<string, unknown>) {
+  const url = process.env["BOOKING_WEBHOOK_URL"];
+  if (!url) return;
+  const headers: Record<string, string> = { "content-type": "application/json" };
+  const secret = process.env["BOOKING_WEBHOOK_SECRET"];
+  if (secret) headers["x-booking-secret"] = secret;
+  try {
+    const res = await fetch(url, {
+      method: "POST",
+      headers,
+      body: JSON.stringify(payload),
+      signal: AbortSignal.timeout(8000),
+    });
+    if (!res.ok) console.error("booking webhook responded", res.status);
+  } catch (err) {
+    console.error("booking webhook failed", err);
+  }
+}
+
 export const createBooking = createServerFn({ method: "POST" })
   .inputValidator((data: unknown) => bookingSchema.parse(data))
   .handler(
@@ -252,26 +276,46 @@ export const createBooking = createServerFn({ method: "POST" })
         return { ok: false, error: "We couldn't confirm the booking. Please try another time." };
       }
 
-      return {
-        ok: true,
-        booking: {
-          id: inserted.id,
-          slotStart: inserted.slot_start,
-          slotEnd: inserted.slot_end,
-          timezone: availability.timezone,
-          dateLabel: fmt(inserted.slot_start, availability.timezone, {
-            weekday: "long",
-            day: "numeric",
-            month: "long",
-            year: "numeric",
-          }),
-          timeLabel: fmt(inserted.slot_start, availability.timezone, {
-            hour: "2-digit",
-            minute: "2-digit",
-            hour12: false,
-          }),
-          manageToken: inserted.manage_token,
-        },
+      const booking: BookingConfirmation = {
+        id: inserted.id,
+        slotStart: inserted.slot_start,
+        slotEnd: inserted.slot_end,
+        timezone: availability.timezone,
+        dateLabel: fmt(inserted.slot_start, availability.timezone, {
+          weekday: "long",
+          day: "numeric",
+          month: "long",
+          year: "numeric",
+        }),
+        timeLabel: fmt(inserted.slot_start, availability.timezone, {
+          hour: "2-digit",
+          minute: "2-digit",
+          hour12: false,
+        }),
+        manageToken: inserted.manage_token,
       };
+
+      await notifyBooking({
+        id: booking.id,
+        slotStart: booking.slotStart,
+        slotEnd: booking.slotEnd,
+        dateLabel: booking.dateLabel,
+        timeLabel: booking.timeLabel,
+        timezone: booking.timezone,
+        visitorTimezone: data.visitorTimezone || null,
+        fullName: data.fullName,
+        company: data.company || null,
+        email: data.email,
+        phone: data.phone,
+        website: data.website || null,
+        notes: data.notes || null,
+        businessType: data.businessType || null,
+        automationGoals: data.automationGoals,
+        enquirySources: data.enquirySources,
+        tools: data.tools,
+        toolsOther: data.toolsOther || null,
+      });
+
+      return { ok: true, booking };
     },
   );

@@ -1,0 +1,107 @@
+{
+  "name": "Hype booking notifications",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "hype-booking",
+        "authentication": "headerAuth",
+        "responseMode": "onReceived",
+        "options": {}
+      },
+      "id": "a1",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        0,
+        0
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "REPLACE_ME",
+          "name": "Hype booking secret"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "sales@hypedigitalconsulting.it, amman224k@gmail.com",
+        "subject": "=New consultation: {{ $('Webhook').item.json.body.fullName }} — {{ $('Webhook').item.json.body.dateLabel }} {{ $('Webhook').item.json.body.timeLabel }}",
+        "emailType": "html",
+        "message": "=<h2 style=\"margin:0 0 12px\">New consultation booked</h2>\n<p><strong>{{ $('Webhook').item.json.body.dateLabel }} at {{ $('Webhook').item.json.body.timeLabel }}</strong> ({{ $('Webhook').item.json.body.timezone }})</p>\n<table cellpadding=\"6\" style=\"border-collapse:collapse;font-family:sans-serif;font-size:14px\">\n<tr><td><strong>Name</strong></td><td>{{ $('Webhook').item.json.body.fullName }}</td></tr>\n<tr><td><strong>Company</strong></td><td>{{ $('Webhook').item.json.body.company || '—' }}</td></tr>\n<tr><td><strong>Email</strong></td><td><a href=\"mailto:{{ $('Webhook').item.json.body.email }}\">{{ $('Webhook').item.json.body.email }}</a></td></tr>\n<tr><td><strong>Phone / WhatsApp</strong></td><td>{{ $('Webhook').item.json.body.phone }}</td></tr>\n<tr><td><strong>Website</strong></td><td>{{ $('Webhook').item.json.body.website || '—' }}</td></tr>\n<tr><td><strong>Business type</strong></td><td>{{ $('Webhook').item.json.body.businessType || '—' }}</td></tr>\n<tr><td><strong>Wants to automate</strong></td><td>{{ ($('Webhook').item.json.body.automationGoals || []).length ? $('Webhook').item.json.body.automationGoals.join(', ') : '—' }}</td></tr>\n<tr><td><strong>Enquiries come from</strong></td><td>{{ ($('Webhook').item.json.body.enquirySources || []).length ? $('Webhook').item.json.body.enquirySources.join(', ') : '—' }}</td></tr>\n<tr><td><strong>Tools</strong></td><td>{{ ($('Webhook').item.json.body.tools || []).length ? $('Webhook').item.json.body.tools.join(', ') : '—' }}{{ $('Webhook').item.json.body.toolsOther ? ' · ' + $('Webhook').item.json.body.toolsOther : '' }}</td></tr>\n<tr><td><strong>Notes</strong></td><td>{{ $('Webhook').item.json.body.notes || '—' }}</td></tr>\n<tr><td><strong>Visitor time zone</strong></td><td>{{ $('Webhook').item.json.body.visitorTimezone || '—' }}</td></tr>\n<tr><td><strong>Booking ID</strong></td><td>{{ $('Webhook').item.json.body.id }}</td></tr>\n</table>",
+        "options": {
+          "replyTo": "={{ $('Webhook').item.json.body.email }}",
+          "appendAttribution": false
+        }
+      },
+      "id": "a2",
+      "name": "Notify team",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        280,
+        -120
+      ],
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 2000,
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "REPLACE_ME",
+          "name": "sales@hypedigitalconsulting.it"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('Webhook').item.json.body.email }}",
+        "subject": "=You're booked: {{ $('Webhook').item.json.body.dateLabel }} at {{ $('Webhook').item.json.body.timeLabel }}",
+        "emailType": "html",
+        "message": "=<p>Hi {{ $('Webhook').item.json.body.fullName.split(' ')[0] }},</p>\n<p>You're booked. Here are the details:</p>\n<p><strong>{{ $('Webhook').item.json.body.dateLabel }} at {{ $('Webhook').item.json.body.timeLabel }}</strong><br>Time zone: {{ $('Webhook').item.json.body.timezone }}<br>30 minutes, online. No preparation needed.</p>\n<p><strong>What happens next</strong></p>\n<ol>\n<li>We look at how your business handles leads, messages and follow-ups today.</li>\n<li>We show you what could run on its own, using the tools you already have.</li>\n<li>You leave with a concrete automation plan. No obligation.</li>\n</ol>\n<p>Need to reschedule? Reply to this email.</p>\n<p>Hype Automations<br>by Hype Digital Consulting</p>",
+        "options": {
+          "replyTo": "sales@hypedigitalconsulting.it",
+          "appendAttribution": false
+        }
+      },
+      "id": "a3",
+      "name": "Confirm customer",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        280,
+        120
+      ],
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 2000,
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "REPLACE_ME",
+          "name": "sales@hypedigitalconsulting.it"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Notify team",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Confirm customer",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  }
+}

@@ -202,7 +202,7 @@ export function BookingFlow({ onClose }: { onClose: () => void }) {
             </Button>
             <Button variant="outline" asChild>
               <a
-                href={`mailto:hello@hypeautomations.com?subject=Reschedule%20consultation%20${confirmation.id}`}
+                href={`mailto:sales@hypedigitalconsulting.it?subject=Reschedule%20consultation%20${confirmation.id}`}
               >
                 Reschedule
               </a>
