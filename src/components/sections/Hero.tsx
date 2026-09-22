@@ -13,7 +13,7 @@ export function Hero() {
       />
 
       <div className="relative mx-auto grid w-full max-w-6xl items-center gap-12 px-5 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16 lg:px-8">
-        <div>
+        <div className="min-w-0">
           <h1 className="type-display">We automate the work you shouldn't be doing manually.</h1>
 
           <p className="mt-6 max-w-xl text-lg leading-relaxed text-muted-foreground sm:text-xl">
@@ -35,7 +35,7 @@ export function Hero() {
           </p>
         </div>
 
-        <div className="lg:pl-4">
+        <div className="min-w-0 lg:pl-4">
           <Run />
         </div>
       </div>
