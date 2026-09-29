@@ -13,6 +13,13 @@ const utmSchema = z
   })
   .default({});
 
+/** Drop undefined keys so partial payloads satisfy exact optional types. */
+function defined<T extends Record<string, unknown>>(o: T) {
+  return Object.fromEntries(Object.entries(o).filter(([, v]) => v !== undefined)) as {
+    [K in keyof T]?: Exclude<T[K], undefined>;
+  };
+}
+
 export const getMyAccount = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
   .handler(async ({ context }) => {
@@ -55,12 +62,12 @@ export const saveCustomerDetails = createServerFn({ method: "POST" })
       .select("id, utm_source")
       .eq("user_id", userId)
       .maybeSingle();
-    const payload = {
+    const payload = defined({
       ...rest,
       website: rest.website || null,
       email,
       ...(existing?.utm_source ? {} : utm),
-    };
+    });
     const res = existing
       ? await supabase.from("pai_customers").update(payload).eq("user_id", userId)
       : await supabase.from("pai_customers").insert({ ...payload, user_id: userId });
@@ -99,7 +106,7 @@ export const upsertOrder = createServerFn({ method: "POST" })
           .single()
       : await supabase
           .from("pai_orders")
-          .insert({ user_id: userId, tier: data.tier, payment_model: data.payment_model, ...data.utm })
+          .insert({ user_id: userId, tier: data.tier, payment_model: data.payment_model, ...defined(data.utm) })
           .select("*")
           .single();
     if (res.error) throw new Error(res.error.message);
@@ -205,7 +212,7 @@ export const adminUpdateCustomer = createServerFn({ method: "POST" })
   .handler(async ({ data, context }) => {
     await assertAdmin(context.supabase, context.userId);
     const { user_id, ...rest } = data;
-    const patch = { ...rest, target_go_live: rest.target_go_live || null };
+    const patch = defined({ ...rest, target_go_live: rest.target_go_live || null });
     const { error } = await context.supabase.from("pai_customers").update(patch).eq("user_id", user_id);
     if (error) throw new Error(error.message);
     return { ok: true };

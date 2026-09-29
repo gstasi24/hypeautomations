@@ -1,3 +1,4 @@
+import { z } from "zod";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { Check, Info, Lock, SendHorizonal } from "lucide-react";
@@ -6,9 +7,7 @@ import { cn } from "@/lib/utils";
 import { useMyAccount, primaryOrder } from "@/components/private-ai/useAccount";
 
 export const Route = createFileRoute("/_authenticated/app/")({
-  validateSearch: (s: Record<string, unknown>) => ({
-    purchase: s["purchase"] === "success" ? ("success" as const) : undefined,
-  }),
+  validateSearch: z.object({ purchase: z.enum(["success"]).optional().catch(undefined) }),
   component: AiScreen,
 });
 

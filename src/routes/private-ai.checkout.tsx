@@ -390,8 +390,8 @@ function DetailsStep({
 
   async function submit(e: React.FormEvent) {
     e.preventDefault();
-    if (!f.ack) return toast.error("Please confirm the acknowledgement.");
-    if (!f.use_case) return toast.error("Please choose a primary use case.");
+    if (!f.ack) { toast.error("Please confirm the acknowledgement."); return; }
+    if (!f.use_case) { toast.error("Please choose a primary use case."); return; }
     setLoading(true);
     try {
       const { data: u } = await supabase.auth.getUser();
