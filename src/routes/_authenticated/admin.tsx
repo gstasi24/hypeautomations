@@ -1,4 +1,4 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
 import { useState } from "react";
@@ -141,9 +141,14 @@ function AdminPage() {
           </p>
           <h1 className="mt-1 text-2xl font-bold">Consultations</h1>
         </div>
-        <Button variant="outline" size="sm" onClick={handleSignOut}>
-          <LogOut className="size-4" /> Sign out
-        </Button>
+        <div className="flex gap-2">
+          <Button size="sm" asChild>
+            <Link to="/admin/private-ai">Private AI customers</Link>
+          </Button>
+          <Button variant="outline" size="sm" onClick={handleSignOut}>
+            <LogOut className="size-4" /> Sign out
+          </Button>
+        </div>
       </header>
 
       <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-4">

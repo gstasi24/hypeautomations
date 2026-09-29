@@ -12,7 +12,14 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AuthRouteImport } from './routes/auth'
+import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
+import { Route as AuthenticatedAppRouteImport } from './routes/_authenticated/app'
+import { Route as PrivateAiIndexRouteImport } from './routes/private-ai.index'
+import { Route as PrivateAiCheckoutRouteImport } from './routes/private-ai.checkout'
+import { Route as AuthenticatedAdminPrivateAiRouteImport } from './routes/_authenticated/admin_.private-ai'
+import { Route as AuthenticatedAppIndexRouteImport } from './routes/_authenticated/app.index'
+import { Route as AuthenticatedAppSectionRouteImport } from './routes/_authenticated/app.$section'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -28,41 +35,131 @@ const AuthRoute = AuthRouteImport.update({
   path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ResetPasswordRoute = ResetPasswordRouteImport.update({
+  id: '/reset-password',
+  path: '/reset-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
   id: '/admin',
   path: '/admin',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedAppRoute = AuthenticatedAppRouteImport.update({
+  id: '/app',
+  path: '/app',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const PrivateAiIndexRoute = PrivateAiIndexRouteImport.update({
+  id: '/private-ai/',
+  path: '/private-ai/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PrivateAiCheckoutRoute = PrivateAiCheckoutRouteImport.update({
+  id: '/private-ai/checkout',
+  path: '/private-ai/checkout',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedAdminPrivateAiRoute =
+  AuthenticatedAdminPrivateAiRouteImport.update({
+    id: '/admin_/private-ai',
+    path: '/admin/private-ai',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedAppIndexRoute = AuthenticatedAppIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AuthenticatedAppRoute,
+} as any)
+const AuthenticatedAppSectionRoute = AuthenticatedAppSectionRouteImport.update({
+  id: '/$section',
+  path: '/$section',
+  getParentRoute: () => AuthenticatedAppRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/admin': typeof AuthenticatedAdminRoute
+  '/app': typeof AuthenticatedAppRouteWithChildren
+  '/private-ai/checkout': typeof PrivateAiCheckoutRoute
+  '/private-ai/': typeof PrivateAiIndexRoute
+  '/admin/private-ai': typeof AuthenticatedAdminPrivateAiRoute
+  '/app/$section': typeof AuthenticatedAppSectionRoute
+  '/app/': typeof AuthenticatedAppIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/admin': typeof AuthenticatedAdminRoute
+  '/private-ai/checkout': typeof PrivateAiCheckoutRoute
+  '/private-ai': typeof PrivateAiIndexRoute
+  '/admin/private-ai': typeof AuthenticatedAdminPrivateAiRoute
+  '/app/$section': typeof AuthenticatedAppSectionRoute
+  '/app': typeof AuthenticatedAppIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/_authenticated/admin': typeof AuthenticatedAdminRoute
+  '/_authenticated/app': typeof AuthenticatedAppRouteWithChildren
+  '/private-ai/checkout': typeof PrivateAiCheckoutRoute
+  '/private-ai/': typeof PrivateAiIndexRoute
+  '/_authenticated/admin_/private-ai': typeof AuthenticatedAdminPrivateAiRoute
+  '/_authenticated/app/$section': typeof AuthenticatedAppSectionRoute
+  '/_authenticated/app/': typeof AuthenticatedAppIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/auth' | '/admin'
+  fullPaths:
+    | '/'
+    | '/auth'
+    | '/reset-password'
+    | '/admin'
+    | '/app'
+    | '/private-ai/checkout'
+    | '/private-ai/'
+    | '/admin/private-ai'
+    | '/app/$section'
+    | '/app/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/auth' | '/admin'
-  id: '__root__' | '/' | '/_authenticated' | '/auth' | '/_authenticated/admin'
+  to:
+    | '/'
+    | '/auth'
+    | '/reset-password'
+    | '/admin'
+    | '/private-ai/checkout'
+    | '/private-ai'
+    | '/admin/private-ai'
+    | '/app/$section'
+    | '/app'
+  id:
+    | '__root__'
+    | '/'
+    | '/_authenticated'
+    | '/auth'
+    | '/reset-password'
+    | '/_authenticated/admin'
+    | '/_authenticated/app'
+    | '/private-ai/checkout'
+    | '/private-ai/'
+    | '/_authenticated/admin_/private-ai'
+    | '/_authenticated/app/$section'
+    | '/_authenticated/app/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AuthRoute: typeof AuthRoute
+  ResetPasswordRoute: typeof ResetPasswordRoute
+  PrivateAiCheckoutRoute: typeof PrivateAiCheckoutRoute
+  PrivateAiIndexRoute: typeof PrivateAiIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -88,6 +185,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/reset-password': {
+      id: '/reset-password'
+      path: '/reset-password'
+      fullPath: '/reset-password'
+      preLoaderRoute: typeof ResetPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_authenticated/admin': {
       id: '/_authenticated/admin'
       path: '/admin'
@@ -95,15 +199,74 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/app': {
+      id: '/_authenticated/app'
+      path: '/app'
+      fullPath: '/app'
+      preLoaderRoute: typeof AuthenticatedAppRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/private-ai/': {
+      id: '/private-ai/'
+      path: '/private-ai'
+      fullPath: '/private-ai/'
+      preLoaderRoute: typeof PrivateAiIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/private-ai/checkout': {
+      id: '/private-ai/checkout'
+      path: '/private-ai/checkout'
+      fullPath: '/private-ai/checkout'
+      preLoaderRoute: typeof PrivateAiCheckoutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/admin_/private-ai': {
+      id: '/_authenticated/admin_/private-ai'
+      path: '/admin/private-ai'
+      fullPath: '/admin/private-ai'
+      preLoaderRoute: typeof AuthenticatedAdminPrivateAiRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/app/': {
+      id: '/_authenticated/app/'
+      path: '/'
+      fullPath: '/app/'
+      preLoaderRoute: typeof AuthenticatedAppIndexRouteImport
+      parentRoute: typeof AuthenticatedAppRoute
+    }
+    '/_authenticated/app/$section': {
+      id: '/_authenticated/app/$section'
+      path: '/$section'
+      fullPath: '/app/$section'
+      preLoaderRoute: typeof AuthenticatedAppSectionRouteImport
+      parentRoute: typeof AuthenticatedAppRoute
+    }
   }
 }
 
+interface AuthenticatedAppRouteChildren {
+  AuthenticatedAppSectionRoute: typeof AuthenticatedAppSectionRoute
+  AuthenticatedAppIndexRoute: typeof AuthenticatedAppIndexRoute
+}
+
+const AuthenticatedAppRouteChildren: AuthenticatedAppRouteChildren = {
+  AuthenticatedAppSectionRoute: AuthenticatedAppSectionRoute,
+  AuthenticatedAppIndexRoute: AuthenticatedAppIndexRoute,
+}
+
+const AuthenticatedAppRouteWithChildren =
+  AuthenticatedAppRoute._addFileChildren(AuthenticatedAppRouteChildren)
+
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedAdminRoute: typeof AuthenticatedAdminRoute
+  AuthenticatedAppRoute: typeof AuthenticatedAppRouteWithChildren
+  AuthenticatedAdminPrivateAiRoute: typeof AuthenticatedAdminPrivateAiRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedAdminRoute: AuthenticatedAdminRoute,
+  AuthenticatedAppRoute: AuthenticatedAppRouteWithChildren,
+  AuthenticatedAdminPrivateAiRoute: AuthenticatedAdminPrivateAiRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =
@@ -113,6 +276,9 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AuthRoute: AuthRoute,
+  ResetPasswordRoute: ResetPasswordRoute,
+  PrivateAiCheckoutRoute: PrivateAiCheckoutRoute,
+  PrivateAiIndexRoute: PrivateAiIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
