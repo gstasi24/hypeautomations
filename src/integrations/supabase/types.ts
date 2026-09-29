@@ -164,6 +164,269 @@ export type Database = {
         }
         Relationships: []
       }
+      pai_admin_notes: {
+        Row: {
+          author_email: string | null
+          author_id: string
+          content: string
+          created_at: string
+          customer_user_id: string
+          id: string
+        }
+        Insert: {
+          author_email?: string | null
+          author_id: string
+          content: string
+          created_at?: string
+          customer_user_id: string
+          id?: string
+        }
+        Update: {
+          author_email?: string | null
+          author_id?: string
+          content?: string
+          created_at?: string
+          customer_user_id?: string
+          id?: string
+        }
+        Relationships: []
+      }
+      pai_audit_logs: {
+        Row: {
+          action: string
+          actor: string
+          created_at: string
+          detail: Json
+          id: string
+          user_id: string
+        }
+        Insert: {
+          action: string
+          actor: string
+          created_at?: string
+          detail?: Json
+          id?: string
+          user_id: string
+        }
+        Update: {
+          action?: string
+          actor?: string
+          created_at?: string
+          detail?: Json
+          id?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      pai_customers: {
+        Row: {
+          account_status: string
+          acknowledged: boolean
+          assigned_staff: string | null
+          company_name: string | null
+          country: string | null
+          created_at: string
+          email: string | null
+          first_name: string | null
+          id: string
+          last_name: string | null
+          onboarding_notes: string | null
+          phone: string | null
+          setup_status: string
+          target_go_live: string | null
+          updated_at: string
+          use_case: string | null
+          user_id: string
+          utm_campaign: string | null
+          utm_content: string | null
+          utm_medium: string | null
+          utm_source: string | null
+          utm_term: string | null
+          website: string | null
+        }
+        Insert: {
+          account_status?: string
+          acknowledged?: boolean
+          assigned_staff?: string | null
+          company_name?: string | null
+          country?: string | null
+          created_at?: string
+          email?: string | null
+          first_name?: string | null
+          id?: string
+          last_name?: string | null
+          onboarding_notes?: string | null
+          phone?: string | null
+          setup_status?: string
+          target_go_live?: string | null
+          updated_at?: string
+          use_case?: string | null
+          user_id: string
+          utm_campaign?: string | null
+          utm_content?: string | null
+          utm_medium?: string | null
+          utm_source?: string | null
+          utm_term?: string | null
+          website?: string | null
+        }
+        Update: {
+          account_status?: string
+          acknowledged?: boolean
+          assigned_staff?: string | null
+          company_name?: string | null
+          country?: string | null
+          created_at?: string
+          email?: string | null
+          first_name?: string | null
+          id?: string
+          last_name?: string | null
+          onboarding_notes?: string | null
+          phone?: string | null
+          setup_status?: string
+          target_go_live?: string | null
+          updated_at?: string
+          use_case?: string | null
+          user_id?: string
+          utm_campaign?: string | null
+          utm_content?: string | null
+          utm_medium?: string | null
+          utm_source?: string | null
+          utm_term?: string | null
+          website?: string | null
+        }
+        Relationships: []
+      }
+      pai_orders: {
+        Row: {
+          amount_cents: number
+          created_at: string
+          currency: string
+          id: string
+          maintenance_cents: number | null
+          maintenance_renewal_at: string | null
+          next_billing_at: string | null
+          payment_model: string
+          payment_status: string
+          provider: string | null
+          provider_checkout_id: string | null
+          provider_customer_id: string | null
+          provider_payment_id: string | null
+          provider_subscription_id: string | null
+          purchased_at: string | null
+          status: string
+          tier: string
+          updated_at: string
+          user_id: string
+          utm_campaign: string | null
+          utm_content: string | null
+          utm_medium: string | null
+          utm_source: string | null
+          utm_term: string | null
+        }
+        Insert: {
+          amount_cents?: number
+          created_at?: string
+          currency?: string
+          id?: string
+          maintenance_cents?: number | null
+          maintenance_renewal_at?: string | null
+          next_billing_at?: string | null
+          payment_model: string
+          payment_status?: string
+          provider?: string | null
+          provider_checkout_id?: string | null
+          provider_customer_id?: string | null
+          provider_payment_id?: string | null
+          provider_subscription_id?: string | null
+          purchased_at?: string | null
+          status?: string
+          tier: string
+          updated_at?: string
+          user_id: string
+          utm_campaign?: string | null
+          utm_content?: string | null
+          utm_medium?: string | null
+          utm_source?: string | null
+          utm_term?: string | null
+        }
+        Update: {
+          amount_cents?: number
+          created_at?: string
+          currency?: string
+          id?: string
+          maintenance_cents?: number | null
+          maintenance_renewal_at?: string | null
+          next_billing_at?: string | null
+          payment_model?: string
+          payment_status?: string
+          provider?: string | null
+          provider_checkout_id?: string | null
+          provider_customer_id?: string | null
+          provider_payment_id?: string | null
+          provider_subscription_id?: string | null
+          purchased_at?: string | null
+          status?: string
+          tier?: string
+          updated_at?: string
+          user_id?: string
+          utm_campaign?: string | null
+          utm_content?: string | null
+          utm_medium?: string | null
+          utm_source?: string | null
+          utm_term?: string | null
+        }
+        Relationships: []
+      }
+      pai_payments: {
+        Row: {
+          amount_cents: number
+          currency: string
+          id: string
+          kind: string
+          occurred_at: string
+          order_id: string
+          provider: string
+          provider_event_id: string | null
+          provider_reference: string | null
+          status: string
+          user_id: string
+        }
+        Insert: {
+          amount_cents: number
+          currency?: string
+          id?: string
+          kind?: string
+          occurred_at?: string
+          order_id: string
+          provider: string
+          provider_event_id?: string | null
+          provider_reference?: string | null
+          status: string
+          user_id: string
+        }
+        Update: {
+          amount_cents?: number
+          currency?: string
+          id?: string
+          kind?: string
+          occurred_at?: string
+          order_id?: string
+          provider?: string
+          provider_event_id?: string | null
+          provider_reference?: string | null
+          status?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "pai_payments_order_id_fkey"
+            columns: ["order_id"]
+            isOneToOne: false
+            referencedRelation: "pai_orders"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       user_roles: {
         Row: {
           created_at: string
