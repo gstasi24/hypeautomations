@@ -7,6 +7,7 @@ import { track } from "@/lib/private-ai/analytics";
 import {
   COMPARISON,
   MAINTENANCE_CENTS,
+  PRICES,
   TIERS,
   TIER_INFO,
   formatEuro,
@@ -143,7 +144,6 @@ function PlanCard({ tier, model }: { tier: Tier; model: PaymentModel }) {
   );
 }
 
-import { PRICES } from "@/lib/private-ai/plans";
 function pricesFor(tier: Tier, model: PaymentModel) {
   return PRICES[model][tier];
 }
