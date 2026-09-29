@@ -11,12 +11,12 @@ import { ArrowLeft, Loader2 } from "lucide-react";
 export const Route = createFileRoute("/auth")({
   head: () => ({
     meta: [
-      { title: "Team Sign In | Hype Automations" },
+      { title: "Sign In | Hype Automations" },
       {
         name: "description",
         content: "Internal sign in for the Hype Automations consultation dashboard.",
       },
-      { property: "og:title", content: "Team Sign In | Hype Automations" },
+      { property: "og:title", content: "Sign In | Hype Automations" },
       { property: "og:description", content: "Internal access to consultation bookings." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -25,6 +25,18 @@ export const Route = createFileRoute("/auth")({
   }),
   component: AuthPage,
 });
+
+async function homeFor(): Promise<"/admin" | "/app"> {
+  const { data } = await supabase.auth.getUser();
+  if (!data.user) return "/app";
+  const { data: role } = await supabase
+    .from("user_roles")
+    .select("role")
+    .eq("user_id", data.user.id)
+    .eq("role", "admin")
+    .maybeSingle();
+  return role ? "/admin" : "/app";
+}
 
 function AuthPage() {
   const navigate = useNavigate();
@@ -35,7 +47,7 @@ function AuthPage() {
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data }) => {
-      if (data.session) navigate({ to: "/admin", replace: true });
+      if (data.session) homeFor().then((to) => navigate({ to, replace: true }));
     });
   }, [navigate]);
 
@@ -47,7 +59,7 @@ function AuthPage() {
         const { error } = await supabase.auth.signUp({
           email,
           password,
-          options: { emailRedirectTo: `${window.location.origin}/admin` },
+          options: { emailRedirectTo: `${window.location.origin}/app` },
         });
         if (error) throw error;
         toast.success("Account created. Check your inbox if confirmation is required.");
@@ -56,7 +68,7 @@ function AuthPage() {
         if (error) throw error;
       }
       const { data } = await supabase.auth.getSession();
-      if (data.session) navigate({ to: "/admin", replace: true });
+      if (data.session) navigate({ to: await homeFor(), replace: true });
     } catch (error) {
       toast.error(error instanceof Error ? error.message : "Something went wrong");
     } finally {
@@ -73,7 +85,7 @@ function AuthPage() {
       return;
     }
     if (result.redirected) return;
-    navigate({ to: "/admin", replace: true });
+    navigate({ to: await homeFor(), replace: true });
   }
 
   return (
@@ -87,10 +99,10 @@ function AuthPage() {
           <ArrowLeft className="size-3.5" /> Back to site
         </Link>
         <h1 className="text-2xl font-bold">
-          {mode === "signin" ? "Team sign in" : "Create team account"}
+          {mode === "signin" ? "Sign in" : "Create account"}
         </h1>
         <p className="mt-2 text-sm text-muted-foreground">
-          Access the Hype Automations consultation dashboard.
+          Access your Hype Private AI workspace or the team dashboard.
         </p>
 
         <form onSubmit={handleSubmit} className="mt-7 space-y-4">

@@ -14,6 +14,7 @@ import { Calculator } from "@/components/sections/Calculator";
 import { HowItWorks } from "@/components/sections/HowItWorks";
 import { Faq } from "@/components/sections/Faq";
 import { FinalCta } from "@/components/sections/FinalCta";
+import { PrivateAiTeaser } from "@/components/sections/PrivateAiTeaser";
 
 const TITLE = "Hype Automations | AI Automation Systems for Growing Businesses";
 const DESCRIPTION =
@@ -47,6 +48,7 @@ function Index() {
           <UseCases />
           <Calculator />
           <HowItWorks />
+          <PrivateAiTeaser />
           <Faq />
           <FinalCta />
         </main>

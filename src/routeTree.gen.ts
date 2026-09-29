@@ -17,6 +17,7 @@ import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/
 import { Route as AuthenticatedAppRouteImport } from './routes/_authenticated/app'
 import { Route as PrivateAiIndexRouteImport } from './routes/private-ai.index'
 import { Route as PrivateAiCheckoutRouteImport } from './routes/private-ai.checkout'
+import { Route as AuthenticatedAdminPrivateAiRouteImport } from './routes/_authenticated/admin_.private-ai'
 import { Route as AuthenticatedAppIndexRouteImport } from './routes/_authenticated/app.index'
 import { Route as AuthenticatedAppSectionRouteImport } from './routes/_authenticated/app.$section'
 
@@ -59,6 +60,12 @@ const PrivateAiCheckoutRoute = PrivateAiCheckoutRouteImport.update({
   path: '/private-ai/checkout',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedAdminPrivateAiRoute =
+  AuthenticatedAdminPrivateAiRouteImport.update({
+    id: '/admin_/private-ai',
+    path: '/admin/private-ai',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedAppIndexRoute = AuthenticatedAppIndexRouteImport.update({
   id: '/',
   path: '/',
@@ -78,6 +85,7 @@ export interface FileRoutesByFullPath {
   '/app': typeof AuthenticatedAppRouteWithChildren
   '/private-ai/checkout': typeof PrivateAiCheckoutRoute
   '/private-ai/': typeof PrivateAiIndexRoute
+  '/admin/private-ai': typeof AuthenticatedAdminPrivateAiRoute
   '/app/$section': typeof AuthenticatedAppSectionRoute
   '/app/': typeof AuthenticatedAppIndexRoute
 }
@@ -88,6 +96,7 @@ export interface FileRoutesByTo {
   '/admin': typeof AuthenticatedAdminRoute
   '/private-ai/checkout': typeof PrivateAiCheckoutRoute
   '/private-ai': typeof PrivateAiIndexRoute
+  '/admin/private-ai': typeof AuthenticatedAdminPrivateAiRoute
   '/app/$section': typeof AuthenticatedAppSectionRoute
   '/app': typeof AuthenticatedAppIndexRoute
 }
@@ -101,6 +110,7 @@ export interface FileRoutesById {
   '/_authenticated/app': typeof AuthenticatedAppRouteWithChildren
   '/private-ai/checkout': typeof PrivateAiCheckoutRoute
   '/private-ai/': typeof PrivateAiIndexRoute
+  '/_authenticated/admin_/private-ai': typeof AuthenticatedAdminPrivateAiRoute
   '/_authenticated/app/$section': typeof AuthenticatedAppSectionRoute
   '/_authenticated/app/': typeof AuthenticatedAppIndexRoute
 }
@@ -114,6 +124,7 @@ export interface FileRouteTypes {
     | '/app'
     | '/private-ai/checkout'
     | '/private-ai/'
+    | '/admin/private-ai'
     | '/app/$section'
     | '/app/'
   fileRoutesByTo: FileRoutesByTo
@@ -124,6 +135,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/private-ai/checkout'
     | '/private-ai'
+    | '/admin/private-ai'
     | '/app/$section'
     | '/app'
   id:
@@ -136,6 +148,7 @@ export interface FileRouteTypes {
     | '/_authenticated/app'
     | '/private-ai/checkout'
     | '/private-ai/'
+    | '/_authenticated/admin_/private-ai'
     | '/_authenticated/app/$section'
     | '/_authenticated/app/'
   fileRoutesById: FileRoutesById
@@ -207,6 +220,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PrivateAiCheckoutRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/admin_/private-ai': {
+      id: '/_authenticated/admin_/private-ai'
+      path: '/admin/private-ai'
+      fullPath: '/admin/private-ai'
+      preLoaderRoute: typeof AuthenticatedAdminPrivateAiRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/app/': {
       id: '/_authenticated/app/'
       path: '/'
@@ -240,11 +260,13 @@ const AuthenticatedAppRouteWithChildren =
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedAdminRoute: typeof AuthenticatedAdminRoute
   AuthenticatedAppRoute: typeof AuthenticatedAppRouteWithChildren
+  AuthenticatedAdminPrivateAiRoute: typeof AuthenticatedAdminPrivateAiRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedAdminRoute: AuthenticatedAdminRoute,
   AuthenticatedAppRoute: AuthenticatedAppRouteWithChildren,
+  AuthenticatedAdminPrivateAiRoute: AuthenticatedAdminPrivateAiRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =

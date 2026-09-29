@@ -5,6 +5,7 @@ import { Logo } from "./Logo";
 import { useBooking } from "@/components/booking/BookingProvider";
 import { Menu } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { Link } from "@tanstack/react-router";
 
 const LINKS = [
   { label: "Solutions", href: "#solutions" },
@@ -50,6 +51,9 @@ export function Navbar() {
               {link.label}
             </a>
           ))}
+          <Link to="/private-ai" className="text-sm font-semibold text-link transition-colors hover:text-foreground">
+            Private AI
+          </Link>
         </div>
 
         <div className="flex items-center gap-2">
@@ -75,6 +79,13 @@ export function Navbar() {
                     {link.label}
                   </a>
                 ))}
+                <Link
+                  to="/private-ai"
+                  onClick={() => setMenuOpen(false)}
+                  className="rounded-control px-3 py-3.5 text-base font-semibold text-link hover:bg-surface-2"
+                >
+                  Private AI
+                </Link>
                 <Button
                   size="lg"
                   className="mt-6 w-full"
