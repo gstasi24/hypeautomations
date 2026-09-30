@@ -132,6 +132,7 @@ function Checkout() {
                 i === idx && "border-transparent bg-brand-gradient text-primary-foreground",
                 i > idx && "border-border text-muted-foreground",
               )}
+              aria-current={i === idx ? "step" : undefined}
             >
               {i < idx ? <Check className="size-3" /> : <span>{i + 1}</span>}
               {STEP_LABEL[s]}
@@ -243,6 +244,8 @@ function AccountStep({ plan, onBack }: { plan: { tier: Tier; model: PaymentModel
   const [f, setF] = useState({ first: "", last: "", email: "", password: "", confirm: "" });
   const [loading, setLoading] = useState(false);
   const [notice, setNotice] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [started, setStarted] = useState(false);
   const returnUrl = () =>
     `${window.location.origin}/private-ai/checkout?tier=${plan.tier}&model=${plan.model}&step=details`;
 
@@ -250,9 +253,10 @@ function AccountStep({ plan, onBack }: { plan: { tier: Tier; model: PaymentModel
     e.preventDefault();
     setLoading(true);
     setNotice(null);
+    setError(null);
     try {
       if (mode === "signup") {
-        if (f.password !== f.confirm) throw new Error("Passwords don't match.");
+        if (f.password !== f.confirm) throw new Error("Passwords don't match. Re-enter both passwords and try again.");
         track("signup_started", { method: "email" });
         const { data, error } = await supabase.auth.signUp({
           email: f.email,
@@ -281,7 +285,9 @@ function AccountStep({ plan, onBack }: { plan: { tier: Tier; model: PaymentModel
         setNotice("If an account exists for this email, a reset link is on its way.");
       }
     } catch (err) {
-      toast.error(err instanceof Error ? err.message : "Something went wrong");
+      const message = err instanceof Error ? err.message : "Something went wrong. Please try again.";
+      setError(message);
+      track("form_validation_error", { form: "account", mode, reason: message });
     } finally {
       setLoading(false);
     }
@@ -311,7 +317,7 @@ function AccountStep({ plan, onBack }: { plan: { tier: Tier; model: PaymentModel
         </>
       )}
 
-      <form onSubmit={submit} className={cn("space-y-4", mode === "forgot" && "mt-6")}>
+      <form onSubmit={submit} onFocus={() => { if (!started) { setStarted(true); track("form_started", { form: "account", mode }); } }} className={cn("space-y-4", mode === "forgot" && "mt-6")} noValidate>
         {mode === "signup" && (
           <div className="grid gap-4 sm:grid-cols-2">
             <Field id="first" label="First name"><Input id="first" required autoComplete="given-name" value={f.first} onChange={set("first")} /></Field>
@@ -326,10 +332,14 @@ function AccountStep({ plan, onBack }: { plan: { tier: Tier; model: PaymentModel
         )}
         {mode === "signup" && (
           <Field id="confirm" label="Confirm password">
-            <Input id="confirm" type="password" required minLength={8} autoComplete="new-password" value={f.confirm} onChange={set("confirm")} />
+            <Input id="confirm" type="password" required minLength={8} autoComplete="new-password" value={f.confirm} onChange={set("confirm")} aria-invalid={Boolean(f.confirm && f.password !== f.confirm)} aria-describedby="confirm-help" />
+            <p id="confirm-help" className={cn("text-xs", f.confirm && f.password !== f.confirm ? "text-destructive" : "text-muted-foreground")}>
+              {f.confirm && f.password !== f.confirm ? "Passwords do not match yet." : "Use at least 8 characters."}
+            </p>
           </Field>
         )}
-        {notice && <p className="rounded-control border border-success/40 p-3 text-sm text-success">{notice}</p>}
+        {notice && <p role="status" className="rounded-control border border-success/40 p-3 text-sm text-success">{notice}</p>}
+        {error && <p role="alert" className="rounded-control border border-destructive/40 p-3 text-sm text-destructive">{error}</p>}
         <Button type="submit" size="lg" className="w-full" disabled={loading}>
           {loading && <Loader2 className="size-4 animate-spin" />}
           {mode === "signup" ? "Create account" : mode === "signin" ? "Sign in" : "Send reset link"}
@@ -371,6 +381,8 @@ function DetailsStep({
   const order = useServerFn(upsertOrder);
   const [f, setF] = useState({ company_name: "", phone: "", country: "", website: "", use_case: "" as string, ack: false });
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [started, setStarted] = useState(false);
 
   useEffect(() => {
     fetchAccount().then(({ customer }) => {
@@ -390,8 +402,9 @@ function DetailsStep({
 
   async function submit(e: React.FormEvent) {
     e.preventDefault();
-    if (!f.ack) { toast.error("Please confirm the acknowledgement."); return; }
-    if (!f.use_case) { toast.error("Please choose a primary use case."); return; }
+    setError(null);
+    if (!f.use_case) { setError("Choose the primary use case that best matches your setup."); track("form_validation_error", { form: "customer_details", field: "use_case" }); return; }
+    if (!f.ack) { setError("Confirm that setup depends on your plan and technical requirements."); track("form_validation_error", { form: "customer_details", field: "acknowledgement" }); return; }
     setLoading(true);
     try {
       const { data: u } = await supabase.auth.getUser();
@@ -412,9 +425,12 @@ function DetailsStep({
         },
       });
       await order({ data: { tier: plan.tier, payment_model: plan.model, utm } });
+      track("form_completed", { form: "customer_details", tier: plan.tier, model: plan.model });
       onNext();
     } catch (err) {
-      toast.error(err instanceof Error ? err.message : "Couldn't save your details");
+      const message = err instanceof Error ? err.message : "Couldn't save your details. Check the form and try again.";
+      setError(message);
+      track("form_validation_error", { form: "customer_details", reason: message });
     } finally {
       setLoading(false);
     }
@@ -423,7 +439,7 @@ function DetailsStep({
   return (
     <section>
       <h1 className="type-title text-2xl">Customer details</h1>
-      <form onSubmit={submit} className="mt-6 space-y-4">
+      <form onSubmit={submit} onFocus={() => { if (!started) { setStarted(true); track("form_started", { form: "customer_details" }); } }} className="mt-6 space-y-4">
         <Field id="company" label="Company name">
           <Input id="company" required autoComplete="organization" value={f.company_name} onChange={(e) => setF({ ...f, company_name: e.target.value })} />
         </Field>
@@ -440,19 +456,20 @@ function DetailsStep({
         </Field>
         <div className="space-y-2">
           <Label>Primary use case</Label>
-          <Select value={f.use_case} onValueChange={(v) => setF({ ...f, use_case: v })}>
-            <SelectTrigger><SelectValue placeholder="Choose one" /></SelectTrigger>
+           <Select value={f.use_case} onValueChange={(v) => setF({ ...f, use_case: v })}>
+             <SelectTrigger aria-invalid={Boolean(error && !f.use_case)}><SelectValue placeholder="Choose one" /></SelectTrigger>
             <SelectContent>
               {USE_CASES.map((u) => <SelectItem key={u} value={u}>{u}</SelectItem>)}
             </SelectContent>
           </Select>
         </div>
-        <label className="flex items-start gap-3 rounded-control border border-border p-4 text-sm">
+         <label className="flex min-h-11 items-start gap-3 rounded-control border border-border p-4 text-sm">
           <Checkbox checked={f.ack} onCheckedChange={(v) => setF({ ...f, ack: v === true })} className="mt-0.5" />
           <span className="text-muted-foreground">
             I understand that setup and integrations depend on my plan and on technical requirements, and are completed during onboarding.
           </span>
         </label>
+         {error && <p role="alert" className="text-sm text-destructive">{error}</p>}
         <div className="flex items-center justify-between">
           <button type="button" onClick={onBack} className="text-sm text-muted-foreground hover:text-foreground">Change plan</button>
           <Button type="submit" size="lg" disabled={loading}>
@@ -513,6 +530,7 @@ function ReviewStep({
       }
       setMsg(res.message);
       setState("pending");
+      track("setup_continued", { tier: plan.tier, model: plan.model, payment: "pending_configuration" });
       onPay();
     } catch (e) {
       track("checkout_failed", { reason: e instanceof Error ? e.message : "unknown" });
@@ -547,9 +565,9 @@ function ReviewStep({
       </div>
 
       {paying && state === "pending" ? (
-        <div className="mt-6 rounded-panel border border-primary/40 bg-surface p-6">
+         <div className="mt-6 rounded-panel border border-primary/40 bg-surface p-6" role="status" aria-live="polite">
           <p className="flex items-center gap-2 font-semibold"><ShieldCheck className="size-5 text-link" /> {msg}</p>
-          <p className="mt-2 text-sm text-muted-foreground">
+           <p className="mt-2 text-sm text-muted-foreground">
             Your order is saved exactly as shown above. No payment has been taken. We'll let you know when secure checkout opens.
           </p>
           <Button variant="outline" className="mt-5" asChild><Link to="/app">Go to your account</Link></Button>

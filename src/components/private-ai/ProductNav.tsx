@@ -52,9 +52,10 @@ export function ProductNav({ minimal = false }: { minimal?: boolean }) {
           </Button>
           {!minimal && (
             <Button size="sm" className="hidden sm:inline-flex" asChild>
-              <Link to="/" hash="pricing">Choose Your AI</Link>
+              <Link to="/" hash="pricing">Choose your AI</Link>
             </Button>
           )}
+          {!minimal ? <Button size="sm" className="sm:hidden" asChild><Link to="/" hash="pricing">Plans</Link></Button> : null}
           {!minimal ? (
             <Sheet open={menuOpen} onOpenChange={setMenuOpen}>
               <SheetTrigger asChild>
@@ -71,7 +72,7 @@ export function ProductNav({ minimal = false }: { minimal?: boolean }) {
                    <Link to="/" hash="demonstration" onClick={() => setMenuOpen(false)} className="rounded-control px-3 py-3 text-muted-foreground hover:bg-surface-2 hover:text-foreground">How it works</Link>
                   <Link to="/" hash="control" onClick={() => setMenuOpen(false)} className="rounded-control px-3 py-3 text-muted-foreground hover:bg-surface-2 hover:text-foreground">Control</Link>
                   <Link to="/" hash="pricing" onClick={() => setMenuOpen(false)} className="rounded-control px-3 py-3 text-muted-foreground hover:bg-surface-2 hover:text-foreground">Pricing</Link>
-                  <Button className="mt-4 w-full" asChild><Link to="/" hash="pricing" onClick={() => setMenuOpen(false)}>Choose Your AI</Link></Button>
+                   <Button className="mt-4 w-full" asChild><Link to="/" hash="pricing" onClick={() => setMenuOpen(false)}>Choose your AI</Link></Button>
                 </div>
               </SheetContent>
             </Sheet>
