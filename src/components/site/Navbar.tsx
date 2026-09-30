@@ -63,7 +63,7 @@ export function Navbar() {
 
         <div className="flex items-center gap-2">
           <Button size="sm" className="hidden lg:inline-flex" onClick={openBooking}>
-            Book a free consultation
+            Book a Consultation
           </Button>
 
           <Sheet open={menuOpen} onOpenChange={setMenuOpen}>
