@@ -1,5 +1,6 @@
 import { Logo } from "./Logo";
 import { useBooking } from "@/components/booking/BookingProvider";
+import { Link } from "@tanstack/react-router";
 
 export function Footer() {
   const { openBooking } = useBooking();
@@ -17,6 +18,8 @@ export function Footer() {
           </div>
 
           <nav className="grid grid-cols-2 gap-x-12 gap-y-3 text-sm">
+            <Link to="/" className="font-semibold text-link hover:text-foreground">Hype Private AI</Link>
+            <Link to="/custom-workflows" className="text-muted-foreground hover:text-foreground">Custom Workflows</Link>
             <a href="#solutions" className="text-muted-foreground hover:text-foreground">
               Solutions
             </a>

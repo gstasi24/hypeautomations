@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
+import { Link } from "@tanstack/react-router";
 import { track } from "@/lib/private-ai/analytics";
 import { cn } from "@/lib/utils";
 import {
@@ -24,7 +25,12 @@ const TOOLS = [
   { label: "Tasks", icon: ListChecks },
   { label: "Stripe", icon: CreditCard },
 ];
-const STAGES = ["Command", "Understand", "Check tools", "Prepare", "Request approval", "Action ready"];
+const STAGES = [
+  "Understanding request",
+  "Checking calendar, tasks & email",
+  "Preparing changes",
+  "Waiting for approval",
+];
 
 export function ProductHero() {
   const [stage, setStage] = useState(0);
@@ -48,8 +54,8 @@ export function ProductHero() {
           </h1>
           <p className="mt-5 text-xl font-medium">Just tell it what needs to happen.</p>
           <p className="mt-4 max-w-xl text-lg leading-relaxed text-muted-foreground">
-            A private AI agent designed around your business, connected to the tools you approve.
-            It keeps context over time and asks for your approval where it matters.
+            A private AI operator designed around your business — built to understand your context,
+            work across approved tools and prepare actions while keeping you in control.
           </p>
           <div className="mt-8 flex flex-col items-start gap-4 sm:flex-row sm:items-center">
             <Button size="lg" asChild onClick={() => track("private_ai_cta_click", { cta: "hero_choose" })}>
@@ -59,6 +65,12 @@ export function ProductHero() {
               <a href="#what-it-does">See What It Can Do</a>
             </Button>
           </div>
+          <Link
+            to="/custom-workflows"
+            className="mt-5 inline-flex min-h-11 items-center text-sm text-muted-foreground transition-colors hover:text-foreground"
+          >
+            Need a custom automation instead? Explore Hype Custom Workflows →
+          </Link>
         </div>
 
         <div className="min-w-0">
@@ -69,9 +81,11 @@ export function ProductHero() {
                 <ToolChip key={t.label} {...t} active={s >= 2} delay={i} />
               ))}
               <div className="col-span-4 flex items-center justify-center py-3">
-                <div className="relative flex size-20 items-center justify-center rounded-full border border-border-strong bg-background">
+                <div className="relative flex size-24 items-center justify-center rounded-full border border-border-strong bg-background">
                   <span className="absolute inset-0 animate-breathe rounded-full bg-brand-gradient opacity-30 blur-md" />
-                  <span className="relative size-9 rounded-full bg-brand-gradient" />
+                  <span className="relative text-center text-[9px] font-extrabold uppercase leading-tight tracking-[0.12em] text-foreground">
+                    Hype<br />Private AI
+                  </span>
                 </div>
               </div>
               {TOOLS.slice(4).map((t, i) => (
@@ -110,14 +124,14 @@ export function ProductHero() {
                 I found 3 priority items, 2 meetings and 4 pending follow-ups. I've prepared the
                 changes. Review before I apply them?
                 <div className="mt-3 flex gap-2">
-                  <span className="rounded-control border border-border px-3 py-1.5 text-xs">Review actions</span>
+                  <span className="rounded-control border border-border px-3 py-1.5 text-xs">Review changes</span>
                   <span
                     className={cn(
                       "inline-flex items-center gap-1 rounded-control px-3 py-1.5 text-xs",
-                      s >= 5 ? "bg-success text-success-foreground" : "bg-primary-fill text-primary-foreground",
+                      s >= 3 ? "bg-success text-success-foreground" : "bg-primary-fill text-primary-foreground",
                     )}
                   >
-                    {s >= 5 && <Check className="size-3" />} Approve
+                    {s >= 3 && <Check className="size-3" />} Approve
                   </span>
                 </div>
               </div>
