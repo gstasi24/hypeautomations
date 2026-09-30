@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Logo } from "@/components/site/Logo";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
@@ -12,12 +12,20 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Bot, ChevronDown, Menu, Workflow } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 export function ProductNav({ minimal = false }: { minimal?: boolean }) {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 28);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
   return (
-    <header className="fixed inset-x-0 top-0 z-50 border-b border-border bg-background/75 backdrop-blur-xl">
-      <nav className="mx-auto grid h-16 w-full max-w-7xl grid-cols-[minmax(0,1fr)_auto] items-center gap-3 px-5 lg:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] lg:px-8">
+    <header className={cn("fixed inset-x-0 top-0 z-50 transition-all duration-300", scrolled ? "border-b border-border bg-background/85 backdrop-blur-xl" : "border-b border-transparent bg-background/30 backdrop-blur-md")}>
+      <nav className={cn("mx-auto grid w-full max-w-7xl grid-cols-[minmax(0,1fr)_auto] items-center gap-3 px-5 transition-[height] duration-300 lg:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] lg:px-8", scrolled ? "h-14" : "h-16")} aria-label="Primary navigation">
         <div className="flex min-w-0 items-center gap-3">
           <Link to="/" aria-label="Hype Automations home">
             <Logo />
@@ -33,7 +41,7 @@ export function ProductNav({ minimal = false }: { minimal?: boolean }) {
         {!minimal ? (
           <div className="hidden items-center justify-center gap-6 text-sm text-muted-foreground lg:flex">
             <ProductsMenu />
-            <Link to="/" hash="what-it-does" className="hover:text-foreground">Capabilities</Link>
+            <Link to="/" hash="demonstration" className="hover:text-foreground">How it works</Link>
             <Link to="/" hash="control" className="hover:text-foreground">Control</Link>
             <Link to="/" hash="pricing" className="hover:text-foreground">Pricing</Link>
           </div>
@@ -50,7 +58,7 @@ export function ProductNav({ minimal = false }: { minimal?: boolean }) {
           {!minimal ? (
             <Sheet open={menuOpen} onOpenChange={setMenuOpen}>
               <SheetTrigger asChild>
-                <Button variant="ghost" size="icon" className="lg:hidden" aria-label="Open menu">
+              <Button variant="ghost" size="icon" className="lg:hidden" aria-label={menuOpen ? "Close menu" : "Open menu"} aria-expanded={menuOpen}>
                   <Menu className="size-5" />
                 </Button>
               </SheetTrigger>
@@ -60,7 +68,7 @@ export function ProductNav({ minimal = false }: { minimal?: boolean }) {
                   <ProductMobileLink to="/" title="Hype Private AI" text="Flagship · one operator across your business" close={() => setMenuOpen(false)} />
                   <ProductMobileLink to="/custom-workflows" title="Hype Custom Workflows" text="Purpose-built process automation" close={() => setMenuOpen(false)} />
                   <div className="my-3 h-px bg-border" />
-                  <Link to="/" hash="what-it-does" onClick={() => setMenuOpen(false)} className="rounded-control px-3 py-3 text-muted-foreground hover:bg-surface-2 hover:text-foreground">Capabilities</Link>
+                   <Link to="/" hash="demonstration" onClick={() => setMenuOpen(false)} className="rounded-control px-3 py-3 text-muted-foreground hover:bg-surface-2 hover:text-foreground">How it works</Link>
                   <Link to="/" hash="control" onClick={() => setMenuOpen(false)} className="rounded-control px-3 py-3 text-muted-foreground hover:bg-surface-2 hover:text-foreground">Control</Link>
                   <Link to="/" hash="pricing" onClick={() => setMenuOpen(false)} className="rounded-control px-3 py-3 text-muted-foreground hover:bg-surface-2 hover:text-foreground">Pricing</Link>
                   <Button className="mt-4 w-full" asChild><Link to="/" hash="pricing" onClick={() => setMenuOpen(false)}>Choose Your AI</Link></Button>
@@ -74,7 +82,7 @@ export function ProductNav({ minimal = false }: { minimal?: boolean }) {
   );
 }
 
-function ProductsMenu() {
+export function ProductsMenu() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger className="inline-flex h-10 items-center gap-1 rounded-control px-2 text-sm outline-none hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring">

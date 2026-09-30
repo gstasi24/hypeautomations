@@ -3,9 +3,10 @@ import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Logo } from "./Logo";
 import { useBooking } from "@/components/booking/BookingProvider";
-import { Bot, ChevronDown, Menu, Workflow } from "lucide-react";
+import { Menu } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Link } from "@tanstack/react-router";
+import { ProductsMenu } from "@/components/private-ai/ProductNav";
 
 const LINKS = [
   { label: "Solutions", href: "#solutions" },
@@ -41,15 +42,7 @@ export function Navbar() {
         </a>
 
         <div className="hidden items-center gap-8 lg:flex">
-          <div className="group relative">
-            <button className="inline-flex h-11 items-center gap-1 text-sm text-muted-foreground transition-colors hover:text-foreground">
-              Products <ChevronDown className="size-3.5" />
-            </button>
-            <div className="invisible absolute left-1/2 top-full w-80 -translate-x-1/2 rounded-control border border-border bg-surface p-2 opacity-0 shadow-lg transition-all group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100">
-              <Link to="/" className="flex items-start gap-3 rounded-control p-3 hover:bg-surface-2"><Bot className="mt-0.5 size-4 shrink-0 text-link" /><span><span className="block font-semibold text-foreground">Hype Private AI</span><span className="block text-xs">Flagship · one operator across your business</span></span></Link>
-              <Link to="/custom-workflows" className="flex items-start gap-3 rounded-control p-3 hover:bg-surface-2"><Workflow className="mt-0.5 size-4 shrink-0 text-link" /><span><span className="block font-semibold text-foreground">Hype Custom Workflows</span><span className="block text-xs">Purpose-built process automation</span></span></Link>
-            </div>
-          </div>
+           <ProductsMenu />
           {LINKS.map((link) => (
             <a
               key={link.href}
@@ -68,7 +61,7 @@ export function Navbar() {
 
           <Sheet open={menuOpen} onOpenChange={setMenuOpen}>
             <SheetTrigger asChild>
-              <Button variant="ghost" size="icon" className="lg:hidden" aria-label="Open menu">
+               <Button variant="ghost" size="icon" className="lg:hidden" aria-label={menuOpen ? "Close menu" : "Open menu"} aria-expanded={menuOpen}>
                 <Menu className="size-5" />
               </Button>
             </SheetTrigger>

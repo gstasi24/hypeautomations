@@ -32,7 +32,7 @@ export function ModelToggle({
           aria-checked={model === m}
           onClick={() => onChange(m)}
           className={cn(
-            "rounded-full px-5 py-2 text-xs font-semibold uppercase tracking-[0.16em] transition-colors",
+            "min-h-11 rounded-full px-5 py-2 text-xs font-semibold uppercase tracking-[0.16em] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
             model === m ? "bg-brand-gradient text-primary-foreground" : "text-muted-foreground hover:text-foreground",
           )}
         >
@@ -60,12 +60,12 @@ export function Pricing() {
   }, []);
 
   return (
-    <section id="pricing" ref={ref} className="relative scroll-mt-20 py-16 lg:py-24">
+    <section id="pricing" ref={ref} className="scene-band relative scroll-mt-20 bg-surface/30">
       <div className="mx-auto w-full max-w-6xl px-5 lg:px-8">
         <div className="flex flex-col items-center text-center">
           <h2 className="type-statement max-w-3xl">Choose your private AI.</h2>
           <p className="mt-4 max-w-xl text-lg text-muted-foreground">
-            Own it with a one-time setup, or keep it all-inclusive monthly.
+             Pick the model that fits how you want to begin. You will review every detail before payment.
           </p>
           <div className="mt-8">
             <ModelToggle
@@ -83,7 +83,7 @@ export function Pricing() {
           </p>
         </div>
 
-        <div className="mt-10 grid gap-5 lg:grid-cols-3">
+        <div className="mt-12 grid gap-5 lg:grid-cols-3">
           {TIERS.map((tier) => (
             <PlanCard key={tier} tier={tier} model={model} />
           ))}
@@ -104,7 +104,7 @@ function PlanCard({ tier, model }: { tier: Tier; model: PaymentModel }) {
   return (
     <div
       className={cn(
-        "relative flex flex-col rounded-panel border bg-surface p-6 sm:p-7",
+        "relative flex flex-col rounded-panel border bg-background p-6 sm:p-7",
         info.popular ? "border-primary/60 glow-ring" : "border-border",
       )}
     >
@@ -137,7 +137,7 @@ function PlanCard({ tier, model }: { tier: Tier; model: PaymentModel }) {
         onClick={() => track("plan_selected", { tier, model, price: priceLabel(tier, model) })}
       >
         <Link to="/private-ai/checkout" search={{ tier, model }}>
-          Choose {info.label}
+          Review {info.label}
         </Link>
       </Button>
     </div>
@@ -152,7 +152,7 @@ function Comparison() {
   const [mobileTier, setMobileTier] = useState<Tier>("advanced");
   return (
     <div className="mt-14">
-      <h3 className="type-title text-center">Compare plans</h3>
+      <h3 className="type-title text-center">Only the differences</h3>
       {/* Mobile: one tier at a time */}
       <div className="mt-6 lg:hidden">
         <div className="grid grid-cols-3 gap-1 rounded-control border border-border bg-surface p-1">
