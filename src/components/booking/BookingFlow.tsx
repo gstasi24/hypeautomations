@@ -24,6 +24,7 @@ import {
   Clock,
   Loader2,
 } from "lucide-react";
+import { track } from "@/lib/private-ai/analytics";
 
 const STEP_LABELS = ["Business", "Goals", "Enquiries", "Tools", "Time", "Details"];
 
@@ -117,6 +118,7 @@ export function BookingFlow({ onClose }: { onClose: () => void }) {
   const [confirmation, setConfirmation] = useState<BookingConfirmation | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [activeDate, setActiveDate] = useState<string | null>(null);
+  const [started, setStarted] = useState(false);
 
   const fetchAvailability = useServerFn(getAvailability);
   const availabilityQuery = useQuery({
@@ -133,13 +135,17 @@ export function BookingFlow({ onClose }: { onClose: () => void }) {
       if (result.ok) {
         setConfirmation(result.booking);
         setError(null);
+        track("form_completed", { form: "consultation" });
       } else {
         setError(result.error);
         availabilityQuery.refetch();
         setStep(4);
       }
     },
-    onError: () => setError("Something went wrong. Please try again."),
+    onError: () => {
+      setError("Something went wrong. Please try again.");
+      track("form_validation_error", { form: "consultation" });
+    },
   });
 
   const availability = availabilityQuery.data;
@@ -237,7 +243,7 @@ export function BookingFlow({ onClose }: { onClose: () => void }) {
   }
 
   return (
-    <section className="relative overflow-hidden p-6 sm:p-9">
+    <section className="relative overflow-hidden p-6 sm:p-9" onFocus={() => { if (!started) { setStarted(true); track("form_started", { form: "consultation" }); } }}>
       <div className="relative">
         <header>
           <p className="text-xs text-muted-foreground">Free consultation</p>

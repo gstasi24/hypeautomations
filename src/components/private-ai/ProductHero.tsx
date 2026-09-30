@@ -20,7 +20,8 @@ export function ProductHero() {
 
   useEffect(() => {
     track("private_ai_hero_view");
-    const timer = window.setInterval(() => setStage((value) => (value + 1) % STAGES.length), 1800);
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const timer = reduced ? undefined : window.setInterval(() => setStage((value) => (value + 1) % STAGES.length), 2200);
     const onScroll = () => {
       const el = scene.current;
       if (!el) return;
@@ -29,7 +30,7 @@ export function ProductHero() {
     };
     window.addEventListener("scroll", onScroll, { passive: true });
     onScroll();
-    return () => { window.clearInterval(timer); window.removeEventListener("scroll", onScroll); };
+    return () => { if (timer) window.clearInterval(timer); window.removeEventListener("scroll", onScroll); };
   }, []);
 
   function pointer(event: React.PointerEvent<HTMLDivElement>) {
