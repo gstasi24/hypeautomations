@@ -37,8 +37,8 @@ function AppShell() {
   const navigate = useNavigate();
   useEffect(() => track("app_opened"), []);
   return (
-    <div className="min-h-screen bg-background text-foreground lg:grid lg:grid-cols-[240px_1fr]">
-      <aside className="sticky top-0 z-40 border-b border-border bg-surface/90 backdrop-blur lg:h-screen lg:border-b-0 lg:border-r">
+    <div className="min-h-dvh bg-background text-foreground lg:grid lg:grid-cols-[240px_1fr]">
+      <aside className="sticky top-0 z-40 border-b border-border bg-surface/90 backdrop-blur lg:h-dvh lg:border-b-0 lg:border-r">
         <div className="flex items-center justify-between px-5 py-4 lg:block">
           <Link to="/private-ai"><Logo /></Link>
           <p className="hidden pt-2 text-[10px] font-semibold uppercase tracking-[0.24em] text-link lg:block">Private AI</p>
@@ -47,7 +47,7 @@ function AppShell() {
               await supabase.auth.signOut();
               navigate({ to: "/" });
             }}
-            className="text-muted-foreground hover:text-foreground lg:hidden"
+            className="inline-flex size-11 items-center justify-center rounded-control text-muted-foreground hover:bg-surface-2 hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring lg:hidden"
             aria-label="Sign out"
           >
             <LogOut className="size-4" />
@@ -68,7 +68,7 @@ function AppShell() {
             await supabase.auth.signOut();
             navigate({ to: "/" });
           }}
-          className="absolute bottom-6 left-3 hidden items-center gap-2.5 px-3 text-sm text-muted-foreground hover:text-foreground lg:flex"
+          className="absolute bottom-6 left-3 hidden min-h-11 items-center gap-2.5 rounded-control px-3 text-sm text-muted-foreground hover:bg-surface-2 hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring lg:flex"
         >
           <LogOut className="size-4" /> Sign out
         </button>

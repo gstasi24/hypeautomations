@@ -74,12 +74,13 @@ function OptionButton({
   onClick: () => void;
 }) {
   return (
-    <button
+    <Button
       type="button"
+      variant="outline"
       onClick={onClick}
       aria-pressed={selected}
       className={cn(
-        "rounded-xl border px-4 py-3 text-left text-sm transition-all",
+        "h-auto min-h-11 justify-start whitespace-normal rounded-control px-4 py-3 text-left text-sm transition-all",
         selected
           ? "border-primary bg-primary/15 text-foreground shadow-[0_0_0_1px_var(--color-primary)]"
           : "border-border bg-surface-2/60 text-muted-foreground hover:border-border-strong hover:text-foreground",
@@ -89,7 +90,7 @@ function OptionButton({
         {label}
         {selected ? <Check className="size-4 text-accent" /> : null}
       </span>
-    </button>
+    </Button>
   );
 }
 
@@ -358,40 +359,44 @@ export function BookingFlow({ onClose }: { onClose: () => void }) {
                 <>
                   <div className="flex gap-2 overflow-x-auto pb-2">
                     {days.map((day) => (
-                      <button
+                      <Button
                         key={day.date}
                         type="button"
+                        variant="outline"
+                        aria-pressed={selectedDate === day.date}
                         onClick={() => {
                           setActiveDate(day.date);
                           setForm((f) => ({ ...f, slotStart: "" }));
                         }}
                         className={cn(
-                          "shrink-0 rounded-xl border px-4 py-2.5 text-sm transition-colors",
+                          "min-h-11 shrink-0 rounded-control border px-4 py-2.5 text-sm transition-colors",
                           selectedDate === day.date
                             ? "border-primary bg-primary/15"
                             : "border-border bg-surface-2/60 text-muted-foreground hover:text-foreground",
                         )}
                       >
                         {day.label}
-                      </button>
+                      </Button>
                     ))}
                   </div>
 
                   <div className="mt-4 grid grid-cols-3 gap-2 sm:grid-cols-4">
                     {selectedDay?.slots.map((slot) => (
-                      <button
+                      <Button
                         key={slot.start}
                         type="button"
+                        variant="outline"
+                        aria-pressed={form.slotStart === slot.start}
                         onClick={() => setForm((f) => ({ ...f, slotStart: slot.start }))}
                         className={cn(
-                          "rounded-xl border py-3 text-sm transition-all",
+                          "min-h-11 rounded-control border py-3 text-sm transition-all",
                           form.slotStart === slot.start
                             ? "border-accent bg-accent/15 text-foreground"
                             : "border-border bg-surface-2/60 text-muted-foreground hover:text-foreground",
                         )}
                       >
                         {slot.label}
-                      </button>
+                      </Button>
                     ))}
                   </div>
 
@@ -482,7 +487,7 @@ export function BookingFlow({ onClose }: { onClose: () => void }) {
                   details I provided for that purpose.
                 </span>
               </label>
-              {error ? <p className="text-sm text-destructive sm:col-span-2">{error}</p> : null}
+              {error ? <p role="alert" className="text-sm text-destructive sm:col-span-2">{error}</p> : null}
             </div>
           ) : null}
         </div>
@@ -502,23 +507,22 @@ export function BookingFlow({ onClose }: { onClose: () => void }) {
             </Button>
           ) : (
             <Button
-              disabled={
-                submit.isPending ||
-                !form.consent ||
-                form.fullName.trim().length < 2 ||
-                !form.email.includes("@") ||
-                form.phone.trim().length < 5 ||
-                !form.slotStart
-              }
-              onClick={() =>
+              disabled={submit.isPending}
+              onClick={() => {
+                if (!form.consent || form.fullName.trim().length < 2 || !form.email.includes("@") || form.phone.trim().length < 5 || !form.slotStart) {
+                  setError("Complete your name, email and phone, then accept the contact consent to continue.");
+                  track("form_validation_error", { form: "consultation", step: "details" });
+                  return;
+                }
+                setError(null);
                 submit.mutate({
                   data: {
                     ...form,
                     consent: true as const,
                     visitorTimezone: Intl.DateTimeFormat().resolvedOptions().timeZone ?? "",
                   },
-                })
-              }
+                });
+              }}
             >
               {submit.isPending ? (
                 <Loader2 className="size-4 animate-spin" />

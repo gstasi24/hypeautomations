@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { ProductNav } from "@/components/private-ai/ProductNav";
 import { ModelToggle } from "@/components/private-ai/Pricing";
@@ -207,23 +208,13 @@ function PlanStep({
       <div className="mt-5">
         <ModelToggle model={plan.model} onChange={(model) => setPlan({ ...plan, model })} />
       </div>
-      <div className="mt-5 space-y-3" role="radiogroup" aria-label="Tier">
-        {TIERS.map((t, index) => (
-          <button
+      <RadioGroup value={plan.tier} onValueChange={(value) => setPlan({ ...plan, tier: value as Tier })} className="mt-5 space-y-3" aria-label="Tier">
+        {TIERS.map((t) => (
+          <RadioGroupItem
             key={t}
-            role="radio"
-            aria-checked={plan.tier === t}
-            onClick={() => setPlan({ ...plan, tier: t })}
-            onKeyDown={(event) => {
-              if (event.key !== "ArrowUp" && event.key !== "ArrowDown") return;
-              event.preventDefault();
-              const direction = event.key === "ArrowDown" ? 1 : -1;
-              const next = TIERS[(index + direction + TIERS.length) % TIERS.length];
-              if (next) setPlan({ ...plan, tier: next });
-            }}
-            tabIndex={plan.tier === t ? 0 : -1}
+            value={t}
             className={cn(
-              "flex w-full items-center justify-between gap-4 rounded-panel border p-5 text-left transition-colors",
+              "h-auto w-full aspect-auto items-center justify-between gap-4 rounded-panel border p-5 text-left transition-colors",
               plan.tier === t ? "border-primary/70 bg-surface" : "border-border hover:border-border-strong",
             )}
           >
@@ -237,9 +228,9 @@ function PlanStep({
                 <span className="block text-xs text-muted-foreground">+ {formatEuro(MAINTENANCE_CENTS)}/year maintenance</span>
               )}
             </span>
-          </button>
+          </RadioGroupItem>
         ))}
-      </div>
+      </RadioGroup>
       <div className="mt-6 flex items-center justify-between gap-4">
         <Link to="/private-ai" hash="pricing" className="text-sm text-muted-foreground hover:text-foreground">
           Compare plans
@@ -358,11 +349,11 @@ function AccountStep({ plan, onBack }: { plan: { tier: Tier; model: PaymentModel
       </form>
 
       <div className="mt-5 flex flex-wrap justify-between gap-3 text-sm text-muted-foreground">
-        <button onClick={onBack} className="hover:text-foreground">Back to plan</button>
+        <Button type="button" variant="link" className="h-11 px-0" onClick={onBack}>Back to plan</Button>
         <div className="flex gap-4">
-          {mode !== "signin" && <button onClick={() => setMode("signin")} className="hover:text-foreground">I have an account</button>}
-          {mode !== "signup" && <button onClick={() => setMode("signup")} className="hover:text-foreground">Create account</button>}
-          {mode === "signin" && <button onClick={() => setMode("forgot")} className="hover:text-foreground">Forgot password?</button>}
+          {mode !== "signin" && <Button type="button" variant="link" className="h-11 px-0" onClick={() => setMode("signin")}>I have an account</Button>}
+          {mode !== "signup" && <Button type="button" variant="link" className="h-11 px-0" onClick={() => setMode("signup")}>Create account</Button>}
+          {mode === "signin" && <Button type="button" variant="link" className="h-11 px-0" onClick={() => setMode("forgot")}>Forgot password?</Button>}
         </div>
       </div>
     </section>
@@ -466,9 +457,9 @@ function DetailsStep({
           <Input id="website" type="text" inputMode="url" autoComplete="url" value={f.website} onChange={(e) => setF({ ...f, website: e.target.value })} />
         </Field>
         <div className="space-y-2">
-          <Label>Primary use case</Label>
+           <Label htmlFor="primary-use-case">Primary use case</Label>
            <Select value={f.use_case} onValueChange={(v) => setF({ ...f, use_case: v })}>
-             <SelectTrigger aria-invalid={Boolean(error && !f.use_case)}><SelectValue placeholder="Choose one" /></SelectTrigger>
+              <SelectTrigger id="primary-use-case" aria-invalid={Boolean(error && !f.use_case)}><SelectValue placeholder="Choose one" /></SelectTrigger>
             <SelectContent>
               {USE_CASES.map((u) => <SelectItem key={u} value={u}>{u}</SelectItem>)}
             </SelectContent>
@@ -482,7 +473,7 @@ function DetailsStep({
         </label>
          {error && <p role="alert" className="text-sm text-destructive">{error}</p>}
         <div className="flex items-center justify-between">
-          <button type="button" onClick={onBack} className="text-sm text-muted-foreground hover:text-foreground">Change plan</button>
+          <Button type="button" variant="link" className="h-11 px-0" onClick={onBack}>Change plan</Button>
           <Button type="submit" size="lg" disabled={loading}>
             {loading && <Loader2 className="size-4 animate-spin" />} Review order
           </Button>
@@ -571,8 +562,8 @@ function ReviewStep({
         <Row k="Primary use case" v={c?.use_case ?? "…"} />
       </dl>
       <div className="mt-3 flex gap-4 text-sm text-muted-foreground">
-        <button onClick={onChangePlan} className="hover:text-foreground">Change plan</button>
-        <button onClick={onEdit} className="hover:text-foreground">Edit details</button>
+        <Button type="button" variant="link" className="h-11 px-0" onClick={onChangePlan}>Change plan</Button>
+        <Button type="button" variant="link" className="h-11 px-0" onClick={onEdit}>Edit details</Button>
       </div>
 
       {paying && state === "pending" ? (
