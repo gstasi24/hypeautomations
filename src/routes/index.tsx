@@ -1,24 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { PrivateAiExperience } from "@/components/private-ai/PrivateAiExperience";
 
-import { BookingProvider } from "@/components/booking/BookingProvider";
-import { Navbar } from "@/components/site/Navbar";
-import { Footer } from "@/components/site/Footer";
-import { StickyCta } from "@/components/site/StickyCta";
-import { Hero } from "@/components/sections/Hero";
-import { PatternInterrupt } from "@/components/sections/PatternInterrupt";
-import { BrokenChain } from "@/components/sections/BrokenChain";
-import { WhatWeAutomate } from "@/components/sections/WhatWeAutomate";
-import { Integrations } from "@/components/sections/Integrations";
-import { UseCases } from "@/components/sections/UseCases";
-import { Calculator } from "@/components/sections/Calculator";
-import { HowItWorks } from "@/components/sections/HowItWorks";
-import { Faq } from "@/components/sections/Faq";
-import { FinalCta } from "@/components/sections/FinalCta";
-import { PrivateAiTeaser } from "@/components/sections/PrivateAiTeaser";
-
-const TITLE = "Hype Automations | AI Automation Systems for Growing Businesses";
+const TITLE = "Hype Private AI | Your Private AI Operator";
 const DESCRIPTION =
-  "We automate lead follow-up, WhatsApp replies, CRM updates and bookings with AI systems built around the tools you already use. Book a free consultation.";
+  "A private AI operator built around your business, designed to work across your connected tools, remember context and help execute everyday workflows with human approval where it matters.";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -31,30 +16,5 @@ export const Route = createFileRoute("/")({
       { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
-  component: Index,
+  component: PrivateAiExperience,
 });
-
-function Index() {
-  return (
-    <BookingProvider>
-      <div className="min-h-screen bg-background text-foreground">
-        <Navbar />
-        <main className="pb-20 lg:pb-0">
-          <Hero />
-          <PatternInterrupt />
-          <BrokenChain />
-          <WhatWeAutomate />
-          <Integrations />
-          <UseCases />
-          <Calculator />
-          <HowItWorks />
-          <PrivateAiTeaser />
-          <Faq />
-          <FinalCta />
-        </main>
-        <Footer />
-        <StickyCta />
-      </div>
-    </BookingProvider>
-  );
-}

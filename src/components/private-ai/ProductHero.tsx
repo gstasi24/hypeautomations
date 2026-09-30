@@ -78,7 +78,7 @@ export function ProductHero() {
             {/* Core + tools */}
             <div className="relative mx-auto grid grid-cols-4 gap-2 sm:gap-3">
               {TOOLS.slice(0, 4).map((t, i) => (
-                <ToolChip key={t.label} {...t} active={s >= 2} delay={i} />
+                <ToolChip key={t.label} {...t} active={s >= 1} delay={i} />
               ))}
               <div className="col-span-4 flex items-center justify-center py-3">
                 <div className="relative flex size-24 items-center justify-center rounded-full border border-border-strong bg-background">
@@ -89,7 +89,7 @@ export function ProductHero() {
                 </div>
               </div>
               {TOOLS.slice(4).map((t, i) => (
-                <ToolChip key={t.label} {...t} active={s >= 2} delay={i + 4} />
+                <ToolChip key={t.label} {...t} active={s >= 1} delay={i + 4} />
               ))}
             </div>
 
@@ -118,7 +118,7 @@ export function ProductHero() {
               <div
                 className={cn(
                   "max-w-[90%] rounded-2xl rounded-bl-md border border-border bg-background px-4 py-3 transition-opacity duration-500",
-                  s >= 4 ? "opacity-100" : "opacity-30",
+                   s >= 2 ? "opacity-100" : "opacity-30",
                 )}
               >
                 I found 3 priority items, 2 meetings and 4 pending follow-ups. I've prepared the

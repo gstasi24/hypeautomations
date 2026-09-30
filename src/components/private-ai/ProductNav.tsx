@@ -17,7 +17,7 @@ export function ProductNav({ minimal = false }: { minimal?: boolean }) {
   const [menuOpen, setMenuOpen] = useState(false);
   return (
     <header className="fixed inset-x-0 top-0 z-50 border-b border-border bg-background/75 backdrop-blur-xl">
-      <nav className="mx-auto flex h-16 w-full max-w-7xl items-center justify-between gap-4 px-5 lg:px-8">
+      <nav className="mx-auto grid h-16 w-full max-w-7xl grid-cols-[minmax(0,1fr)_auto] items-center gap-3 px-5 lg:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] lg:px-8">
         <div className="flex min-w-0 items-center gap-3">
           <Link to="/" aria-label="Hype Automations home">
             <Logo />
@@ -31,19 +31,19 @@ export function ProductNav({ minimal = false }: { minimal?: boolean }) {
           </Link>
         </div>
         {!minimal ? (
-          <div className="hidden items-center gap-6 text-sm text-muted-foreground lg:flex">
+          <div className="hidden items-center justify-center gap-6 text-sm text-muted-foreground lg:flex">
             <ProductsMenu />
             <Link to="/" hash="what-it-does" className="hover:text-foreground">Capabilities</Link>
             <Link to="/" hash="control" className="hover:text-foreground">Control</Link>
             <Link to="/" hash="pricing" className="hover:text-foreground">Pricing</Link>
           </div>
         ) : null}
-        <div className="flex items-center gap-2">
+        <div className="flex shrink-0 items-center justify-end gap-1 sm:gap-2">
           <Button variant="ghost" size="sm" asChild>
             <Link to="/app">Sign in</Link>
           </Button>
           {!minimal && (
-            <Button size="sm" asChild>
+            <Button size="sm" className="hidden sm:inline-flex" asChild>
               <Link to="/" hash="pricing">Choose Your AI</Link>
             </Button>
           )}
