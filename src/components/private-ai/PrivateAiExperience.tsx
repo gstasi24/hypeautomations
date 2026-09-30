@@ -4,14 +4,12 @@ import { ArrowRight } from "lucide-react";
 import { ProductNav } from "@/components/private-ai/ProductNav";
 import { ProductHero } from "@/components/private-ai/ProductHero";
 import {
-  Control,
-  Ecosystem,
-  Examples,
-  Interrupt,
-  NotAChatbot,
-  Privacy,
+  CapabilityStory,
+  Demonstration,
+  Outcomes,
+  Personalization,
   ProductFinalCta,
-  Roles,
+  TrustControl,
 } from "@/components/private-ai/Story";
 import { Pricing } from "@/components/private-ai/Pricing";
 import { captureUtm } from "@/lib/private-ai/analytics";
@@ -26,13 +24,11 @@ export function PrivateAiExperience() {
       <ProductNav />
       <main>
         <ProductHero />
-        <Interrupt />
-        <NotAChatbot />
-        <Examples />
-        <Roles />
-        <Ecosystem />
-        <Control />
-        <Privacy />
+        <Demonstration />
+        <CapabilityStory />
+        <Personalization />
+        <Outcomes />
+        <TrustControl />
         <Pricing />
         <CustomWorkflowsBridge />
         <ProductFinalCta />
@@ -52,7 +48,7 @@ export function PrivateAiExperience() {
 
 function CustomWorkflowsBridge() {
   return (
-    <section className="relative py-16 lg:py-24" aria-labelledby="custom-workflows-bridge-title">
+    <section className="scene-band relative" aria-labelledby="custom-workflows-bridge-title">
       <div className="mx-auto w-full max-w-6xl px-5 lg:px-8">
         <div className="border-y border-border py-10 sm:py-12">
           <div className="grid gap-10 lg:grid-cols-[1fr_0.9fr] lg:items-center">

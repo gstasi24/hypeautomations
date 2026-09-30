@@ -24,6 +24,7 @@ import {
   Clock,
   Loader2,
 } from "lucide-react";
+import { track } from "@/lib/private-ai/analytics";
 
 const STEP_LABELS = ["Business", "Goals", "Enquiries", "Tools", "Time", "Details"];
 
@@ -117,6 +118,7 @@ export function BookingFlow({ onClose }: { onClose: () => void }) {
   const [confirmation, setConfirmation] = useState<BookingConfirmation | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [activeDate, setActiveDate] = useState<string | null>(null);
+  const [started, setStarted] = useState(false);
 
   const fetchAvailability = useServerFn(getAvailability);
   const availabilityQuery = useQuery({
@@ -133,13 +135,17 @@ export function BookingFlow({ onClose }: { onClose: () => void }) {
       if (result.ok) {
         setConfirmation(result.booking);
         setError(null);
+        track("form_completed", { form: "consultation" });
       } else {
         setError(result.error);
         availabilityQuery.refetch();
         setStep(4);
       }
     },
-    onError: () => setError("Something went wrong. Please try again."),
+    onError: () => {
+      setError("Something went wrong. Please try again.");
+      track("form_validation_error", { form: "consultation" });
+    },
   });
 
   const availability = availabilityQuery.data;
@@ -237,7 +243,7 @@ export function BookingFlow({ onClose }: { onClose: () => void }) {
   }
 
   return (
-    <section className="relative overflow-hidden p-6 sm:p-9">
+    <section className="relative overflow-hidden p-6 sm:p-9" onFocus={() => { if (!started) { setStarted(true); track("form_started", { form: "consultation" }); } }}>
       <div className="relative">
         <header>
           <p className="text-xs text-muted-foreground">Free consultation</p>
@@ -251,7 +257,7 @@ export function BookingFlow({ onClose }: { onClose: () => void }) {
           </h2>
         </header>
 
-        <div className="mt-5 flex gap-1.5" aria-hidden="true">
+        <div className="mt-5 flex gap-1.5" role="progressbar" aria-valuemin={1} aria-valuemax={STEP_LABELS.length} aria-valuenow={step + 1} aria-label={`Step ${step + 1} of ${STEP_LABELS.length}`}>
           {STEP_LABELS.map((label, index) => (
             <span
               key={label}
@@ -406,6 +412,7 @@ export function BookingFlow({ onClose }: { onClose: () => void }) {
                 <Label htmlFor="full-name">Name *</Label>
                 <Input
                   id="full-name"
+                  autoComplete="name"
                   value={form.fullName}
                   onChange={(e) => setForm((f) => ({ ...f, fullName: e.target.value }))}
                   required
@@ -415,6 +422,7 @@ export function BookingFlow({ onClose }: { onClose: () => void }) {
                 <Label htmlFor="company">Company</Label>
                 <Input
                   id="company"
+                  autoComplete="organization"
                   value={form.company}
                   onChange={(e) => setForm((f) => ({ ...f, company: e.target.value }))}
                 />
@@ -424,16 +432,18 @@ export function BookingFlow({ onClose }: { onClose: () => void }) {
                 <Input
                   id="email"
                   type="email"
+                  autoComplete="email"
                   value={form.email}
                   onChange={(e) => setForm((f) => ({ ...f, email: e.target.value }))}
                   required
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="phone">Phone / WhatsApp *</Label>
+                <Label htmlFor="phone">Phone *</Label>
                 <Input
                   id="phone"
                   type="tel"
+                  autoComplete="tel"
                   value={form.phone}
                   onChange={(e) => setForm((f) => ({ ...f, phone: e.target.value }))}
                   required
@@ -443,6 +453,9 @@ export function BookingFlow({ onClose }: { onClose: () => void }) {
                 <Label htmlFor="website">Website (optional)</Label>
                 <Input
                   id="website"
+                  type="url"
+                  inputMode="url"
+                  autoComplete="url"
                   value={form.website}
                   onChange={(e) => setForm((f) => ({ ...f, website: e.target.value }))}
                   placeholder="yourcompany.com"

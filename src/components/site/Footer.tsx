@@ -20,28 +20,28 @@ export function Footer() {
           <nav className="grid grid-cols-2 gap-x-12 gap-y-3 text-sm">
             <Link to="/" className="font-semibold text-link hover:text-foreground">Hype Private AI</Link>
             <Link to="/custom-workflows" className="text-muted-foreground hover:text-foreground">Custom Workflows</Link>
-            <a href="#solutions" className="text-muted-foreground hover:text-foreground">
+            <Link to="/custom-workflows" hash="solutions" className="text-muted-foreground hover:text-foreground">
               Solutions
-            </a>
-            <a href="#automations" className="text-muted-foreground hover:text-foreground">
+            </Link>
+            <Link to="/custom-workflows" hash="automations" className="text-muted-foreground hover:text-foreground">
               Automations
-            </a>
-            <a href="#how-it-works" className="text-muted-foreground hover:text-foreground">
+            </Link>
+            <Link to="/custom-workflows" hash="how-it-works" className="text-muted-foreground hover:text-foreground">
               How it works
-            </a>
+            </Link>
             <button
               type="button"
               onClick={openBooking}
-              className="text-left text-muted-foreground hover:text-foreground"
+               className="min-h-11 text-left text-muted-foreground hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
             >
               Book a free consultation
             </button>
-            <a href="#faq" className="text-muted-foreground hover:text-foreground">
+            <Link to="/custom-workflows" hash="faq" className="text-muted-foreground hover:text-foreground">
               FAQ
-            </a>
-            <a href="#integrations" className="text-muted-foreground hover:text-foreground">
+            </Link>
+            <Link to="/custom-workflows" hash="integrations" className="text-muted-foreground hover:text-foreground">
               Integrations
-            </a>
+            </Link>
           </nav>
         </div>
 
