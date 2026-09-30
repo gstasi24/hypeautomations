@@ -16,6 +16,12 @@ export type PaiEvent =
   | "checkout_failed"
   | "app_opened"
   | "billing_viewed";
+  | "demo_interaction"
+  | "form_started"
+  | "form_validation_error"
+  | "form_completed"
+  | "setup_continued"
+  | "custom_workflows_cta_click";
 
 export function track(event: PaiEvent, props: Record<string, unknown> = {}) {
   if (typeof window === "undefined") return;

@@ -1,4 +1,5 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
+import { cn } from "@/lib/utils";
 
 export function useInView<T extends HTMLElement>(options?: { threshold?: number; once?: boolean }) {
   const ref = useRef<T | null>(null);
@@ -29,4 +30,25 @@ export function useInView<T extends HTMLElement>(options?: { threshold?: number;
   }, [options?.threshold, options?.once]);
 
   return { ref, inView };
+}
+
+export function Reveal({
+  children,
+  className,
+  delay = 0,
+}: {
+  children: ReactNode;
+  className?: string;
+  delay?: number;
+}) {
+  const { ref, inView } = useInView<HTMLDivElement>({ threshold: 0.12 });
+  return (
+    <div
+      ref={ref}
+      className={cn("scene-reveal", inView && "scene-reveal-visible", className)}
+      style={{ "--reveal-delay": `${delay}ms` } as React.CSSProperties}
+    >
+      {children}
+    </div>
+  );
 }
