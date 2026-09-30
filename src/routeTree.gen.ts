@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AuthRouteImport } from './routes/auth'
+import { Route as CustomWorkflowsRouteImport } from './routes/custom-workflows'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
 import { Route as AuthenticatedAppRouteImport } from './routes/_authenticated/app'
@@ -33,6 +34,11 @@ const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
 const AuthRoute = AuthRouteImport.update({
   id: '/auth',
   path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CustomWorkflowsRoute = CustomWorkflowsRouteImport.update({
+  id: '/custom-workflows',
+  path: '/custom-workflows',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ResetPasswordRoute = ResetPasswordRouteImport.update({
@@ -80,6 +86,7 @@ const AuthenticatedAppSectionRoute = AuthenticatedAppSectionRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/custom-workflows': typeof CustomWorkflowsRoute
   '/reset-password': typeof ResetPasswordRoute
   '/admin': typeof AuthenticatedAdminRoute
   '/app': typeof AuthenticatedAppRouteWithChildren
@@ -92,6 +99,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/custom-workflows': typeof CustomWorkflowsRoute
   '/reset-password': typeof ResetPasswordRoute
   '/admin': typeof AuthenticatedAdminRoute
   '/private-ai/checkout': typeof PrivateAiCheckoutRoute
@@ -105,6 +113,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
+  '/custom-workflows': typeof CustomWorkflowsRoute
   '/reset-password': typeof ResetPasswordRoute
   '/_authenticated/admin': typeof AuthenticatedAdminRoute
   '/_authenticated/app': typeof AuthenticatedAppRouteWithChildren
@@ -119,6 +128,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/auth'
+    | '/custom-workflows'
     | '/reset-password'
     | '/admin'
     | '/app'
@@ -131,6 +141,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/auth'
+    | '/custom-workflows'
     | '/reset-password'
     | '/admin'
     | '/private-ai/checkout'
@@ -143,6 +154,7 @@ export interface FileRouteTypes {
     | '/'
     | '/_authenticated'
     | '/auth'
+    | '/custom-workflows'
     | '/reset-password'
     | '/_authenticated/admin'
     | '/_authenticated/app'
@@ -157,6 +169,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AuthRoute: typeof AuthRoute
+  CustomWorkflowsRoute: typeof CustomWorkflowsRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
   PrivateAiCheckoutRoute: typeof PrivateAiCheckoutRoute
   PrivateAiIndexRoute: typeof PrivateAiIndexRoute
@@ -183,6 +196,13 @@ declare module '@tanstack/react-router' {
       path: '/auth'
       fullPath: '/auth'
       preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/custom-workflows': {
+      id: '/custom-workflows'
+      path: '/custom-workflows'
+      fullPath: '/custom-workflows'
+      preLoaderRoute: typeof CustomWorkflowsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/reset-password': {
@@ -276,6 +296,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AuthRoute: AuthRoute,
+  CustomWorkflowsRoute: CustomWorkflowsRoute,
   ResetPasswordRoute: ResetPasswordRoute,
   PrivateAiCheckoutRoute: PrivateAiCheckoutRoute,
   PrivateAiIndexRoute: PrivateAiIndexRoute,

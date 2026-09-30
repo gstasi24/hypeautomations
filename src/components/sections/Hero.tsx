@@ -14,24 +14,26 @@ export function Hero() {
 
       <div className="relative mx-auto grid w-full max-w-6xl items-center gap-12 px-5 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16 lg:px-8">
         <div className="min-w-0">
-          <h1 className="type-display">We automate the work you shouldn't be doing manually.</h1>
+          <p className="text-xs font-semibold uppercase tracking-[0.28em] text-link">Hype Custom Workflows</p>
+          <h1 className="type-display mt-5">Automate smarter. Build exactly what your business needs.</h1>
 
           <p className="mt-6 max-w-xl text-lg leading-relaxed text-muted-foreground sm:text-xl">
-            We connect AI, WhatsApp, your CRM, email and the tools you already use, so leads,
-            replies, follow-ups and bookings happen without anyone doing them by hand.
+            Custom AI-powered workflows designed around the way your business actually operates.
+            Connect tools, remove repetitive work and build automated processes across sales,
+            operations, customer service and internal workflows.
           </p>
 
           <div className="mt-8 flex flex-col items-start gap-4 sm:flex-row sm:items-center">
             <Button size="lg" onClick={openBooking}>
-              Book a free consultation
+              Book a Consultation
             </Button>
             <Button variant="link" size="lg" className="px-0" asChild>
-              <a href="#how-it-works">See how it works</a>
+              <a href="#how-it-works">See How It Works</a>
             </Button>
           </div>
 
           <p className="mt-4 text-sm text-muted-foreground">
-            Free, no commitment. We look at your process and show you what could run on its own.
+            Private AI is one operator across your business. Custom Workflows automate a specific process end to end.
           </p>
         </div>
 

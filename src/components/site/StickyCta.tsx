@@ -23,7 +23,7 @@ export function StickyCta() {
       )}
     >
       <Button size="lg" className="w-full" onClick={openBooking}>
-        Book a free consultation
+        Book a Consultation
       </Button>
     </div>
   );

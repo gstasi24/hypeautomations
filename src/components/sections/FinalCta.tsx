@@ -45,7 +45,7 @@ export function FinalCta() {
         </ul>
 
         <Button size="lg" className="mt-10" onClick={openBooking}>
-          Book a free consultation
+          Book a Consultation
         </Button>
         <p className="mt-4 text-sm text-muted-foreground">
           Free, no commitment. You leave with a plan even if we never work together.
