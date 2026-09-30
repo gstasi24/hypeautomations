@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { ArrowRight, Briefcase, CalendarDays, Check, Compass, FileText, Heart, Lock, Mail, Pause, Scale, ShieldCheck, Sparkles, TrendingUp, Users, Workflow } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Reveal } from "@/components/site/Reveal";
 import { track } from "@/lib/private-ai/analytics";
 import { cn } from "@/lib/utils";
@@ -14,6 +15,7 @@ const REQUEST_STEPS = [
 
 export function Demonstration() {
   const [active, setActive] = useState(0);
+  const activeValue = String(active);
   return (
     <section id="demonstration" className="scene-band scroll-mt-20" aria-labelledby="demo-title">
       <div className="mx-auto max-w-6xl px-5 lg:px-8">
@@ -21,23 +23,23 @@ export function Demonstration() {
           <p className="text-xs font-semibold uppercase tracking-[0.24em] text-link">Show, don't tell</p>
           <h2 id="demo-title" className="type-statement mx-auto mt-4 max-w-4xl">One request becomes coordinated work.</h2>
         </Reveal>
-        <div className="mt-12 grid gap-4 lg:grid-cols-[0.75fr_1.25fr] lg:items-stretch">
-          <div className="flex flex-col gap-2" role="tablist" aria-label="Illustrative request sequence">
+        <Tabs value={activeValue} onValueChange={(value) => { const index = Number(value); setActive(index); track("demo_interaction", { step: REQUEST_STEPS[index]?.label }); }} className="mt-12 grid gap-4 lg:grid-cols-[0.75fr_1.25fr] lg:items-stretch" orientation="vertical">
+          <TabsList className="flex h-auto flex-col gap-2 bg-transparent p-0" aria-label="Illustrative request sequence">
             {REQUEST_STEPS.map((step, index) => (
-              <button key={step.label} role="tab" aria-selected={active === index} aria-controls="request-demo" onClick={() => { setActive(index); track("demo_interaction", { step: step.label }); }} className={cn("min-h-16 rounded-control border px-5 py-4 text-left transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring", active === index ? "border-primary/60 bg-surface text-foreground" : "border-border text-muted-foreground hover:border-border-strong hover:text-foreground")}>
+              <TabsTrigger key={step.label} value={String(index)} className={cn("min-h-16 w-full justify-start rounded-control border px-5 py-4 text-left transition-colors", active === index ? "border-primary/60 bg-surface text-foreground" : "border-border bg-transparent text-muted-foreground hover:border-border-strong hover:text-foreground")}>
                 <span className="text-xs font-bold uppercase tracking-[0.18em]">0{index + 1} · {step.label}</span>
-              </button>
+              </TabsTrigger>
             ))}
-          </div>
-          <div id="request-demo" role="tabpanel" className="spotlight-panel min-h-72 rounded-panel border border-border bg-surface p-6 sm:p-9">
+          </TabsList>
+          {REQUEST_STEPS.map((step, index) => <TabsContent key={step.label} value={String(index)} className="spotlight-panel m-0 min-h-72 rounded-panel border border-border bg-surface p-6 sm:p-9">
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-link">{REQUEST_STEPS[active]?.label}</p>
             <p className="mt-5 max-w-2xl text-2xl font-semibold leading-snug sm:text-3xl">{REQUEST_STEPS[active]?.text}</p>
             {active === 3 ? (
               <div className="mt-6 rounded-control border border-border bg-background/70 p-4 text-left">
                 <p className="text-sm leading-relaxed text-muted-foreground">I found 3 priority items, 2 meetings and 4 pending follow-ups. I've prepared the changes. Review before I apply them?</p>
-                <div className="mt-4 flex flex-wrap gap-2" aria-label="Illustrative actions">
-                  <span className="inline-flex min-h-11 items-center rounded-control border border-border px-4 text-sm font-semibold">Review changes</span>
-                  <span className="inline-flex min-h-11 items-center rounded-control bg-brand-gradient px-4 text-sm font-semibold text-primary-foreground">Approve</span>
+                <div className="mt-4 flex flex-wrap gap-x-5 gap-y-2 text-sm font-semibold" aria-label="Illustrative actions">
+                  <span className="text-foreground">Review changes</span>
+                  <span className="text-link">Approval required</span>
                 </div>
               </div>
             ) : null}
@@ -47,8 +49,8 @@ export function Demonstration() {
                 <span className="ml-auto">Illustrative only</span>
               </div>
             </div>
-          </div>
-        </div>
+          </TabsContent>)}
+        </Tabs>
       </div>
     </section>
   );

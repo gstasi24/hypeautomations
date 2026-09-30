@@ -2,6 +2,8 @@ import { useEffect, useRef, useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { cn } from "@/lib/utils";
 import { track } from "@/lib/private-ai/analytics";
 import {
@@ -24,30 +26,20 @@ export function ModelToggle({
   onChange: (m: PaymentModel) => void;
 }) {
   return (
-    <div role="radiogroup" aria-label="Payment model" className="inline-flex rounded-full border border-border bg-surface p-1">
-      {(["one_time", "monthly"] as const).map((m, index, models) => (
-        <button
+    <RadioGroup value={model} onValueChange={(value) => onChange(value as PaymentModel)} aria-label="Payment model" className="inline-flex grid-cols-2 rounded-full border border-border bg-surface p-1">
+      {(["one_time", "monthly"] as const).map((m) => (
+        <RadioGroupItem
           key={m}
-          role="radio"
-          aria-checked={model === m}
-          onClick={() => onChange(m)}
-          onKeyDown={(event) => {
-            if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") return;
-            event.preventDefault();
-            const direction = event.key === "ArrowRight" ? 1 : -1;
-            const next = models[(index + direction + models.length) % models.length];
-            if (next) onChange(next);
-          }}
-          tabIndex={model === m ? 0 : -1}
+          value={m}
           className={cn(
-            "min-h-11 rounded-full px-5 py-2 text-xs font-semibold uppercase tracking-[0.16em] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
+            "h-11 w-auto aspect-auto rounded-full border-0 px-5 py-2 text-xs font-semibold uppercase tracking-[0.16em] transition-colors [&>span]:hidden",
             model === m ? "bg-brand-gradient text-primary-foreground" : "text-muted-foreground hover:text-foreground",
           )}
         >
           {m === "one_time" ? "One-time" : "Monthly"}
-        </button>
+        </RadioGroupItem>
       ))}
-    </div>
+    </RadioGroup>
   );
 }
 
@@ -163,20 +155,22 @@ function Comparison() {
       <h3 className="type-title text-center">Only the differences</h3>
       {/* Mobile: one tier at a time */}
       <div className="mt-6 lg:hidden">
-        <div className="grid grid-cols-3 gap-1 rounded-control border border-border bg-surface p-1">
+        <Tabs value={mobileTier} onValueChange={(value) => setMobileTier(value as Tier)}>
+        <TabsList aria-label="Compare plan" className="grid h-auto w-full grid-cols-3 gap-1 rounded-control border border-border bg-surface p-1">
           {TIERS.map((t) => (
-            <button
+            <TabsTrigger
               key={t}
-              onClick={() => setMobileTier(t)}
+              value={t}
               className={cn(
-                "rounded-md py-2 text-xs font-semibold uppercase tracking-wider",
+                "min-h-11 rounded-md py-2 text-xs font-semibold uppercase tracking-wider",
                 mobileTier === t ? "bg-surface-2 text-foreground" : "text-muted-foreground",
               )}
             >
               {TIER_INFO[t].label}
-            </button>
+            </TabsTrigger>
           ))}
-        </div>
+        </TabsList>
+        </Tabs>
         <dl className="mt-4 divide-y divide-border rounded-panel border border-border bg-surface">
           {COMPARISON.map((row) => (
             <div key={row.label} className="flex justify-between gap-4 px-4 py-3 text-sm">
