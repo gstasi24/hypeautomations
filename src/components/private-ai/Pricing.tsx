@@ -25,12 +25,20 @@ export function ModelToggle({
 }) {
   return (
     <div role="radiogroup" aria-label="Payment model" className="inline-flex rounded-full border border-border bg-surface p-1">
-      {(["one_time", "monthly"] as const).map((m) => (
+      {(["one_time", "monthly"] as const).map((m, index, models) => (
         <button
           key={m}
           role="radio"
           aria-checked={model === m}
           onClick={() => onChange(m)}
+          onKeyDown={(event) => {
+            if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") return;
+            event.preventDefault();
+            const direction = event.key === "ArrowRight" ? 1 : -1;
+            const next = models[(index + direction + models.length) % models.length];
+            if (next) onChange(next);
+          }}
+          tabIndex={model === m ? 0 : -1}
           className={cn(
             "min-h-11 rounded-full px-5 py-2 text-xs font-semibold uppercase tracking-[0.16em] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
             model === m ? "bg-brand-gradient text-primary-foreground" : "text-muted-foreground hover:text-foreground",

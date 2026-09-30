@@ -208,12 +208,20 @@ function PlanStep({
         <ModelToggle model={plan.model} onChange={(model) => setPlan({ ...plan, model })} />
       </div>
       <div className="mt-5 space-y-3" role="radiogroup" aria-label="Tier">
-        {TIERS.map((t) => (
+        {TIERS.map((t, index) => (
           <button
             key={t}
             role="radio"
             aria-checked={plan.tier === t}
             onClick={() => setPlan({ ...plan, tier: t })}
+            onKeyDown={(event) => {
+              if (event.key !== "ArrowUp" && event.key !== "ArrowDown") return;
+              event.preventDefault();
+              const direction = event.key === "ArrowDown" ? 1 : -1;
+              const next = TIERS[(index + direction + TIERS.length) % TIERS.length];
+              if (next) setPlan({ ...plan, tier: next });
+            }}
+            tabIndex={plan.tier === t ? 0 : -1}
             className={cn(
               "flex w-full items-center justify-between gap-4 rounded-panel border p-5 text-left transition-colors",
               plan.tier === t ? "border-primary/70 bg-surface" : "border-border hover:border-border-strong",
