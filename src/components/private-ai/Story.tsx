@@ -1,296 +1,169 @@
 import { useState } from "react";
-import {
-  ArrowRight,
-  Briefcase,
-  Check,
-  Compass,
-  Heart,
-  Lock,
-  Pause,
-  Scale,
-  ShieldCheck,
-  Sparkles,
-  Trash2,
-  TrendingUp,
-  Workflow,
-  Eye,
-  KeyRound,
-  Cloud,
-} from "lucide-react";
+import { ArrowRight, Briefcase, CalendarDays, Check, Compass, FileText, Heart, Lock, Mail, Pause, Scale, ShieldCheck, Sparkles, TrendingUp, Users, Workflow } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Statement, Instrument } from "@/components/site/Section";
-import { cn } from "@/lib/utils";
+import { Reveal } from "@/components/site/Reveal";
 import { track } from "@/lib/private-ai/analytics";
+import { cn } from "@/lib/utils";
 
-export function Interrupt() {
+const REQUEST_STEPS = [
+  { label: "Request", text: "Give me today's priorities and move anything non-urgent to tomorrow." },
+  { label: "Understands", text: "Identifies urgency, deadlines, meetings and open follow-ups." },
+  { label: "Acts", text: "Checks calendar, tasks and email, then prepares the changes." },
+  { label: "Reports", text: "Returns a clear summary and waits for approval before applying anything." },
+];
+
+export function Demonstration() {
+  const [active, setActive] = useState(0);
   return (
-    <section className="py-16 lg:py-24">
-      <div className="mx-auto max-w-4xl px-5 text-center lg:px-8">
-        <p className="type-statement">
-          You don't need another dashboard.{" "}
-          <span className="text-gradient">You need your software to work together.</span>
-        </p>
+    <section id="demonstration" className="scene-band scroll-mt-20" aria-labelledby="demo-title">
+      <div className="mx-auto max-w-6xl px-5 lg:px-8">
+        <Reveal className="text-center">
+          <p className="text-xs font-semibold uppercase tracking-[0.24em] text-link">Show, don't tell</p>
+          <h2 id="demo-title" className="type-statement mx-auto mt-4 max-w-4xl">One request becomes coordinated work.</h2>
+        </Reveal>
+        <div className="mt-12 grid gap-4 lg:grid-cols-[0.75fr_1.25fr] lg:items-stretch">
+          <div className="flex flex-col gap-2" role="tablist" aria-label="Illustrative request sequence">
+            {REQUEST_STEPS.map((step, index) => (
+              <button key={step.label} role="tab" aria-selected={active === index} aria-controls="request-demo" onClick={() => { setActive(index); track("demo_interaction", { step: step.label }); }} className={cn("min-h-16 rounded-control border px-5 py-4 text-left transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring", active === index ? "border-primary/60 bg-surface text-foreground" : "border-border text-muted-foreground hover:border-border-strong hover:text-foreground")}>
+                <span className="text-xs font-bold uppercase tracking-[0.18em]">0{index + 1} · {step.label}</span>
+              </button>
+            ))}
+          </div>
+          <div id="request-demo" role="tabpanel" className="spotlight-panel min-h-72 rounded-panel border border-border bg-surface p-6 sm:p-9">
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-link">{REQUEST_STEPS[active]?.label}</p>
+            <p className="mt-5 max-w-2xl text-2xl font-semibold leading-snug sm:text-3xl">{REQUEST_STEPS[active]?.text}</p>
+            <div className="mt-9 border-t border-border pt-5">
+              <div className="flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
+                {[Mail, CalendarDays, Users, FileText].map((Icon, index) => <span key={index} className={cn("inline-flex size-10 items-center justify-center rounded-full border", index <= active ? "border-primary/50 bg-primary/10 text-link" : "border-border")}><Icon className="size-4" aria-hidden="true" /></span>)}
+                <span className="ml-auto">Illustrative only</span>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   );
 }
 
-const CHAT = ["Ask", "Receive answer", "You do the work"];
-const OPERATOR = ["Ask", "Understand", "Check systems", "Prepare actions", "Ask for approval", "Execute", "Report back"];
-
-export function NotAChatbot() {
-  return (
-    <Instrument
-      id="what-it-does"
-      rail="flow"
-      title="Not another chatbot. A private AI operator built around your business."
-      lead="A chat tool gives you an answer. An operator works through your systems and brings the result back for approval."
-      className="scroll-mt-20"
-    >
-      <div className="grid gap-8 lg:grid-cols-[1fr_1.6fr]">
-        <Flow title="Traditional AI chat" steps={CHAT} muted />
-        <Flow title="Private AI operator" steps={OPERATOR} />
-      </div>
-    </Instrument>
-  );
-}
-
-function Flow({ title, steps, muted }: { title: string; steps: string[]; muted?: boolean }) {
-  return (
-    <div>
-      <p className={cn("text-xs font-semibold uppercase tracking-[0.2em]", muted ? "text-muted-foreground" : "text-link")}>
-        {title}
-      </p>
-      <ol className="mt-4 flex flex-wrap items-center gap-2">
-        {steps.map((s, i) => (
-          <li key={s} className="flex items-center gap-2">
-            <span
-              className={cn(
-                "rounded-control border px-3 py-2 text-sm",
-                muted ? "border-dashed border-manual/60 text-muted-foreground" : "border-primary/40",
-                !muted && s === "Ask for approval" && "border-success/60 text-success",
-              )}
-            >
-              {s}
-            </span>
-            {i < steps.length - 1 && <ArrowRight className="size-3.5 text-muted-foreground" />}
-          </li>
-        ))}
-      </ol>
-    </div>
-  );
-}
-
-const EXAMPLES = [
-  {
-    q: "Schedule a call with Priya next week, but avoid Fridays.",
-    steps: ["Checks your calendar and Priya's thread", "Finds open slots Monday–Thursday", "Drafts the invite", "Asks you to approve before sending"],
-  },
-  {
-    q: "Write this week's client update from my email, docs and CRM.",
-    steps: ["Reads recent client emails", "Pulls notes from shared docs", "Checks deal stages in the CRM", "Drafts an update for your review"],
-  },
-  {
-    q: "Chase every invoice unpaid for more than 30 days.",
-    steps: ["Finds invoices older than 30 days", "Matches each to the right contact", "Prepares polite reminders", "Waits for your approval to send"],
-  },
-  {
-    q: "Give me a briefing every Monday morning.",
-    steps: ["Collects meetings, deadlines and open threads", "Highlights what needs you", "Delivers the briefing on schedule"],
-  },
-  {
-    q: "Add everyone from yesterday's webinar to the CRM.",
-    steps: ["Reads the attendee list", "Checks for existing contacts", "Prepares new records and tags", "Asks before creating them"],
-  },
+const CAPABILITIES = [
+  { title: "Communication", text: "Prepare clear replies and follow-ups from the context already in your approved tools.", example: "Draft this week's client update from email, documents and CRM." },
+  { title: "Appointments", text: "Find workable times, respect constraints and prepare the next step for approval.", example: "Schedule Priya next week, but avoid Fridays." },
+  { title: "Operations", text: "Coordinate recurring tasks and handoffs without adding another dashboard to maintain.", example: "Prepare Monday's priorities, deadlines and open threads." },
+  { title: "Records", text: "Keep customer and workflow records ready to update while sensitive writes stay controlled.", example: "Prepare yesterday's webinar contacts for the CRM." },
 ];
 
-export function Examples() {
-  const [i, setI] = useState(0);
-  const ex = EXAMPLES[i]!;
+export function CapabilityStory() {
+  const [active, setActive] = useState(0);
   return (
-    <Statement rail="flow" title="Just tell it what needs to happen." lead="Pick a request to see how it would be handled.">
-      <div className="grid gap-5 lg:grid-cols-[1fr_1fr]">
-        <div className="flex flex-col gap-2">
-          {EXAMPLES.map((e, idx) => (
-            <button
-              key={e.q}
-              onClick={() => setI(idx)}
-              className={cn(
-                "rounded-control border px-4 py-3 text-left text-sm transition-colors",
-                idx === i ? "border-primary/60 bg-surface text-foreground" : "border-border text-muted-foreground hover:text-foreground",
-              )}
-            >
-              "{e.q}"
-            </button>
+    <section id="capabilities" className="scene-band scroll-mt-20 bg-surface/30" aria-labelledby="capability-title">
+      <div className="mx-auto grid max-w-6xl gap-12 px-5 lg:grid-cols-[0.9fr_1.1fr] lg:px-8">
+        <div className="lg:sticky lg:top-28 lg:self-start">
+          <Reveal>
+            <p className="text-xs font-semibold uppercase tracking-[0.24em] text-link">Not another chatbot</p>
+            <h2 id="capability-title" className="type-statement mt-4">Built to move work forward.</h2>
+            <p className="mt-5 max-w-lg text-lg text-muted-foreground">A chat tool answers. Hype Private AI is designed to understand context, prepare action and report back.</p>
+          </Reveal>
+          <div className="mt-8 rounded-panel border border-border bg-background p-6">
+            <p className="text-sm text-muted-foreground">Current request</p>
+            <p className="mt-3 text-xl font-semibold">“{CAPABILITIES[active]?.example}”</p>
+            <div className="mt-6 flex items-center gap-2 text-xs text-success"><Check className="size-4" /> Approval remains with you</div>
+          </div>
+        </div>
+        <div className="space-y-3" role="list">
+          {CAPABILITIES.map((item, index) => (
+            <Reveal key={item.title} delay={index * 70}>
+              <button onClick={() => { setActive(index); track("demo_interaction", { capability: item.title }); }} aria-pressed={active === index} className={cn("group w-full rounded-panel border p-6 text-left transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring sm:p-8", active === index ? "border-primary/60 bg-surface" : "border-border bg-background hover:border-border-strong")}>
+                <span className="text-xs font-semibold text-link">0{index + 1}</span>
+                <h3 className="mt-3 text-2xl font-bold">{item.title}</h3>
+                <p className="mt-3 max-w-xl text-muted-foreground">{item.text}</p>
+              </button>
+            </Reveal>
           ))}
         </div>
-        <div key={i} className="animate-float-in rounded-panel border border-border bg-surface p-6">
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-link">How it would run</p>
-          <ol className="mt-5 space-y-4">
-            {ex.steps.map((s, idx) => (
-              <li key={s} className="flex gap-3 text-sm">
-                <span className="flex size-6 shrink-0 items-center justify-center rounded-full border border-primary/40 text-[11px]">
-                  {idx + 1}
-                </span>
-                {s}
-              </li>
-            ))}
-          </ol>
-          <p className="mt-6 text-xs text-muted-foreground">Illustrative. Exact behavior depends on your plan and connected tools.</p>
-        </div>
       </div>
-    </Statement>
+    </section>
   );
 }
 
 const ROLES = [
-  { key: "executive", title: "Executive Assistant", icon: Briefcase, text: "Calendar, inbox triage, briefings and follow-ups." },
-  { key: "sales", title: "Sales Assistant", icon: TrendingUp, text: "Lead follow-up, CRM hygiene and pipeline updates." },
-  { key: "operations", title: "Operations Assistant", icon: Workflow, text: "Recurring tasks, invoices, reporting and handoffs." },
-  { key: "lifestyle", title: "Lifestyle Assistant", icon: Heart, text: "Personal scheduling, reminders and planning." },
-  { key: "paralegal", title: "Paralegal Assistant", icon: Scale, text: "Supports legal workflows like intake, documents and deadlines. It does not provide legal advice." },
-  { key: "custom", title: "Custom Role", icon: Compass, text: "A role designed around your business.", pro: true },
+  { key: "executive", title: "Executive", icon: Briefcase, text: "Calendar, inbox, briefings and follow-ups." },
+  { key: "sales", title: "Sales", icon: TrendingUp, text: "Lead follow-up, CRM hygiene and pipeline updates." },
+  { key: "operations", title: "Operations", icon: Workflow, text: "Recurring tasks, invoices, reporting and handoffs." },
+  { key: "lifestyle", title: "Lifestyle", icon: Heart, text: "Personal scheduling, reminders and planning." },
+  { key: "paralegal", title: "Paralegal", icon: Scale, text: "Intake, documents and deadlines. No legal advice." },
+  { key: "custom", title: "Custom role", icon: Compass, text: "A Pro role designed around your operation." },
 ];
 
-export function Roles() {
+export function Personalization() {
+  const [active, setActive] = useState("executive");
+  const selected = ROLES.find((role) => role.key === active) ?? ROLES[0];
   return (
-    <Statement id="roles" rail="flow" title="Start with the role you need." className="scroll-mt-20">
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {ROLES.map((r) => (
-          <button
-            key={r.key}
-            onClick={() => track("role_selected", { role: r.key })}
-            className="group rounded-panel border border-border bg-surface p-6 text-left transition-colors hover:border-primary/50"
-          >
-            <div className="flex items-center justify-between">
-              <r.icon className="size-5 text-link" />
-              {r.pro && (
-                <span className="rounded-full border border-primary/50 px-2 py-0.5 text-[10px] font-bold uppercase tracking-widest text-link">
-                  Pro
-                </span>
-              )}
+    <section id="personalization" className="scene-band scroll-mt-20" aria-labelledby="personalization-title">
+      <div className="mx-auto max-w-6xl px-5 lg:px-8">
+        <Reveal className="text-center">
+          <p className="text-xs font-semibold uppercase tracking-[0.24em] text-link">Built around you</p>
+          <h2 id="personalization-title" className="type-statement mx-auto mt-4 max-w-4xl">Your operation becomes the interface.</h2>
+          <p className="mx-auto mt-5 max-w-2xl text-lg text-muted-foreground">Choose a role to see the outcome it is designed around. Exact tools and behavior are configured during onboarding.</p>
+        </Reveal>
+        <div className="mt-12 grid gap-8 lg:grid-cols-[1fr_1fr] lg:items-center">
+          <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+            {ROLES.map((role) => <button key={role.key} onClick={() => { setActive(role.key); track("role_selected", { role: role.key }); }} aria-pressed={active === role.key} className={cn("min-h-28 rounded-panel border p-4 text-left transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring", active === role.key ? "border-primary/60 bg-surface" : "border-border hover:border-border-strong")}><role.icon className="size-5 text-link" aria-hidden="true" /><span className="mt-4 block text-sm font-semibold">{role.title}</span></button>)}
+          </div>
+          <div className="spotlight-panel rounded-panel border border-border bg-surface p-7 sm:p-10">
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-link">{selected?.title} assistant</p>
+            <p className="mt-5 text-2xl font-semibold sm:text-3xl">{selected?.text}</p>
+            <div className="mt-8 flex flex-wrap gap-2">
+              {["Context", "Approved tools", "Human control"].map((item) => <span key={item} className="rounded-full border border-border px-3 py-2 text-xs text-muted-foreground">{item}</span>)}
             </div>
-            <h3 className="mt-4 font-semibold">{r.title}</h3>
-            <p className="mt-2 text-sm text-muted-foreground">{r.text}</p>
-          </button>
-        ))}
-      </div>
-    </Statement>
-  );
-}
-
-const ECOSYSTEM = [
-  "Google Workspace", "Microsoft 365", "Slack", "Discord", "Telegram", "Microsoft Teams", "Notion", "Asana",
-  "Trello", "ClickUp", "HubSpot", "Salesforce", "Pipedrive", "Stripe", "QuickBooks", "Xero", "Calendly",
-  "DocuSign", "Google Docs", "Clio", "PracticePanther", "n8n",
-];
-
-export function Ecosystem() {
-  return (
-    <Statement
-      rail="flow"
-      title="Designed to work with the tools you already use."
-      lead="Supported tools we can connect, depending on your plan. Additional API integrations are scoped when required."
-    >
-      <ul className="flex flex-wrap gap-2">
-        {ECOSYSTEM.map((t) => (
-          <li key={t} className="rounded-full border border-border bg-surface px-4 py-2 text-sm">
-            {t}
-          </li>
-        ))}
-      </ul>
-      <p className="mt-6 text-xs text-muted-foreground">
-        Product names are trademarks of their owners. Listing a tool does not imply a partnership.
-      </p>
-    </Statement>
-  );
-}
-
-const PRIVACY = [
-  { icon: Lock, t: "Dedicated deployment", d: "Each customer is designed to run in their own isolated environment." },
-  { icon: ShieldCheck, t: "Not used for training", d: "Your data is not used to train models." },
-  { icon: KeyRound, t: "Secret management", d: "Access credentials are designed to be stored in a dedicated secret manager." },
-  { icon: Eye, t: "Auditability", d: "Actions are designed to be logged so you can review what happened." },
-  { icon: Check, t: "Approval by default", d: "Sensitive write actions ask for approval by default." },
-  { icon: Pause, t: "Pause control", d: "You can pause your assistant." },
-  { icon: Trash2, t: "Deletion on request", d: "Your data is deleted when you ask." },
-  { icon: Cloud, t: "Client-owned cloud (Pro)", d: "Option to run in your own Google Cloud, where agreed." },
-];
-
-export function Privacy() {
-  return (
-    <Statement rail="flow" title="Private by design." lead="These describe how each deployment is designed. They are set up during your onboarding.">
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        {PRIVACY.map((p) => (
-          <div key={p.t} className="rounded-panel border border-border bg-surface p-5">
-            <p.icon className="size-5 text-link" />
-            <h3 className="mt-3 text-sm font-semibold">{p.t}</h3>
-            <p className="mt-1.5 text-sm text-muted-foreground">{p.d}</p>
           </div>
-        ))}
-      </div>
-    </Statement>
-  );
-}
-
-const CONTROL = [
-  { s: "Read", a: true },
-  { s: "Understand", a: true },
-  { s: "Draft", a: true },
-  { s: "Prepare action", a: true },
-  { s: "Send · Create · Pay · Sign", a: false },
-];
-
-export function Control() {
-  const [approved, setApproved] = useState(false);
-  return (
-    <Instrument id="control" rail="done" title="It can act. You stay in control." className="scroll-mt-20">
-      <div className="grid gap-8 lg:grid-cols-[1.2fr_1fr]">
-        <ol className="space-y-2">
-          {CONTROL.map((c) => (
-            <li key={c.s} className="flex items-center justify-between rounded-control border border-border px-4 py-3 text-sm">
-              <span className="font-medium">{c.s}</span>
-              <span className={cn("text-xs font-semibold uppercase tracking-wider", c.a ? "text-link" : "text-success")}>
-                {c.a ? "Automatic" : "Approval required by default"}
-              </span>
-            </li>
-          ))}
-          <li className="flex items-center gap-2 px-4 pt-2 text-sm text-muted-foreground">
-            <ArrowRight className="size-3.5" /> Approve <ArrowRight className="size-3.5" /> Execute
-          </li>
-        </ol>
-        <div className="rounded-panel border border-border bg-background p-5">
-          <div className="flex items-center gap-2 text-xs text-muted-foreground">
-            <Sparkles className="size-3.5 text-link" /> Action ready
-          </div>
-          <p className="mt-3 font-semibold">Ready to send 3 invoice reminders</p>
-          <p className="mt-1 text-sm text-muted-foreground">Invoices over 30 days · drafts prepared</p>
-          <div className="mt-5 flex gap-2">
-            <Button variant="outline" size="sm" onClick={() => setApproved(false)}>Review</Button>
-            <Button size="sm" onClick={() => setApproved(true)}>
-              {approved ? <><Check className="size-4" /> Approved</> : "Approve & Send"}
-            </Button>
-          </div>
-          <p className="mt-4 text-[11px] text-muted-foreground">Interactive illustration. Nothing is sent.</p>
         </div>
       </div>
-    </Instrument>
+    </section>
+  );
+}
+
+export function Outcomes() {
+  return (
+    <section className="scene-band bg-surface/30" aria-labelledby="outcomes-title">
+      <div className="mx-auto max-w-6xl px-5 lg:px-8">
+        <Reveal><h2 id="outcomes-title" className="type-statement max-w-4xl">Less coordination. More continuity.</h2></Reveal>
+        <div className="mt-12 grid gap-px overflow-hidden rounded-panel border border-border bg-border md:grid-cols-3">
+          {["Work arrives already prepared", "Context follows the request", "Sensitive actions wait for you"].map((text, index) => <Reveal key={text} delay={index * 80} className="bg-background p-7 sm:p-9"><span className="text-xs font-semibold text-link">0{index + 1}</span><p className="mt-5 text-xl font-semibold">{text}</p></Reveal>)}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+const TRUST = [
+  { icon: Lock, title: "Private setup", text: "Your dedicated environment and agreed integrations are prepared during onboarding." },
+  { icon: ShieldCheck, title: "Approval by default", text: "Sensitive sends, creates, payments and signatures are designed to wait for approval." },
+  { icon: Pause, title: "Clear control", text: "Review prepared work, pause the assistant and request deletion of your data." },
+];
+
+export function TrustControl() {
+  const [approved, setApproved] = useState(false);
+  return (
+    <section id="control" className="scene-band scroll-mt-20" aria-labelledby="control-title">
+      <div className="mx-auto max-w-6xl px-5 lg:px-8">
+        <Reveal className="text-center"><p className="text-xs font-semibold uppercase tracking-[0.24em] text-link">Trust before action</p><h2 id="control-title" className="type-statement mx-auto mt-4 max-w-4xl">It can act. You stay in control.</h2></Reveal>
+        <div className="mt-12 grid gap-4 md:grid-cols-3">{TRUST.map((item, index) => <Reveal key={item.title} delay={index * 70} className="rounded-panel border border-border bg-surface p-6"><item.icon className="size-5 text-link" /><h3 className="mt-5 text-lg font-semibold">{item.title}</h3><p className="mt-2 text-sm leading-relaxed text-muted-foreground">{item.text}</p></Reveal>)}</div>
+        <div className="mt-6 grid gap-6 rounded-panel border border-border bg-surface p-6 lg:grid-cols-[1fr_auto] lg:items-center lg:p-8">
+          <div><p className="flex items-center gap-2 text-xs text-link"><Sparkles className="size-4" /> Action ready</p><p className="mt-3 text-xl font-semibold">3 invoice reminders are prepared</p><p className="mt-2 text-sm text-muted-foreground">Review the drafts before anything is sent.</p></div>
+          <div className="flex flex-col gap-2 sm:flex-row"><Button variant="outline" onClick={() => setApproved(false)}>Review drafts</Button><Button onClick={() => setApproved(true)}>{approved ? <><Check /> Approved</> : "Approve illustration"}</Button></div>
+          <p className="text-xs text-muted-foreground lg:col-span-2" aria-live="polite">Interactive illustration only. Nothing is sent or changed.</p>
+        </div>
+        <ol className="mt-12 grid gap-3 sm:grid-cols-3 lg:grid-cols-6" aria-label="What happens after purchase">{["Purchase confirmed", "Setup review", "Persona", "Integrations", "Testing", "Activation"].map((item, index) => <li key={item} className="rounded-control border border-border p-4 text-sm"><span className="text-xs text-link">0{index + 1}</span><span className="mt-2 block font-medium">{item}</span>{index > 0 ? <span className="mt-1 block text-xs text-muted-foreground">Completed with onboarding</span> : <span className="mt-1 block text-xs text-success">First step</span>}</li>)}</ol>
+      </div>
+    </section>
   );
 }
 
 export function ProductFinalCta() {
   return (
-    <section className="relative overflow-hidden py-20 lg:py-28">
-      <div className="brand-glow left-1/2 top-1/4 h-[420px] w-[680px] -translate-x-1/2 opacity-50" aria-hidden />
-      <div className="relative mx-auto max-w-3xl px-5 text-center">
-        <h2 className="type-statement">One AI. Your tools. Your business.</h2>
-        <p className="mx-auto mt-5 max-w-xl text-lg text-muted-foreground">
-          Choose a plan and we'll start your private setup through a guided onboarding.
-        </p>
-        <Button size="lg" className="mt-8" asChild onClick={() => track("private_ai_cta_click", { cta: "final" })}>
-          <a href="#pricing">Choose Your AI</a>
-        </Button>
-      </div>
+    <section className="scene-band relative overflow-hidden" aria-labelledby="final-title">
+      <div className="brand-glow left-1/2 top-1/4 h-[420px] w-[680px] -translate-x-1/2 opacity-40" aria-hidden="true" />
+      <Reveal className="relative mx-auto max-w-3xl px-5 text-center"><h2 id="final-title" className="type-statement">Your private AI starts with your business.</h2><p className="mx-auto mt-5 max-w-xl text-lg text-muted-foreground">Choose a plan, create your account and review the exact setup before secure payment is enabled.</p><Button size="lg" className="mt-8" asChild onClick={() => track("private_ai_cta_click", { cta: "final" })}><a href="#pricing">Choose your AI <ArrowRight /></a></Button></Reveal>
     </section>
   );
 }
