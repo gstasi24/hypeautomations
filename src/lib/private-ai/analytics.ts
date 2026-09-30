@@ -15,7 +15,7 @@ export type PaiEvent =
   | "checkout_completed"
   | "checkout_failed"
   | "app_opened"
-  | "billing_viewed";
+  | "billing_viewed"
   | "demo_interaction"
   | "form_started"
   | "form_validation_error"
