@@ -8,4 +8,4 @@
 - [x] Unify navigation, actions, forms, motion, and analytics grammar.
 - [x] Simplify pricing and checkout decisions without changing business rules.
 - [x] Align Custom Workflows interactions while preserving its consultation funnel.
-- [ ] Complete responsive, keyboard, reduced-motion, routing, pricing, naming, and CTA QA.
+- [x] Complete responsive, keyboard, reduced-motion, routing, pricing, naming, and CTA QA.

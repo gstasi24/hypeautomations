@@ -32,6 +32,15 @@ export function Demonstration() {
           <div id="request-demo" role="tabpanel" className="spotlight-panel min-h-72 rounded-panel border border-border bg-surface p-6 sm:p-9">
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-link">{REQUEST_STEPS[active]?.label}</p>
             <p className="mt-5 max-w-2xl text-2xl font-semibold leading-snug sm:text-3xl">{REQUEST_STEPS[active]?.text}</p>
+            {active === 3 ? (
+              <div className="mt-6 rounded-control border border-border bg-background/70 p-4 text-left">
+                <p className="text-sm leading-relaxed text-muted-foreground">I found 3 priority items, 2 meetings and 4 pending follow-ups. I've prepared the changes. Review before I apply them?</p>
+                <div className="mt-4 flex flex-wrap gap-2" aria-label="Illustrative actions">
+                  <span className="inline-flex min-h-11 items-center rounded-control border border-border px-4 text-sm font-semibold">Review changes</span>
+                  <span className="inline-flex min-h-11 items-center rounded-control bg-brand-gradient px-4 text-sm font-semibold text-primary-foreground">Approve</span>
+                </div>
+              </div>
+            ) : null}
             <div className="mt-9 border-t border-border pt-5">
               <div className="flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
                 {[Mail, CalendarDays, Users, FileText].map((Icon, index) => <span key={index} className={cn("inline-flex size-10 items-center justify-center rounded-full border", index <= active ? "border-primary/50 bg-primary/10 text-link" : "border-border")}><Icon className="size-4" aria-hidden="true" /></span>)}

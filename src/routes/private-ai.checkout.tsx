@@ -185,6 +185,9 @@ function Summary({ plan }: { plan: { tier: Tier; model: PaymentModel } }) {
       <p className="mt-5 flex items-center gap-2 text-xs text-muted-foreground">
         <Lock className="size-3.5" /> We never see or store your card details.
       </p>
+      <p className="mt-4 rounded-control border border-border bg-background/50 p-3 text-xs leading-relaxed text-muted-foreground">
+        Secure payment integration will be enabled before launch. No payment can be taken in this preview.
+      </p>
     </aside>
   );
 }

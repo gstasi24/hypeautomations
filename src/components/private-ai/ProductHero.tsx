@@ -46,6 +46,7 @@ export function ProductHero() {
       <div className="relative mx-auto flex w-full max-w-6xl flex-col items-center px-5 text-center lg:px-8">
         <p className="text-xs font-semibold uppercase tracking-[0.24em] text-link">Your private AI operator</p>
         <h1 className="type-display mt-5 max-w-5xl">One AI. Your tools. <span className="text-gradient">Your business.</span></h1>
+        <p className="mt-5 text-xl font-semibold text-foreground sm:text-2xl">Just tell it what needs to happen.</p>
         <p className="mt-6 max-w-2xl text-lg leading-relaxed text-muted-foreground sm:text-xl">
           Designed around how your business works—understanding context, coordinating approved tools and preparing action while you stay in control.
         </p>
