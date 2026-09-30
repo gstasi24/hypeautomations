@@ -257,7 +257,7 @@ export function BookingFlow({ onClose }: { onClose: () => void }) {
           </h2>
         </header>
 
-        <div className="mt-5 flex gap-1.5" aria-hidden="true">
+        <div className="mt-5 flex gap-1.5" role="progressbar" aria-valuemin={1} aria-valuemax={STEP_LABELS.length} aria-valuenow={step + 1} aria-label={`Step ${step + 1} of ${STEP_LABELS.length}`}>
           {STEP_LABELS.map((label, index) => (
             <span
               key={label}
@@ -412,6 +412,7 @@ export function BookingFlow({ onClose }: { onClose: () => void }) {
                 <Label htmlFor="full-name">Name *</Label>
                 <Input
                   id="full-name"
+                  autoComplete="name"
                   value={form.fullName}
                   onChange={(e) => setForm((f) => ({ ...f, fullName: e.target.value }))}
                   required
@@ -421,6 +422,7 @@ export function BookingFlow({ onClose }: { onClose: () => void }) {
                 <Label htmlFor="company">Company</Label>
                 <Input
                   id="company"
+                  autoComplete="organization"
                   value={form.company}
                   onChange={(e) => setForm((f) => ({ ...f, company: e.target.value }))}
                 />
@@ -430,16 +432,18 @@ export function BookingFlow({ onClose }: { onClose: () => void }) {
                 <Input
                   id="email"
                   type="email"
+                  autoComplete="email"
                   value={form.email}
                   onChange={(e) => setForm((f) => ({ ...f, email: e.target.value }))}
                   required
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="phone">Phone / WhatsApp *</Label>
+                <Label htmlFor="phone">Phone *</Label>
                 <Input
                   id="phone"
                   type="tel"
+                  autoComplete="tel"
                   value={form.phone}
                   onChange={(e) => setForm((f) => ({ ...f, phone: e.target.value }))}
                   required
@@ -449,6 +453,9 @@ export function BookingFlow({ onClose }: { onClose: () => void }) {
                 <Label htmlFor="website">Website (optional)</Label>
                 <Input
                   id="website"
+                  type="url"
+                  inputMode="url"
+                  autoComplete="url"
                   value={form.website}
                   onChange={(e) => setForm((f) => ({ ...f, website: e.target.value }))}
                   placeholder="yourcompany.com"
